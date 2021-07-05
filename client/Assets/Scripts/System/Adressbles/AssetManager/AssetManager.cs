@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace EG
 {
-    public class AssetManager : MonoBehaviour
+    public class AssetManager : MonoSingleton<AssetManager>
     {
 
         public enum ReleaseType
@@ -18,8 +18,7 @@ namespace EG
             Manual,
             NoneRelease
         }
-        public static AssetManager Instance;
-        public bool IsInitialize;
+
         private bool enableHotUpdate = false;
 
         /// <summary>
@@ -36,12 +35,8 @@ namespace EG
         /// </summary>
         private Dictionary<AsyncOperationHandle, GameObject> handleDic = new Dictionary<AsyncOperationHandle, GameObject>();
 
-        private void Awake()
-        {
-            Instance = this;
-            GameObject.DontDestroyOnLoad(gameObject);
-        }
-        public void Initialize()
+
+        public override void Initialize()
         {
             Addressables.InitializeAsync().Completed += InitialCompleted;
         }
@@ -50,7 +45,7 @@ namespace EG
         {
             if (!enableHotUpdate)
             {
-                IsInitialize = true;
+                m_Initialize = true;
                 return;
             }
             Addressables.CheckForCatalogUpdates(true).Completed += CheckComplete;
@@ -152,11 +147,11 @@ namespace EG
                 {
                     progressHandler(0, 1);
                 }
-                IsInitialize = true;
+                m_Initialize = true;
             }
             else
             {
-                IsInitialize = true;
+                m_Initialize = true;
             }
 
 
