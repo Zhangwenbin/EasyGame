@@ -275,9 +275,10 @@ namespace EG
         /// <param name="loadSceneMode"></param>
         /// <param name="activateOnLoad"></param>
         /// <param name="priority"></param>
-        public void LoadSceneAsync(string key, Action<string> callback, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool activateOnLoad = true, int priority = 100)
+        public AsyncOperationHandle LoadSceneAsync(string key, Action<string> callback, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool activateOnLoad = true, int priority = 100)
         {
-            Addressables.LoadSceneAsync(key, loadSceneMode, activateOnLoad, priority).Completed += (res) =>
+            var handle = Addressables.LoadSceneAsync(key, loadSceneMode, activateOnLoad, priority);
+            handle.Completed += (res) =>
             {
 
                 if (callback != null)
@@ -286,6 +287,7 @@ namespace EG
                 }
 
             };
+            return handle;
         }
 
         /// <summary>
