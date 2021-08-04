@@ -15,4 +15,16 @@ public class ViewManger : MonoBehaviour
     {
         
     }
+
+
+    public ViewBase ShowView<T>() where T:ViewBase
+    {
+        var view= System.Activator.CreateInstance<T>();
+        return view;
+    }
+
+    public void HideView()
+    {
+
+    }
 }
