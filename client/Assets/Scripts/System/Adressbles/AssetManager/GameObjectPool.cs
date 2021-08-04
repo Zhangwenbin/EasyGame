@@ -4,131 +4,147 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace EG
+public static class GameObjectPool 
 {
-    public static class GameObjectPool
+    private static Dictionary<string , CacheItem> pools = new Dictionary<string, CacheItem>();//gameobject 缓存池
+    public static void RecycleGameObject(string assetName,GameObject go)
     {
-        private static Dictionary<string, CacheItem> pools = new Dictionary<string, CacheItem>();//gameobject 缓存池
-        public static void RecycleGameObject(string assetName, GameObject go)
+        CacheItem item = null;
+        if (!pools.TryGetValue(assetName,out item))
         {
-            CacheItem item = null;
-            if (!pools.TryGetValue(assetName, out item))
+            item = new CacheItem();
+            pools[assetName] = item;
+        }
+        if (!item.PutIn(go))
+        {
+            GameObject.Destroy(go);
+        }
+    }
+
+    public static GameObject GetGameObject(string assetName)
+    {
+        CacheItem item = null;
+        if (pools.TryGetValue(assetName, out item))
+        {
+            return item.Get();
+        }
+        return null;
+    }
+
+  
+
+    public class CacheItem
+    {
+        public CacheItem()
+        {
+            maxCount = 8;
+            array = new GameObject[maxCount];
+            index = -1;
+        }
+        private int index;
+        public int maxCount;
+        public GameObject[] array;
+        public bool PutIn(GameObject go)
+        {
+            if (index<maxCount-1)
             {
-                item = new CacheItem();
-                pools[assetName] = item;
+                index++;
+                array[index] = go;
+                go.SetActive(false);
+                GameObject.DontDestroyOnLoad(go);
+                return true;
             }
-            if (!item.PutIn(go))
-            {
-                GameObject.Destroy(go);
-            }
+            return false;
         }
 
-        public static GameObject GetGameObject(string assetName)
+        public GameObject Get()
         {
-            CacheItem item = null;
-            if (pools.TryGetValue(assetName, out item))
+            while (index >=0)
             {
-                return item.Get();
-            }
-            return null;
-        }
-
-
-
-        public class CacheItem
-        {
-            public CacheItem()
-            {
-                maxCount = 8;
-                array = new GameObject[maxCount];
-                index = -1;
-            }
-            private int index;
-            public int maxCount;
-            public GameObject[] array;
-            public bool PutIn(GameObject go)
-            {
-                if (index < maxCount - 1)
+                index--;
+                if (array[index+1]!=null)
                 {
-                    index++;
-                    array[index] = go;
-                    go.SetActive(false);
-                    return true;
-                }
-                return false;
-            }
-
-            public GameObject Get()
-            {
-                if (index >= 0)
-                {
-                    index--;
                     return array[index + 1];
                 }
-                return null;
-            }
-        }
-
-    }
-
-    public static class RefPool<T> where T : UnityEngine.Object
-    {
-        private static Dictionary<string, RefItem<T>> refPools = new Dictionary<string, RefItem<T>>();//引用类型缓存池
-        public static void OnLoadObject(string assetName, T obj, AsyncOperationHandle handle)
-        {
-            RefItem<T> item = null;
-            if (!refPools.TryGetValue(assetName, out item))
-            {
-                item = new RefItem<T>(obj, handle);
-                item.AddRef();
-                refPools[assetName] = item;
-            }
-        }
-
-        public static T GetObject(string assetName)
-        {
-            RefItem<T> item = null;
-            if (refPools.TryGetValue(assetName, out item))
-            {
-                item.AddRef();
-                return item.obj;
             }
             return null;
         }
-        public class RefItem<U> where U : UnityEngine.Object
+    }
+
+}
+
+public static class RefPool
+{
+    private static Dictionary<string, RefItem> refPools = new Dictionary<string, RefItem>();//引用类型缓存池
+    public static void OnLoadObject(string assetName, AsyncOperationHandle handle) 
+    {
+        lock (refPools)
         {
-            public U obj;
-            public AsyncOperationHandle handle;
-            public int refNum = 0;
-            public RefItem(U obj, AsyncOperationHandle handle)
+            RefItem item = null;
+            if (!refPools.TryGetValue(assetName, out item))
             {
-                this.obj = obj;
-                this.handle = handle;
-                refNum = 0;
-            }
-
-            public void AddRef()
-            {
-                refNum++;
-            }
-
-            public void SubRef()
-            {
-                refNum--;
-            }
-
-            public bool CanRelease()
-            {
-                return refNum <= 0;
-            }
-
-            public void Release()
-            {
-                refNum = 0;
-                obj = null;
-                Addressables.Release(handle);
+                item = new RefItem(handle);
+                item.AddRef();
+                refPools.Add(assetName, item);
             }
         }
 
     }
+
+    public static object GetObject(string assetName)
+    {
+        RefItem item = null;
+        if (refPools.TryGetValue(assetName, out item))
+        {
+            item.AddRef();
+            return item.handle.Result;
+        }
+        return null;
+    }
+
+    public static void ReleaseObject(string assetName)
+    {
+        RefItem item = null;
+        if (refPools.TryGetValue(assetName, out item))
+        {
+            item.SubRef();
+            if (item.CanRelease())
+            {
+                item.Release();
+                refPools.Remove(assetName);
+            }
+        }
+    }
+    public class RefItem
+    {
+        public AsyncOperationHandle handle;
+        public int refNum = 0;
+        public RefItem(AsyncOperationHandle handle)
+        {
+            this.handle = handle;
+            refNum = 0;
+        }
+
+        public void AddRef()
+        {
+            refNum++;
+        }
+
+        public void SubRef()
+        {
+            refNum--;
+        }
+
+        public bool CanRelease()
+        {
+            return refNum <= 0;
+        }
+
+        public void Release()
+        {
+            refNum = 0;
+            Addressables.Release(handle);
+        }
+    }
+
 }
