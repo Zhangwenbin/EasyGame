@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.CLR.Method;
 using ILRuntime.Runtime.Enviorment;
@@ -59,9 +60,22 @@ public class ValueTypeBindingDemo : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         RunTest();
         yield return new WaitForSeconds(0.5f);
+        RunTestToLocal();
+        yield return new WaitForSeconds(0.5f);
+        RunTestLocal();
+        yield return new WaitForSeconds(0.5f);
         RunTest2();
         yield return new WaitForSeconds(0.5f);
+        RunTest2ToLocal();
+        yield return new WaitForSeconds(0.5f);
+        RunTest2Local();
+        yield return new WaitForSeconds(0.5f);
         RunTest3();
+        yield return new WaitForSeconds(0.5f);
+        RunTest3ToLocal();
+        yield return new WaitForSeconds(0.5f);
+        RunTest3Local();
+        
     }
 
     void InitializeILRuntime()
@@ -100,6 +114,98 @@ public class ValueTypeBindingDemo : MonoBehaviour
         //调用无参数静态方法，appdomain.Invoke("类名", "方法名", 对象引用, 参数列表);
         appdomain.Invoke("HotFix_Project.TestValueType", "RunTest3", null, null);
     }
+    
+    void RunTestToLocal()
+    {
+        //调用无参数静态方法，appdomain.Invoke("类名", "方法名", 对象引用, 参数列表);
+        appdomain.Invoke("HotFix_Project.TestValueType", "RunTestInLocal", null, null);
+    }
+
+    void RunTest2ToLocal()
+    {
+        //调用无参数静态方法，appdomain.Invoke("类名", "方法名", 对象引用, 参数列表);
+        appdomain.Invoke("HotFix_Project.TestValueType", "RunTest2InLocal", null, null);
+    }
+
+    void RunTest3ToLocal()
+    {
+        //调用无参数静态方法，appdomain.Invoke("类名", "方法名", 对象引用, 参数列表);
+        appdomain.Invoke("HotFix_Project.TestValueType", "RunTest3InLocal", null, null);
+    }
+    
+    
+      public  void RunTestLocal()
+        {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            //Debug.Log("测试Vector3的各种运算");
+            Vector3 a = new Vector3(1, 2, 3);
+            Vector3 b = Vector3.one;
+
+            //Debug.Log("a + b = " + (a + b));
+            //Debug.Log("a - b = " + (a - b));
+            //Debug.Log("a * 2 = " + (a * 2));
+            //Debug.Log("2 * a = " + (2 * a));
+            //Debug.Log("a / 2 = " + (a / 2));
+            //Debug.Log("-a = " + (-a));
+            //Debug.Log("a == b = " + (a == b));
+            //Debug.Log("a != b = " + (a != b));
+            //Debug.Log("a dot b = " + Vector3.Dot(a, b));
+            //Debug.Log("a cross b = " + Vector3.Cross(a, b));
+            //Debug.Log("a distance b = " + Vector3.Distance(a, b));
+            //Debug.Log("a.magnitude = " + a.magnitude);
+            //Debug.Log("a.normalized = " + a.normalized);
+            //Debug.Log("a.sqrMagnitude = " + a.sqrMagnitude);
+
+            sw.Start();
+            float dot = 0;
+            for(int i = 0; i < 100000; i++)
+            {
+                a += Vector3.one;
+                dot += Vector3.Dot(a, Vector3.zero);
+            }
+            sw.Stop();
+
+            Debug.LogFormat("Value: a={0},dot={1}, time = {2}ms", a, dot, sw.ElapsedMilliseconds);
+        }
+
+        public  void RunTest2Local()
+        {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            //Debug.Log("测试Vector3的各种运算");
+            int a = 4;
+            int b = 3;
+
+            sw.Start();
+            float dot = 0;
+            for (int i = 0; i < 100000; i++)
+            {
+                a *= b;
+            }
+            sw.Stop();
+
+            Debug.LogFormat("Value: a={0},dot={1}, time = {2}ms", a, dot, sw.ElapsedMilliseconds);
+        }
+
+        public  void RunTest3Local()
+        {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            //Debug.Log("测试Vector2的各种运算");
+            StringBuilder sb = new StringBuilder();
+            string a = "dsfsf";
+            string b = "";
+            sb.Append(a);
+
+            sw.Start();
+            float dot = 0;
+            for (int i = 0; i < 100000; i++)
+            {
+                sb.Append(b);
+           
+            }
+            sw.Stop();
+
+            Debug.LogFormat("Value: a={0},dot={1}, time = {2}ms", sb.ToString(), dot, sw.ElapsedMilliseconds);
+        }
 
     private void OnDestroy()
     {
