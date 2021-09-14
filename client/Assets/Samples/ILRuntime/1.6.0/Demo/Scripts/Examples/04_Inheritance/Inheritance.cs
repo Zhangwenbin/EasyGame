@@ -89,6 +89,7 @@ public class Inheritance : MonoBehaviour
         appdomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
 #endif
         //这里做一些ILRuntime的注册，这里应该写继承适配器的注册，为了演示方便，这个例子写在OnHotFixLoaded了
+        appdomain.DebugService.StartDebugService(56000);
     }
 
     void OnHotFixLoaded()
