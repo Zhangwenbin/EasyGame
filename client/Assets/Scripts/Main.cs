@@ -68,7 +68,14 @@ namespace EG
         //由于Unity的Profiler接口只允许在主线程使用，为了避免出异常，需要告诉ILRuntime主线程的线程ID才能正确将函数运行耗时报告给Profiler
         appdomain.UnityMainThreadID = Thread.CurrentThread.ManagedThreadId;
 #endif
-        //这里做一些ILRuntime的注册，这个示例暂时没有需要注册的
+        //这里做一些ILRuntime的注册
+        
+        //first 重定向注册
+        LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appdomain);
+        
+        
+        //second 绑定注册
+        ILRuntime.Runtime.Generated.CLRBindings.Initialize(appdomain);
     }
 
 
