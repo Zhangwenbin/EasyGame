@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace CSharpHelpers
 {
-    /// <summary>Enumの補助</summary>
+    /// <summary>Enum</summary>
     public static class EnumSupport
     {
         public static int ToInt32<T>(this T value)
