@@ -16,4 +16,3 @@ C:\zwb\EasyGame\client\Assets\Samples\ILRuntime\1.6.0\Demo\HotFix_Project~\obj\D
 C:\zwb\EasyGame\client\Assets\Samples\ILRuntime\1.6.0\Demo\HotFix_Project~\obj\Debug\HotFix_Project.csproj.CoreCompileInputs.cache
 C:\zwb\EasyGame\client\Assets\Samples\ILRuntime\1.6.0\Demo\HotFix_Project~\obj\Debug\HotFix_Project.dll
 C:\zwb\EasyGame\client\Assets\Samples\ILRuntime\1.6.0\Demo\HotFix_Project~\obj\Debug\HotFix_Project.pdb
-C:\zwb\EasyGame\client\Assets\Samples\ILRuntime\1.6.0\Demo\HotFix_Project~\obj\Debug\HotFix_Project.csproj.CopyComplete
