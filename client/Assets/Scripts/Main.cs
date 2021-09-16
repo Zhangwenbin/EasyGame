@@ -18,6 +18,7 @@ namespace EG
 
     void Start()
     {
+        //todo hotfix
         StartCoroutine(LoadHotFixAssembly());
     }
 
@@ -30,32 +31,28 @@ namespace EG
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //这个DLL文件是直接编译HotFix_Project.sln生成的，已经在项目中设置好输出目录为StreamingAssets，在VS里直接编译即可生成到对应目录，无需手动拷贝
-#if UNITY_ANDROID
-        WWW www = new WWW(Application.streamingAssetsPath + "/HotFix_Project.dll");
-#else
-        WWW www = new WWW("file:///" + Application.streamingAssetsPath + "/HotFix_Project.dll");
-#endif
-        while (!www.isDone)
+// #if UNITY_ANDROID
+//         WWW www = new WWW(Application.streamingAssetsPath + "/HotFix_Project.dll");
+// #else
+//         WWW www = new WWW("file:///" + Application.streamingAssetsPath + "/HotFix_Project.dll");
+// #endif
+        var req= AssetManager.Instance.LoadAssetAsync("HotFix_Project.bytes");
+        while (!req.IsDone)
             yield return null;
-        if (!string.IsNullOrEmpty(www.error))
-            UnityEngine.Debug.LogError(www.error);
-        byte[] dll = www.bytes;
-        www.Dispose();
+        byte[] dll = ((TextAsset)req.Result).bytes;
 
         //PDB文件是调试数据库，如需要在日志中显示报错的行号，则必须提供PDB文件，不过由于会额外耗用内存，正式发布时请将PDB去掉，下面LoadAssembly的时候pdb传null即可
-#if UNITY_ANDROID
-        www = new WWW(Application.streamingAssetsPath + "/HotFix_Project.pdb");
-#else
-        www = new WWW("file:///" + Application.streamingAssetsPath + "/HotFix_Project.pdb");
-#endif
-        while (!www.isDone)
-            yield return null;
-        if (!string.IsNullOrEmpty(www.error))
-            UnityEngine.Debug.LogError(www.error);
-        byte[] pdb = www.bytes;
+// #if UNITY_ANDROID
+//         www = new WWW(Application.streamingAssetsPath + "/HotFix_Project.pdb");
+// #else
+//         www = new WWW("file:///" + Application.streamingAssetsPath + "/HotFix_Project.pdb");
+// #endif
+        // while (!www.isDone)
+        //     yield return null;
+        // byte[] pdb = www.bytes;
         fs = new MemoryStream(dll);
-        p = new MemoryStream(pdb);
-        appdomain.LoadAssembly(fs, p, new ILRuntime.Mono.Cecil.Pdb.PdbReaderProvider());
+        // p = new MemoryStream(pdb);
+        appdomain.LoadAssembly(fs, null, new ILRuntime.Mono.Cecil.Pdb.PdbReaderProvider());
 
 
         InitializeILRuntime();
