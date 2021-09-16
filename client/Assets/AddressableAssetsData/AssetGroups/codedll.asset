@@ -16,7 +16,13 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 634e6530ad9eaac48bafc4177ceecfac
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 95d9e9178c916e645ab7c3e5ae003a7c
+    m_Address: HotFix_Project.bytes
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - .bytes
+    - codedll
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 19f8b50110acad240902cabfaaa0a33a, type: 2}
   m_SchemaSet:

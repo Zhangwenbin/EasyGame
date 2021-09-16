@@ -1,0 +1,11 @@
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\bin\Debug\netcoreapp2.1\ExcelTools.deps.json
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\bin\Debug\netcoreapp2.1\ExcelTools.runtimeconfig.json
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\bin\Debug\netcoreapp2.1\ExcelTools.runtimeconfig.dev.json
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\bin\Debug\netcoreapp2.1\ExcelTools.dll
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\bin\Debug\netcoreapp2.1\ExcelTools.pdb
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\obj\Debug\netcoreapp2.1\ExcelTools.AssemblyInfoInputs.cache
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\obj\Debug\netcoreapp2.1\ExcelTools.AssemblyInfo.cs
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\obj\Debug\netcoreapp2.1\ExcelTools.csproj.CoreCompileInputs.cache
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\obj\Debug\netcoreapp2.1\ExcelTools.dll
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\obj\Debug\netcoreapp2.1\ExcelTools.pdb
+C:\zwb\ohayoo_longriver_sd6\ExcelTools\ExcelTools\obj\Debug\netcoreapp2.1\ExcelTools.genruntimeconfig.cache

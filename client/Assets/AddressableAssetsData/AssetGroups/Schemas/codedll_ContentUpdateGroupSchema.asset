@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: codedll_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
   m_Group: {fileID: 11400000, guid: 8e2bb969bee14d5418d8237032d11f9c, type: 2}
-  m_StaticContent: 0
+  m_StaticContent: 1
