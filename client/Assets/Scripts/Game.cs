@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using ILRuntime.CLR.Method;
-using ILRuntime.CLR.TypeSystem;
-using UnityEngine;
-using ILRuntime.Runtime.Enviorment;
-using MotionFramework.Config;
+﻿using UnityEngine;
+
 
 namespace EG
 {
-    public class Main : MonoBehaviour
+    public class Game : MonoBehaviour
     {
+        private static Game Instance;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         private FsmMachine _fsmMachine;
         private void Start()
         {
@@ -24,6 +23,11 @@ namespace EG
         private void Update()
         {
             _fsmMachine.Update();
+        }
+
+        public static void Goto(string name)
+        {
+            Instance._fsmMachine.GoTo(name);
         }
     }
 }
