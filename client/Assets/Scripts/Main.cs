@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -6,23 +7,23 @@ using ILRuntime.CLR.Method;
 using ILRuntime.CLR.TypeSystem;
 using UnityEngine;
 using ILRuntime.Runtime.Enviorment;
+using MotionFramework.Config;
 
 namespace EG
 {
     public class Main : MonoBehaviour
     {
-        IEnumerator Start()
+        private FsmMachine _fsmMachine;
+        private void Start()
         {
-            AssetManager.Instance.Initialize();
-            while (!AssetManager.Instance.isInitialized)
-            {
-                yield return null;
-            }
+            DontDestroyOnLoad(gameObject);
+            _fsmMachine = new FsmMachine();
+            _fsmMachine.Initialize("InitState",this);
         }
 
-
-        void Update()
+        private void Update()
         {
+            _fsmMachine.Update();
         }
     }
 }

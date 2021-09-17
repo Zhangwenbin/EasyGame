@@ -1,0 +1,1847 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Assembly-CSharp</name>
+    </assembly>
+    <members>
+        <member name="M:ILRuntime.Runtime.Generated.CLRBindings.Initialize(ILRuntime.Runtime.Enviorment.AppDomain)">
+            <summary>
+            Initialize the CLR binding, please invoke this AFTER CLR Redirection registration
+            </summary>
+        </member>
+        <member name="M:ILRuntime.Runtime.Generated.CLRBindings.Shutdown(ILRuntime.Runtime.Enviorment.AppDomain)">
+            <summary>
+            Release the CLR binding, please invoke this BEFORE ILRuntime Appdomain destroy
+            </summary>
+        </member>
+        <member name="F:EG.LoadRequest.handle">
+            <summary>
+            for load
+            </summary>
+        </member>
+        <member name="P:EG.LoadRequest.IsDone">
+            <summary>
+            True if the operation is complete.
+            </summary>
+        </member>
+        <member name="P:EG.LoadRequest.IsValid">
+            <summary>
+            Check if the internal operation is not null and has the same version of this handle.
+            </summary>
+            <returns>True if valid.</returns>
+        </member>
+        <member name="P:EG.LoadRequest.PercentComplete">
+            <summary>
+            The progress of the internal operation.
+            This is evenly weighted between all sub-operations. For example, a LoadAssetAsync call could potentially
+            be chained with InitializeAsync and have multiple dependent operations that download and load content.
+            In that scenario, PercentComplete would reflect how far the overal operation was, and would not accurately
+            represent just percent downloaded or percent loaded into memory.
+            For accurate download percentages, use GetDownloadStatus(). 
+            </summary>
+        </member>
+        <member name="P:EG.LoadRequest.Result">
+            <summary>
+            The result object of the operations.
+            </summary>
+        </member>
+        <member name="P:EG.LoadRequest.Status">
+            <summary>
+            The status of the internal operation.
+            </summary>
+        </member>
+        <member name="M:EG.LoadRequest.System#Collections#IEnumerator#MoveNext">
+            <summary>
+            Overload for <see cref="M:System.Collections.IEnumerator.MoveNext"/>.
+            </summary>
+            <returns>Returns true if the enumerator can advance to the next element in the collectin. Returns false otherwise.</returns>
+        </member>
+        <member name="M:EG.LoadRequest.System#Collections#IEnumerator#Reset">
+            <summary>
+            Overload for <see cref="M:System.Collections.IEnumerator.Reset"/>.
+            </summary>
+        </member>
+        <member name="M:EG.AssetManager.GetAsset(System.String,System.Action{System.String,UnityEngine.Object},EG.LoadPriority,EG.ReleaseType)">
+            <summary>
+            从assetbundle中加载asset
+            </summary>
+            <param name="name"></param>
+            <param name="callback"></param>
+            <param name="priority"></param>
+        </member>
+        <member name="M:EG.AssetManager.RegisterAsset(System.String,UnityEngine.GameObject)">
+            <summary>
+            注册不需要加载的资源
+            </summary>
+            <param name="key"></param>
+            <param name="obj"></param>
+        </member>
+        <member name="M:EG.AssetManager.GetBytes(System.String,System.Action{System.String,System.Byte[]})">
+            <summary>
+            加载二进制文件
+            </summary>
+            <param name="name"></param>
+            <param name="callback"></param>
+        </member>
+        <member name="M:EG.AssetManager.GetString(System.String,System.Action{System.String,System.String})">
+            <summary>
+            从assetbundle中读取字符串
+            </summary>
+            <param name="name"></param>
+            <param name="callback"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EG.Vector2Jason">
+            <summary>
+            供fastJSON使用的Vector2类型序列化解析器
+            </summary>
+        </member>
+        <member name="M:EG.Vector2Jason.SerializeVector2(System.Object)">
+            <summary>
+            将Vector2序列化为文本
+            </summary>
+            <param name="obj">需要序列化的Vector2数值</param>
+            <returns>序列化后的文本</returns>
+        </member>
+        <member name="M:EG.Vector2Jason.DeserializeVector2(System.String)">
+            <summary>
+            将文本反序列化成Vector2
+            </summary>
+            <param name="str">需要反序列化的文本</param>
+            <returns>得到的Vector2数值</returns>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.SharedSegment(System.String)">
+            <summary>ArraySegmentを作る.</summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.Segment(System.String,System.Int32,System.Int32,System.Boolean)">
+            <summary>ArraySegmentを作る.</summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.Segment(System.String,System.Int32,System.Boolean)">
+            <summary>ArraySegmentを作る.</summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.Segment(System.String,System.Boolean)">
+            <summary>ArraySegmentを作る.</summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.Segment(System.Char[],System.Int32,System.Int32)">
+            <summary>ArraySegmentを作る.切り出すだけ.</summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.Compact(System.ArraySegment{System.Char})">
+            <summary>Arrayのサイズを最低限に.</summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.Clone(System.ArraySegment{System.Char},System.Boolean)">
+            <summary>複製を作る. Arrayも複製される.</summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.FormatToCharArray(System.Int32,System.Boolean)">
+            <summary>
+            ArraySegment&lt;char&gt;で返す.
+            rentsArray==falseで共有char[]を使われるためFree不要だが、
+            次回のコールで書き換えられるので保持してはいけない
+            </summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.FormatToString(System.Int32)">
+            <summary>
+            アロケーションがおきないかもしれない
+            </summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.FormatToString(System.UInt32)">
+            <summary>
+            アロケーションがおきないかもしれない
+            </summary>
+        </member>
+        <member name="M:EG.CharArraySegmentExtensions.FormatToString(System.Int64)">
+            <summary>
+            アロケーションがおきないかもしれない
+            </summary>
+        </member>
+        <member name="M:EG.FastStringBuilder.Alloc">
+            ***********************************************************************
+            <summary>
+            ビルダーの確保
+            </summary>
+            <param name="splitChar">分割文字</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Free(EG.FastStringBuilder)">
+            ***********************************************************************
+            <summary>
+            ビルダーの開放
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Concat``2(``0,``1)">
+            ***********************************************************************
+            <summary>
+            Concat
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.#ctor(System.Int32)">
+            ***********************************************************************
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="initialCapacity">サイズ</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Clear">
+            ***********************************************************************
+            <summary>
+            クリア
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.ReallocateIFN(System.Int32)">
+            ***********************************************************************
+            <summary>
+            バッファの確保
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Set(System.String)">
+            ***********************************************************************
+            <summary>
+            文字列を設定する( メモリを割り当てない )
+            </summary>
+            <param name="str">文字列</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.AppendTop(System.String)">
+            ***********************************************************************
+            <summary>
+            文字列の追加( メモリ割り当てなし )
+            </summary>
+            <param name="value">文字列</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.AppendTop(System.Char)">
+            ***********************************************************************
+            <summary>
+            文字の追加( メモリ割り当てなし )
+            </summary>
+            <param name="value">文字</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Append(System.String)">
+            ***********************************************************************
+            <summary>
+            文字列の追加( メモリ割り当てなし )
+            </summary>
+            <param name="value">文字列</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Append(System.Char)">
+            ***********************************************************************
+            <summary>
+            文字の追加( メモリ割り当てなし )
+            </summary>
+            <param name="value">文字</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.AppendTyped``1(``0)">
+            ***********************************************************************
+            <summary>
+            文字列の追加( メモリ割り当てなし )
+            </summary>
+            <param name="value">文字列</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Append(System.Int32)">
+            ***********************************************************************
+            <summary>
+            INTの追加( メモリ割り当てなし )
+            </summary>
+            <param name="value">int値</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Append(System.Int32,System.Int32,System.Char)">
+            ***********************************************************************
+            <summary>
+            INTの追加( メモリ割り当てなし )
+            </summary>
+            <param name="value">int値</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Append(System.UInt32)">
+            ***********************************************************************
+            <summary>
+            uintの追加( メモリ割り当てなし )
+            </summary>
+            <param name="value">uint値</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Append(System.Int64)">
+            ***********************************************************************
+            <summary>
+            longの追加( メモリ割り当てなし )
+            </summary>
+            <param name="value">long値</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Append(System.Single)">
+            ***********************************************************************
+            <summary>
+            FLOATの追加( メモリ割り当てなし )
+            </summary>
+            <param name="valueF">float値</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Replace(System.String,System.String)">
+            ***********************************************************************
+            <summary>
+            置き換え
+            </summary>
+            <param name="oldStr">置き換え元</param>
+            <param name="newStr">置き換え先</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Split(System.Char,System.String[]@)">
+            ***********************************************************************
+            <summary>
+            分割
+            </summary>
+            <param name="splitChar">分割文字</param>
+            <param name="output">格納先</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.IsEmpty">
+            ***********************************************************************
+            <summary>
+            空かどうか調べる
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.Contains(System.String)">
+            ***********************************************************************
+            <summary>
+            検索
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.ToString">
+            ***********************************************************************
+            <summary>
+            文字列を返す
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FastStringBuilder.WriteTo(System.Char[])">
+            ***********************************************************************
+            <summary>
+            char[]
+            </summary>
+            ***********************************************************************
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:EG.FastStringBuilder.ToArraySegment" -->
+        <member name="M:EG.WeakStringPool.GetOrAdd(System.Char[],System.Int32,System.Int32)">
+            <summary>
+            渡されたchar[]の値から作られたstringが既に作成済みで
+            gcに回収されていなかったら、新規作成せずそのstringを返す.
+            </summary>
+        </member>
+        <member name="M:EG.CollectionUtility.GetOrNull``1(System.Collections.Generic.List{``0},System.Int32)">
+            ***********************************************************************
+            <summary>
+            範囲外ならnullを返す
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CollectionUtility.StableSort``1(System.Collections.Generic.List{``0},System.Comparison{``0})">
+            ***********************************************************************
+            <summary>
+            安定ソート
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CollectionUtility.StableSortReverse``1(System.Collections.Generic.List{``0},System.Comparison{``0})">
+            ***********************************************************************
+            <summary>
+            安定ソート(逆順)
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CollectionUtility.MergeTo``1(System.Collections.Generic.List{``0}@,``0[],System.Func{``0,``0,System.Boolean},System.Boolean)">
+            ***********************************************************************
+            <summary>
+            マージ
+            </summary>
+            <param name="list">マージ先リスト</param>
+            <param name="dst">マージ対象</param>
+            <param name="predicate">比較関数</param>
+            <param name="enableSame">重複を許可するかどうか</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CollectionUtility.MergeTo``1(System.Collections.Generic.List{``0}@,System.Collections.Generic.List{``0},System.Func{``0,``0,System.Boolean},System.Boolean)">
+            ***********************************************************************
+            <summary>
+            マージ
+            </summary>
+            <param name="list">マージ先リスト</param>
+            <param name="dst">マージ対象</param>
+            <param name="predicate">比較関数</param>
+            <param name="enableSame">重複を許可するかどうか</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CollectionUtility.Merge``1(System.Collections.Generic.List{``0},System.Collections.Generic.List{``0},System.Func{``0,``0,System.Boolean},System.Boolean)">
+            ***********************************************************************
+            <summary>
+            マージ
+            </summary>
+            <param name="list">マージ先リスト</param>
+            <param name="dst">マージ対象</param>
+            <param name="predicate">比較関数</param>
+            <param name="enableSame">重複を許可するかどうか</param>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CollectionUtility.UniqueBy``2(System.Collections.Generic.List{``0},System.Func{``0,``1})">
+            ***********************************************************************
+            <summary>
+            デリゲート戻り値をキーとした重複排除. 自身を返す.
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CollectionUtility.SortBy``2(System.Collections.Generic.List{``0},System.Func{``0,``1})">
+            ***********************************************************************
+            <summary>
+            デリゲート戻り値をキーとしたソートを行い、自身を返す(コピーではない).
+            Linq.OrderBy()を模している. アロケーションは初回以外発生しない.
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CollectionUtility.StableSortBy``2(System.Collections.Generic.List{``0},System.Func{``0,``1})">
+            ***********************************************************************
+            <summary>
+            デリゲート戻り値をキーとした安定ソートを行い、自身を返す.
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.DictionaryUtility.GetOrAdd``2(System.Collections.Generic.Dictionary{``0,``1},``0,System.Func{``0,``1})">
+            <summary>ConcurrentDictionary.GetOrAdd()と同じ機能</summary>
+        </member>
+        <member name="M:EG.DictionaryUtility.GetOrAdd``3(System.Collections.Generic.Dictionary{``0,``1},``0,System.Func{``0,``2,``1},``2)">
+            <summary>ConcurrentDictionary.GetOrAdd()と同じ機能</summary>
+        </member>
+        <member name="M:EG.DictionaryUtility.Deconstruct``2(System.Collections.Generic.KeyValuePair{``0,``1},``0@,``1@)">
+            <summary>分割宣言用Extension</summary>
+        </member>
+        <member name="M:EG.EditorHelp.CreateScriptableObject``1(System.Action{UnityEngine.ScriptableObject,System.String,System.String})">
+            ***********************************************************************
+            <summary>
+            新しいスクリプタルオブジェクトアセットを作成する
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="T:EG.EditorHelp.DoCreateScriptableObject">
+            ***********************************************************************
+            <summary>
+            中身書き換え
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.CreateAssetOfType``1">
+            ***********************************************************************
+            <summary>
+            スクリプタルオブジェクトの生成
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.GetTempPath(System.Boolean)">
+            ***********************************************************************
+            <summary>
+            Editor用のTempPath取得
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.ConfigSave``1(System.String,``0,System.Boolean)">
+            ***********************************************************************
+            <summary>
+            保存
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.ConfigLoad``1(System.String,``0,System.Boolean)">
+            ***********************************************************************
+            <summary>
+            読み込み
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.CreateDirectory(System.String)">
+            ***********************************************************************
+            <summary>
+            フォルダ生成
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.SetDirty(UnityEngine.Object)">
+            ***********************************************************************
+            <summary>
+            SetDirty オーバーライド
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.GenericCopyTo(UnityEditor.SerializedProperty,UnityEditor.SerializedProperty,System.Type)">
+            ***********************************************************************
+            <summary>
+            シリアライズプロパティのコピー( self -> prop へコピー )
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.CopyTo(UnityEditor.SerializedProperty,UnityEditor.SerializedProperty,System.Type)">
+            ***********************************************************************
+            <summary>
+            シリアライズプロパティのコピー( self -> prop へコピー )
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.ValidateNullableSerializeFields(UnityEngine.MonoBehaviour)">
+            
+        </member>
+        <member name="M:EG.EditorHelp.DrawPopupStringField(System.String,System.String,System.String[],System.Boolean)">
+            <summary>string一覧</summary>
+        </member>
+        <member name="M:EG.EditorHelp.ChangeKeyControllValue(System.String,System.Int32@,System.Int32,System.Int32)">
+            ***********************************************************************
+            ***********************************************************************
+        </member>
+        <member name="M:EG.EditorHelp.HeadStart(System.String,UnityEngine.Color)">
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CustomFieldAttribute.GUIField(System.Type,UnityEditor.SerializedProperty,System.Single)">
+            ***********************************************************************
+            <summary>
+            ＧＵＩ
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.CustomFieldAttribute.GUIField_ObjectField``1(System.String,System.Type,UnityEditor.SerializedProperty)">
+            ***********************************************************************
+            <summary>
+            ＧＵＩ_オブジェクトフィールド
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="F:EG.CustomFieldAttribute._edit_array_size">
+            ***********************************************************************
+            <summary>
+            配列
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FileUtility.Write(System.String,System.Byte[])">
+            ***********************************************************************
+            <summary>
+            書き込み
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FileUtility.MakeDirectory(System.String)">
+            ***********************************************************************
+            <summary>
+            フォルダ生成
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.FileUtility.GetDirectorySize(System.IO.DirectoryInfo)">
+            ***********************************************************************
+            <summary>
+            フォルダサイズを取得
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.GameObjectId.Awake">
+            ***********************************************************************
+            <summary>
+            起動した瞬間に呼ばれる
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.GameObjectId.Initialize">
+            ***********************************************************************
+            <summary>
+            初期化
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.GameObjectId.Release">
+            ***********************************************************************
+            <summary>
+            起動した瞬間に呼ばれる
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.GameObjectId.FindGameObject(System.String)">
+            ***********************************************************************
+            <summary>
+            検索
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.GameObjectId.OnValidate">
+            ***********************************************************************
+            <summary>
+            エディタに必要な情報の整理
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.ListPool.RentList``1(System.Collections.Generic.List{``0})">
+            
+        </member>
+        <member name="M:EG.ListPool.RentList``1(``0[])">
+            
+        </member>
+        <member name="M:EG.ListPool.Zip``2(System.Collections.Generic.List{``0},System.Collections.Generic.IList{``1})">
+            
+        </member>
+        <member name="M:EG.TimerManager.Initialize">
+            ***********************************************************************
+            <summary>
+            初期化
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.TimerManager.Update">
+            ***********************************************************************
+            <summary>
+            更新
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.TimerManager.SetSlow(System.Single,System.Single,System.Single,System.Single)">
+            ***********************************************************************
+            <summary>
+            スロー開始
+            </summary>
+            <param name="time">スロー最大時間</param>
+            <param name="time_s">スロー開始時間</param>
+            <param name="time_e">スロー戻り時間</param>
+            <param name="rate">スローレート</param>
+            <returns></returns>
+            <remarks></remarks>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.TimerManager.ResetSlow">
+            ***********************************************************************
+            <summary>
+            スロー解除
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.TimerManager.SetFrameStartCount">
+            ***********************************************************************
+            <summary>
+            フレームカウントの初期値を設定
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="M:EG.TimerManager.CalcValueSpeedRate(System.Single@,System.Single)">
+            ***********************************************************************
+            <summary>
+            係数を速度倍率に合わせて補正
+            </summary>
+            ***********************************************************************
+        </member>
+        <member name="T:MotionFramework.IO.ByteBuffer">
+            <summary>
+            字节缓冲区
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.#ctor(System.Int32)">
+            <summary>
+            字节缓冲区
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.#ctor(System.Byte[])">
+            <summary>
+            字节缓冲区
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.GetBuffer">
+            <summary>
+            获取数据
+            </summary>
+        </member>
+        <member name="P:MotionFramework.IO.ByteBuffer.Capacity">
+            <summary>
+            缓冲区容量
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.Clear">
+            <summary>
+            清空缓冲区
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.DiscardReadBytes">
+            <summary>
+            删除已读部分，重新初始化数组
+            </summary>
+        </member>
+        <member name="P:MotionFramework.IO.ByteBuffer.ReaderIndex">
+            <summary>
+            读取的下标位置
+            </summary>
+        </member>
+        <member name="P:MotionFramework.IO.ByteBuffer.ReadableBytes">
+            <summary>
+            当前可读数据量
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.IsReadable(System.Int32)">
+            <summary>
+            查询是否可以读取
+            </summary>
+            <param name="size">读取数据量</param>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.MarkReaderIndex">
+            <summary>
+            标记读取的下标位置，便于某些时候回退到该位置
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.ResetReaderIndex">
+            <summary>
+            回退到标记的读取下标位置
+            </summary>
+        </member>
+        <member name="P:MotionFramework.IO.ByteBuffer.WriterIndex">
+            <summary>
+            写入的下标位置
+            </summary>
+        </member>
+        <member name="P:MotionFramework.IO.ByteBuffer.WriteableBytes">
+            <summary>
+            当前可写入数据量
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.IsWriteable(System.Int32)">
+            <summary>
+            查询是否可以写入
+            </summary>
+            <param name="size">写入数据量</param>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.MarkWriterIndex">
+            <summary>
+            标记写入的下标位置，便于某些时候回退到该位置。
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.ResetWriterIndex">
+            <summary>
+            回退到标记的写入下标位置
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.ByteBuffer.ReverseOrder(System.Byte[])">
+            <summary>
+            大小端转换
+            </summary>
+        </member>
+        <member name="F:MotionFramework.IO.StringConvert.REGEX">
+            <summary>
+            正则表达式
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.ReplaceSpecialChar(System.String)">
+            <summary>
+            替换掉字符串里的特殊字符
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.StringToString(System.String)">
+            <summary>
+            字符串转换为字符串
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.StringToBool(System.String)">
+            <summary>
+            字符串转换为BOOL
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.StringToValue``1(System.String)">
+            <summary>
+            字符串转换为数值
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.StringToValueList``1(System.String,System.Char)">
+            <summary>
+            字符串转换为数值列表
+            </summary>
+            <param name="separator">分隔符</param>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.StringToStringList(System.String,System.Char)">
+            <summary>
+            字符串转为字符串列表
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.IndexToEnum``1(System.String)">
+            <summary>
+            转换为枚举
+            枚举索引转换为枚举类型
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.IndexToEnum``1(System.Int32)">
+            <summary>
+            转换为枚举
+            枚举索引转换为枚举类型
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.NameToEnum``1(System.String)">
+            <summary>
+            转换为枚举
+            枚举名称转换为枚举类型
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.StringToParams(System.String)">
+            <summary>
+            字符串转换为参数列表
+            </summary>
+        </member>
+        <member name="M:MotionFramework.IO.StringConvert.StringToVector3(System.String,System.Char)">
+            <summary>
+            字符串转换为向量
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:MotionFramework.IO.StringOperate" -->
+        <member name="M:MotionFramework.IO.StringOperate.SetOperateString(System.String)">
+            <summary>
+            设置要处理的字符串
+            </summary>
+        </member>
+        <member name="T:MotionFramework.Config.ConfigTable">
+            <summary>
+            配表数据类
+            </summary>
+        </member>
+        <member name="T:MotionFramework.Config.AssetConfig">
+            <summary>
+            配表资源类
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Config.AssetConfig._tables">
+            <summary>
+            配表数据集合
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Config.AssetConfig.IsPrepare">
+            <summary>
+            准备完毕
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Config.AssetConfig.Location">
+            <summary>
+            资源地址
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.AssetConfig.Load(System.String)">
+            <summary>
+            加载表格
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.AssetConfig.ReadTable(MotionFramework.IO.ByteBuffer)">
+            <summary>
+            序列化表格的接口
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.AssetConfig.ParseDataInternal(System.Byte[])">
+            <summary>
+            解析数据
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.AssetConfig.ParseDataFromCustomData(System.Byte[])">
+            <summary>
+            通过外部传进的数据来组织表
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.AssetConfig.GetTable(System.Int32)">
+            <summary>
+            获取数据，如果不存在报警告
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.AssetConfig.TryGetTable(System.Int32,MotionFramework.Config.ConfigTable@)">
+            <summary>
+            获取数据，如果不存在不会报警告
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.AssetConfig.ContainsKey(System.Int32)">
+            <summary>
+            是否包含Key
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.AssetConfig.GetKeys">
+            <summary>
+            获取所有Key
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.AssetConfig.GetValues">
+            <summary>
+            获取所有Value
+            </summary>
+        </member>
+        <member name="E:MotionFramework.Config.AssetConfig.Completed">
+            <summary>
+            完成委托
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Config.ConfigDefine.CfgStreamMaxLen">
+            <summary>
+            配表文件最大128MB
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Config.ConfigDefine.TabStreamMaxLen">
+            <summary>
+            配表单行最大256K
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Config.ConfigDefine.TabStreamHead">
+            <summary>
+            配表文件标记
+            </summary>
+        </member>
+        <member name="T:MotionFramework.Config.ConfigManager">
+            <summary>
+            配表管理器
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.ConfigManager.LoadConfigs(System.Collections.Generic.List{MotionFramework.Config.ConfigManager.LoadPair})">
+            <summary>
+            按照列表顺序批量加载配表
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.ConfigManager.GetConfig``1">
+            <summary>
+            获取配表
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Config.ConfigManager.GetConfig(System.String)">
+            <summary>
+            获取配表
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIRoot.Go">
+            <summary>
+            实例化对象
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIRoot.IsDone">
+            <summary>
+            是否加载完毕
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIRoot.IsPrepare">
+            <summary>
+            是否准备完毕
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIRoot.UIDesktop">
+            <summary>
+            UI桌面
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIRoot.UICamera">
+            <summary>
+            UI相机
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.IsCreate">
+            <summary>
+            是否已经创建
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.WindowName">
+            <summary>
+            窗口名称
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.WindowLayer">
+            <summary>
+            窗口层级
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.FullScreen">
+            <summary>
+            是否是全屏窗口
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.Go">
+            <summary>
+            实例化对象
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.UserData">
+            <summary>
+            自定义数据
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.IsDone">
+            <summary>
+            是否加载完毕
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.IsPrepare">
+            <summary>
+            是否准备完毕
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.Depth">
+            <summary>
+            窗口深度值
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.UIWindow.Visible">
+            <summary>
+            窗口可见性
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Window.WindowAttribute.WindowLayer">
+            <summary>
+            窗口层级
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Window.WindowAttribute.FullScreen">
+            <summary>
+            全屏窗口标记
+            </summary>
+        </member>
+        <member name="P:MotionFramework.Window.WindowManager.Root">
+            <summary>
+            UI根节点
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.IsLoading">
+            <summary>
+            是否有任意窗口正在加载
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.IsLoadDone``1">
+            <summary>
+            检测窗口是否加载完毕
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.IsTop``1(System.Int32)">
+            <summary>
+            查询顶端窗口
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.IsTop``1">
+            <summary>
+            查询顶端窗口
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.HasWindow(System.Int32)">
+            <summary>
+            查询层级窗口是否存在
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.HasWindow``1">
+            <summary>
+            查询窗口是否存在
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.CreateUIRoot``1(System.String)">
+            <summary>
+            创建UIRoot
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.OpenWindow``1(System.String,System.Object)">
+            <summary>
+            打开窗口
+            </summary>
+            <param name="location">资源路径</param>
+            <param name="userData">用户数据</param>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.CloseWindow``1">
+            <summary>
+            关闭窗口
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Window.WindowManager.CloseAll">
+            <summary>
+            关闭所有窗口
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Utility.AssemblyUtility.GetAssembly(System.String)">
+            <summary>
+            获取程序集
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Utility.AssemblyUtility.GetTypes(System.String)">
+            <summary>
+            获取程序集里的所有类型
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Utility.AssemblyUtility.GetAssignableTypes(System.String,System.Type)">
+            <summary>
+            获取带继承关系的所有类的类型
+            <param name="parentType">父类类型</param> 
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Utility.AssemblyUtility.GetAttributeTypes(System.String,System.Type)">
+            <summary>
+            获取带属性标签的所有类的类型
+            <param name="attributeType">属性类型</param>
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Utility.AssemblyUtility.GetAssignableAttributeTypes(System.String,System.Type,System.Type,System.Boolean)">
+            <summary>
+            获取带继承关系和属性标签的所有类的类型
+            </summary>
+            <param name="parentType">父类类型</param>
+            <param name="attributeType">属性类型</param>
+        </member>
+        <member name="P:CanvasRoot.UIDesktop">
+            <summary>
+            UI桌面
+            </summary>
+        </member>
+        <member name="P:CanvasRoot.UICamera">
+            <summary>
+            UI相机
+            </summary>
+        </member>
+        <member name="M:CanvasRoot.ApplySafeRect(UnityEngine.Rect)">
+            <summary>
+            设置屏幕安全区域（异形屏支持）
+            </summary>
+            <param name="safeRect">安全区域</param>
+        </member>
+        <member name="M:CanvasRoot.SimulateIPhoneXNotchScreenOnEditor">
+            <summary>
+            编辑器下模拟IPhoneX异形屏
+            </summary>
+        </member>
+        <member name="P:CanvasWindow.Depth">
+            <summary>
+            窗口深度值
+            </summary>
+        </member>
+        <member name="P:CanvasWindow.Visible">
+            <summary>
+            窗口可见性
+            </summary>
+        </member>
+        <member name="P:CanvasWindow.Interactable">
+            <summary>
+            窗口交互性
+            </summary>
+        </member>
+        <member name="M:CanvasWindow.OnAssetLoad(UnityEngine.GameObject)">
+            <summary>
+            资源准备完毕
+            </summary>
+        </member>
+        <member name="M:CanvasWindow.OnSortDepth(System.Int32)">
+            <summary>
+            当触发窗口的层级排序
+            </summary>
+        </member>
+        <member name="M:CanvasWindow.OnSetVisible(System.Boolean)">
+            <summary>
+            当因为全屏遮挡触发窗口的显隐
+            </summary>
+        </member>
+        <member name="M:CanvasWindow.CloneAttachPrefab(System.String)">
+            <summary>
+            克隆一个附加的预制体
+            </summary>
+        </member>
+        <member name="M:CanvasWindow.GetUIElement(System.String)">
+            <summary>
+            获取窗口里缓存的元素对象
+            </summary>
+            <param name="path">对象路径</param>
+        </member>
+        <member name="M:CanvasWindow.GetUIComponent``1(System.String)">
+            <summary>
+            获取窗口里缓存的组件对象
+            </summary>
+            <typeparam name="T">组件类型</typeparam>
+            <param name="path">组件路径</param>
+        </member>
+        <member name="M:CanvasWindow.GetUIComponent(System.String,System.String)">
+            <summary>
+            获取窗口里缓存的组件对象
+            </summary>
+            <param name="path">组件路径</param>
+            <param name="typeName">组件类型名称</param>
+        </member>
+        <member name="M:CanvasWindow.AddButtonListener(System.String,UnityEngine.Events.UnityAction)">
+            <summary>
+            监听按钮点击事件
+            </summary>
+        </member>
+        <member name="M:UnityEngine.UI.UIManifest.ConvertListToDic">
+            <summary>
+            游戏运行时把List内容存在字典里方便查询
+            </summary>
+        </member>
+        <member name="M:UnityEngine.UI.UIManifest.CloneAttachPrefab(System.String)">
+            <summary>
+            克隆一个附加的预制体
+            </summary>
+        </member>
+        <member name="M:UnityEngine.UI.UIManifest.GetUIElement(System.String)">
+            <summary>
+            根据全路径获取UI元素
+            </summary>
+        </member>
+        <member name="M:UnityEngine.UI.UIManifest.GetUIComponent(System.String,System.String)">
+            <summary>
+            根据全路径获取UI组件
+            </summary>
+        </member>
+        <member name="M:UnityEngine.UI.UIManifest.GetUIComponent``1(System.String)">
+            <summary>
+            根据全路径获取UI组件
+            </summary>
+        </member>
+        <member name="T:UnityEngine.UI.UISprite">
+            <summary>
+            扩展的精灵
+            </summary>
+        </member>
+        <member name="P:UnityEngine.UI.UISprite.Image">
+            <summary>
+            关联的图片
+            </summary>
+        </member>
+        <member name="P:UnityEngine.UI.UISprite.SpriteName">
+            <summary>
+            精灵名称
+            </summary>
+        </member>
+        <member name="M:UnityEngine.UI.UISprite.Awake">
+            <summary>
+            注意：Awake方法只有在GameObject激活的时候才会起效
+            </summary>
+        </member>
+        <member name="M:UnityEngine.UnityEngine_Transform_Extension.GetFirstChild(UnityEngine.Transform,System.Boolean)">
+            <summary>
+            获取第一个子物体
+            </summary>
+            <param name="findActiveObject">激活条件</param>
+        </member>
+        <member name="M:UnityEngine.UnityEngine_Transform_Extension.GetLastChild(UnityEngine.Transform,System.Boolean)">
+            <summary>
+            获取最后一个子物体
+            </summary>
+            <param name="findActiveObject">激活条件</param>
+        </member>
+        <member name="M:UnityEngine.UnityEngine_Transform_Extension.BFSearch(UnityEngine.Transform,System.String)">
+            <summary>
+            广度优先搜索查找子物体
+            </summary>
+        </member>
+        <member name="M:UnityEngine.UnityEngine_Transform_Extension.BFSearch``1(UnityEngine.Transform,System.String)">
+            <summary>
+            广度优先搜索查找子物体的组件
+            </summary>
+        </member>
+        <member name="M:fastJSON.JSON.RegisterSerializeType(System.String,System.Type)">
+            <summary>
+            注册序列化中需要使用的类型
+            </summary>
+            <param name="typeName">类型名称</param>
+            <param name="type">序列化类型</param>
+        </member>
+        <member name="M:fastJSON.Reflection.RegisterSerializeType(System.String,System.Type)">
+            <summary>
+            注册序列化中需要使用的类型
+            </summary>
+            <param name="typeName">类型名称</param>
+            <param name="type">序列化类型</param>
+        </member>
+        <member name="T:CSharpHelpers.EnumSupport">
+            <summary>Enum</summary>
+        </member>
+        <member name="M:CSharpHelpers.EnumSupport.GetEqualityComparer``1">
+            <summary>Dictionaryのコンストラクタに渡して使う</summary>
+        </member>
+        <member name="M:CSharpHelpers.EnumSupport.CreateDictionary``2">
+            <summary>boxingの発生しないenumキーのDictionary作る</summary>
+        </member>
+        <member name="T:CSharpHelpers.EnumSupport`1">
+            <summary>Enumの補助(本実装・Type指定のコードが長くなるのでこっちは内部でのみ使う)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOFade(UnityEngine.AudioSource,System.Single,System.Single)">
+            <summary>Tweens an AudioSource's volume to the given value.
+            Also stores the AudioSource as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach (0 to 1)</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOPitch(UnityEngine.AudioSource,System.Single,System.Single)">
+            <summary>Tweens an AudioSource's pitch to the given value.
+            Also stores the AudioSource as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOSetFloat(UnityEngine.Audio.AudioMixer,System.String,System.Single,System.Single)">
+            <summary>Tweens an AudioMixer's exposed float to the given value.
+            Also stores the AudioMixer as the tween's target so it can be used for filtered operations.
+            Note that you need to manually expose a float in an AudioMixerGroup in order to be able to tween it from an AudioMixer.</summary>
+            <param name="floatName">Name given to the exposed float to set</param>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOComplete(UnityEngine.Audio.AudioMixer,System.Boolean)">
+            <summary>
+            Completes all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens completed
+            (meaning the tweens that don't have infinite loops and were not already complete)
+            </summary>
+            <param name="withCallbacks">For Sequences only: if TRUE also internal Sequence callbacks will be fired,
+            otherwise they will be ignored</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOKill(UnityEngine.Audio.AudioMixer,System.Boolean)">
+            <summary>
+            Kills all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens killed.
+            </summary>
+            <param name="complete">If TRUE completes the tween before killing it</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOFlip(UnityEngine.Audio.AudioMixer)">
+            <summary>
+            Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens flipped.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOGoto(UnityEngine.Audio.AudioMixer,System.Single,System.Boolean)">
+            <summary>
+            Sends to the given position all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens involved.
+            </summary>
+            <param name="to">Time position to reach
+            (if higher than the whole tween duration the tween will simply reach its end)</param>
+            <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOPause(UnityEngine.Audio.AudioMixer)">
+            <summary>
+            Pauses all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens paused.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOPlay(UnityEngine.Audio.AudioMixer)">
+            <summary>
+            Plays all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens played.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOPlayBackwards(UnityEngine.Audio.AudioMixer)">
+            <summary>
+            Plays backwards all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens played.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOPlayForward(UnityEngine.Audio.AudioMixer)">
+            <summary>
+            Plays forward all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens played.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DORestart(UnityEngine.Audio.AudioMixer)">
+            <summary>
+            Restarts all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens restarted.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DORewind(UnityEngine.Audio.AudioMixer)">
+            <summary>
+            Rewinds all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens rewinded.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOSmoothRewind(UnityEngine.Audio.AudioMixer)">
+            <summary>
+            Smoothly rewinds all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens rewinded.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleAudio.DOTogglePause(UnityEngine.Audio.AudioMixer)">
+            <summary>
+            Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens involved.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleSprite.DOColor(UnityEngine.SpriteRenderer,UnityEngine.Color,System.Single)">
+            <summary>Tweens a SpriteRenderer's color to the given value.
+            Also stores the spriteRenderer as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleSprite.DOFade(UnityEngine.SpriteRenderer,System.Single,System.Single)">
+            <summary>Tweens a Material's alpha color to the given value.
+            Also stores the spriteRenderer as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleSprite.DOGradientColor(UnityEngine.SpriteRenderer,UnityEngine.Gradient,System.Single)">
+            <summary>Tweens a SpriteRenderer's color using the given gradient
+            (NOTE 1: only uses the colors of the gradient, not the alphas - NOTE 2: creates a Sequence, not a Tweener).
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="gradient">The gradient to use</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleSprite.DOBlendableColor(UnityEngine.SpriteRenderer,UnityEngine.Color,System.Single)">
+            <summary>Tweens a SpriteRenderer's color to the given value,
+            in a way that allows other DOBlendableColor tweens to work together on the same target,
+            instead than fight each other as multiple DOColor would do.
+            Also stores the SpriteRenderer as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The value to tween to</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOFade(UnityEngine.CanvasGroup,System.Single,System.Single)">
+            <summary>Tweens a CanvasGroup's alpha color to the given value.
+            Also stores the canvasGroup as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOColor(UnityEngine.UI.Graphic,UnityEngine.Color,System.Single)">
+            <summary>Tweens an Graphic's color to the given value.
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOFade(UnityEngine.UI.Graphic,System.Single,System.Single)">
+            <summary>Tweens an Graphic's alpha color to the given value.
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOColor(UnityEngine.UI.Image,UnityEngine.Color,System.Single)">
+            <summary>Tweens an Image's color to the given value.
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOFade(UnityEngine.UI.Image,System.Single,System.Single)">
+            <summary>Tweens an Image's alpha color to the given value.
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOFillAmount(UnityEngine.UI.Image,System.Single,System.Single)">
+            <summary>Tweens an Image's fillAmount to the given value.
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach (0 to 1)</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOGradientColor(UnityEngine.UI.Image,UnityEngine.Gradient,System.Single)">
+            <summary>Tweens an Image's colors using the given gradient
+            (NOTE 1: only uses the colors of the gradient, not the alphas - NOTE 2: creates a Sequence, not a Tweener).
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="gradient">The gradient to use</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOFlexibleSize(UnityEngine.UI.LayoutElement,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens an LayoutElement's flexibleWidth/Height to the given value.
+            Also stores the LayoutElement as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOMinSize(UnityEngine.UI.LayoutElement,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens an LayoutElement's minWidth/Height to the given value.
+            Also stores the LayoutElement as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOPreferredSize(UnityEngine.UI.LayoutElement,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens an LayoutElement's preferredWidth/Height to the given value.
+            Also stores the LayoutElement as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOColor(UnityEngine.UI.Outline,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Outline's effectColor to the given value.
+            Also stores the Outline as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOFade(UnityEngine.UI.Outline,System.Single,System.Single)">
+            <summary>Tweens a Outline's effectColor alpha to the given value.
+            Also stores the Outline as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOScale(UnityEngine.UI.Outline,UnityEngine.Vector2,System.Single)">
+            <summary>Tweens a Outline's effectDistance to the given value.
+            Also stores the Outline as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOAnchorPos(UnityEngine.RectTransform,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOAnchorPosX(UnityEngine.RectTransform,System.Single,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition X to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOAnchorPosY(UnityEngine.RectTransform,System.Single,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition Y to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOAnchorPos3D(UnityEngine.RectTransform,UnityEngine.Vector3,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition3D to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOAnchorPos3DX(UnityEngine.RectTransform,System.Single,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition3D X to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOAnchorPos3DY(UnityEngine.RectTransform,System.Single,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition3D Y to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOAnchorPos3DZ(UnityEngine.RectTransform,System.Single,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition3D Z to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOAnchorMax(UnityEngine.RectTransform,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchorMax to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOAnchorMin(UnityEngine.RectTransform,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchorMin to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOPivot(UnityEngine.RectTransform,UnityEngine.Vector2,System.Single)">
+            <summary>Tweens a RectTransform's pivot to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOPivotX(UnityEngine.RectTransform,System.Single,System.Single)">
+            <summary>Tweens a RectTransform's pivot X to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOPivotY(UnityEngine.RectTransform,System.Single,System.Single)">
+            <summary>Tweens a RectTransform's pivot Y to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOSizeDelta(UnityEngine.RectTransform,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's sizeDelta to the given value.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOPunchAnchorPos(UnityEngine.RectTransform,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Boolean)">
+            <summary>Punches a RectTransform's anchoredPosition towards the given direction and then back to the starting one
+            as if it was connected to the starting position via an elastic.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="punch">The direction and strength of the punch (added to the RectTransform's current position)</param>
+            <param name="duration">The duration of the tween</param>
+            <param name="vibrato">Indicates how much will the punch vibrate</param>
+            <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting position when bouncing backwards.
+            1 creates a full oscillation between the punch direction and the opposite direction,
+            while 0 oscillates only between the punch and the start position</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOShakeAnchorPos(UnityEngine.RectTransform,System.Single,System.Single,System.Int32,System.Single,System.Boolean,System.Boolean)">
+            <summary>Shakes a RectTransform's anchoredPosition with the given values.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="duration">The duration of the tween</param>
+            <param name="strength">The shake strength</param>
+            <param name="vibrato">Indicates how much will the shake vibrate</param>
+            <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+            Setting it to 0 will shake along a single direction.</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+            <param name="fadeOut">If TRUE the shake will automatically fadeOut smoothly within the tween's duration, otherwise it will not</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOShakeAnchorPos(UnityEngine.RectTransform,System.Single,UnityEngine.Vector2,System.Int32,System.Single,System.Boolean,System.Boolean)">
+            <summary>Shakes a RectTransform's anchoredPosition with the given values.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="duration">The duration of the tween</param>
+            <param name="strength">The shake strength on each axis</param>
+            <param name="vibrato">Indicates how much will the shake vibrate</param>
+            <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+            Setting it to 0 will shake along a single direction.</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+            <param name="fadeOut">If TRUE the shake will automatically fadeOut smoothly within the tween's duration, otherwise it will not</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOJumpAnchorPos(UnityEngine.RectTransform,UnityEngine.Vector2,System.Single,System.Int32,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition to the given value, while also applying a jump effect along the Y axis.
+            Returns a Sequence instead of a Tweener.
+            Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param>
+            <param name="jumpPower">Power of the jump (the max height of the jump is represented by this plus the final Y offset)</param>
+            <param name="numJumps">Total number of jumps</param>
+            <param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DONormalizedPos(UnityEngine.UI.ScrollRect,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens a ScrollRect's horizontal/verticalNormalizedPosition to the given value.
+            Also stores the ScrollRect as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOHorizontalNormalizedPos(UnityEngine.UI.ScrollRect,System.Single,System.Single,System.Boolean)">
+            <summary>Tweens a ScrollRect's horizontalNormalizedPosition to the given value.
+            Also stores the ScrollRect as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOVerticalNormalizedPos(UnityEngine.UI.ScrollRect,System.Single,System.Single,System.Boolean)">
+            <summary>Tweens a ScrollRect's verticalNormalizedPosition to the given value.
+            Also stores the ScrollRect as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOValue(UnityEngine.UI.Slider,System.Single,System.Single,System.Boolean)">
+            <summary>Tweens a Slider's value to the given value.
+            Also stores the Slider as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOColor(UnityEngine.UI.Text,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Text's color to the given value.
+            Also stores the Text as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOCounter(UnityEngine.UI.Text,System.Int32,System.Int32,System.Single,System.Boolean,System.Globalization.CultureInfo)">
+            <summary>
+            Tweens a Text's text from one integer to another, with options for thousands separators
+            </summary>
+            <param name="fromValue">The value to start from</param>
+            <param name="endValue">The end value to reach</param>
+            <param name="duration">The duration of the tween</param>
+            <param name="addThousandsSeparator">If TRUE (default) also adds thousands separators</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to use (InvariantCulture if NULL)</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOFade(UnityEngine.UI.Text,System.Single,System.Single)">
+            <summary>Tweens a Text's alpha color to the given value.
+            Also stores the Text as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOText(UnityEngine.UI.Text,System.String,System.Single,System.Boolean,DG.Tweening.ScrambleMode,System.String)">
+            <summary>Tweens a Text's text to the given value.
+            Also stores the Text as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end string to tween to</param><param name="duration">The duration of the tween</param>
+            <param name="richTextEnabled">If TRUE (default), rich text will be interpreted correctly while animated,
+            otherwise all tags will be considered as normal text</param>
+            <param name="scrambleMode">The type of scramble mode to use, if any</param>
+            <param name="scrambleChars">A string containing the characters to use for scrambling.
+            Use as many characters as possible (minimum 10) because DOTween uses a fast scramble mode which gives better results with more characters.
+            Leave it to NULL (default) to use default ones</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOBlendableColor(UnityEngine.UI.Graphic,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Graphic's color to the given value,
+            in a way that allows other DOBlendableColor tweens to work together on the same target,
+            instead than fight each other as multiple DOColor would do.
+            Also stores the Graphic as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The value to tween to</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOBlendableColor(UnityEngine.UI.Image,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Image's color to the given value,
+            in a way that allows other DOBlendableColor tweens to work together on the same target,
+            instead than fight each other as multiple DOColor would do.
+            Also stores the Image as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The value to tween to</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.DOBlendableColor(UnityEngine.UI.Text,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Text's color BY the given value,
+            in a way that allows other DOBlendableColor tweens to work together on the same target,
+            instead than fight each other as multiple DOColor would do.
+            Also stores the Text as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The value to tween to</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUI.Utils.SwitchToRectTransform(UnityEngine.RectTransform,UnityEngine.RectTransform)">
+            <summary>
+            Converts the anchoredPosition of the first RectTransform to the second RectTransform,
+            taking into consideration offset, anchors and pivot, and returns the new anchoredPosition
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.DOTweenModuleUnityVersion">
+            <summary>
+            Shortcuts/functions that are not strictly related to specific Modules
+            but are available only on some Unity versions
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.DOGradientColor(UnityEngine.Material,UnityEngine.Gradient,System.Single)">
+            <summary>Tweens a Material's color using the given gradient
+            (NOTE 1: only uses the colors of the gradient, not the alphas - NOTE 2: creates a Sequence, not a Tweener).
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="gradient">The gradient to use</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.DOGradientColor(UnityEngine.Material,UnityEngine.Gradient,System.String,System.Single)">
+            <summary>Tweens a Material's named color property using the given gradient
+            (NOTE 1: only uses the colors of the gradient, not the alphas - NOTE 2: creates a Sequence, not a Tweener).
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="gradient">The gradient to use</param>
+            <param name="property">The name of the material property to tween (like _Tint or _SpecColor)</param>
+            <param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.WaitForCompletion(DG.Tweening.Tween,System.Boolean)">
+            <summary>
+            Returns a <see cref="T:UnityEngine.CustomYieldInstruction"/> that waits until the tween is killed or complete.
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForCompletion(true);</code>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.WaitForRewind(DG.Tweening.Tween,System.Boolean)">
+            <summary>
+            Returns a <see cref="T:UnityEngine.CustomYieldInstruction"/> that waits until the tween is killed or rewinded.
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForRewind();</code>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.WaitForKill(DG.Tweening.Tween,System.Boolean)">
+            <summary>
+            Returns a <see cref="T:UnityEngine.CustomYieldInstruction"/> that waits until the tween is killed.
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForKill();</code>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.WaitForElapsedLoops(DG.Tweening.Tween,System.Int32,System.Boolean)">
+            <summary>
+            Returns a <see cref="T:UnityEngine.CustomYieldInstruction"/> that waits until the tween is killed or has gone through the given amount of loops.
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForElapsedLoops(2);</code>
+            </summary>
+            <param name="elapsedLoops">Elapsed loops to wait for</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.WaitForPosition(DG.Tweening.Tween,System.Single,System.Boolean)">
+            <summary>
+            Returns a <see cref="T:UnityEngine.CustomYieldInstruction"/> that waits until the tween is killed
+            or has reached the given time position (loops included, delays excluded).
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForPosition(2.5f);</code>
+            </summary>
+            <param name="position">Position (loops included, delays excluded) to wait for</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.WaitForStart(DG.Tweening.Tween,System.Boolean)">
+            <summary>
+            Returns a <see cref="T:UnityEngine.CustomYieldInstruction"/> that waits until the tween is killed or started
+            (meaning when the tween is set in a playing state the first time, after any eventual delay).
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForStart();</code>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.DOOffset(UnityEngine.Material,UnityEngine.Vector2,System.Int32,System.Single)">
+            <summary>Tweens a Material's named texture offset property with the given ID to the given value.
+            Also stores the material as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param>
+            <param name="propertyID">The ID of the material property to tween (also called nameID in Unity's manual)</param>
+            <param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.DOTiling(UnityEngine.Material,UnityEngine.Vector2,System.Int32,System.Single)">
+            <summary>Tweens a Material's named texture scale property with the given ID to the given value.
+            Also stores the material as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param>
+            <param name="propertyID">The ID of the material property to tween (also called nameID in Unity's manual)</param>
+            <param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.AsyncWaitForCompletion(DG.Tweening.Tween)">
+            <summary>
+            Returns an async <see cref="T:System.Threading.Tasks.Task"/> that waits until the tween is killed or complete.
+            It can be used inside an async operation.
+            <para>Example usage:</para><code>await myTween.WaitForCompletion();</code>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.AsyncWaitForRewind(DG.Tweening.Tween)">
+            <summary>
+            Returns an async <see cref="T:System.Threading.Tasks.Task"/> that waits until the tween is killed or rewinded.
+            It can be used inside an async operation.
+            <para>Example usage:</para><code>await myTween.AsyncWaitForRewind();</code>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.AsyncWaitForKill(DG.Tweening.Tween)">
+            <summary>
+            Returns an async <see cref="T:System.Threading.Tasks.Task"/> that waits until the tween is killed.
+            It can be used inside an async operation.
+            <para>Example usage:</para><code>await myTween.AsyncWaitForKill();</code>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.AsyncWaitForElapsedLoops(DG.Tweening.Tween,System.Int32)">
+            <summary>
+            Returns an async <see cref="T:System.Threading.Tasks.Task"/> that waits until the tween is killed or has gone through the given amount of loops.
+            It can be used inside an async operation.
+            <para>Example usage:</para><code>await myTween.AsyncWaitForElapsedLoops();</code>
+            </summary>
+            <param name="elapsedLoops">Elapsed loops to wait for</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.AsyncWaitForPosition(DG.Tweening.Tween,System.Single)">
+            <summary>
+            Returns an async <see cref="T:System.Threading.Tasks.Task"/> that waits until the tween is killed or started
+            (meaning when the tween is set in a playing state the first time, after any eventual delay).
+            It can be used inside an async operation.
+            <para>Example usage:</para><code>await myTween.AsyncWaitForPosition();</code>
+            </summary>
+            <param name="position">Position (loops included, delays excluded) to wait for</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUnityVersion.AsyncWaitForStart(DG.Tweening.Tween)">
+            <summary>
+            Returns an async <see cref="T:System.Threading.Tasks.Task"/> that waits until the tween is killed.
+            It can be used inside an async operation.
+            <para>Example usage:</para><code>await myTween.AsyncWaitForKill();</code>
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.DOTweenModuleUtils">
+            <summary>
+            Utility functions that deal with available Modules.
+            Modules defines:
+            - DOTAUDIO
+            - DOTPHYSICS
+            - DOTPHYSICS2D
+            - DOTSPRITE
+            - DOTUI
+            Extra defines set and used for implementation of external assets:
+            - DOTWEEN_TMP ► TextMesh Pro
+            - DOTWEEN_TK2D ► 2D Toolkit
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenModuleUtils.Init">
+            <summary>
+            Called via Reflection by DOTweenComponent on Awake
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.DOTweenAnimation">
+            <summary>
+            Attach this to a GameObject to create a tween
+            </summary>
+        </member>
+        <member name="E:DG.Tweening.DOTweenAnimation.OnReset">
+            <summary>Used internally by the editor</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenAnimation.DORestart">
+            <summary>
+            Restarts the tween
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenAnimation.DORestart(System.Boolean)">
+            <summary>
+            Restarts the tween
+            </summary>
+            <param name="fromHere">If TRUE, re-evaluates the tween's start and end values from its current position.
+            Set it to TRUE when spawning the same DOTweenAnimation in different positions (like when using a pooling system)</param>
+        </member>
+        <member name="M:DG.Tweening.DOTweenAnimation.GetTweens">
+            <summary>
+            Returns the tweens created by this DOTweenAnimation, in the same order as they appear in the Inspector (top to bottom)
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenAnimation.CreateEditorPreview">
+            <summary>
+            Previews the tween in the editor. Only for DOTween internal usage: don't use otherwise.
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTweenProShortcuts.DOSpiral(UnityEngine.Transform,System.Single,System.Nullable{UnityEngine.Vector3},DG.Tweening.SpiralMode,System.Single,System.Single,System.Single,System.Boolean)">
+            <summary>Tweens a Transform's localPosition in a spiral shape.
+            Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+            <param name="duration">The duration of the tween</param>
+            <param name="axis">The axis around which the spiral will rotate</param>
+            <param name="mode">The type of spiral movement</param>
+            <param name="speed">Speed of the rotations</param>
+            <param name="frequency">Frequency of the rotation. Lower values lead to wider spirals</param>
+            <param name="depth">Indicates how much the tween should move along the spiral's axis</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+    </members>
+</doc>

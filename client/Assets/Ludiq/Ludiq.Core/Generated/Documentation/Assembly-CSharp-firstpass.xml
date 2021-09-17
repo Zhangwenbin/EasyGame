@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Assembly-CSharp-firstpass</name>
+    </assembly>
+    <members>
+        <member name="T:Farmhash.Sharp.Farmhash">
+            <summary>
+            Class that can calculate 32bit and 64bit hashes using
+            <see href="https://github.com/google/farmhash">
+            Google's farmhash
+            </see>
+            algorithm
+            </summary>
+        </member>
+        <member name="M:Farmhash.Sharp.Farmhash.Hash32(System.Byte*,System.Int32)">
+            <summary>
+            Calculates a 32bit hash from a given byte array upto a certain length
+            </summary>
+            <param name="s">pointer to bytes that contain at least <paramref name="len"/> bytes</param>
+            <param name="length">number of bytes to consume to calculate hash</param>
+            <returns>A 32bit hash</returns>
+        </member>
+        <member name="M:Farmhash.Sharp.Farmhash.Hash32(System.Byte[],System.Int32)">
+            <summary>
+            Calculates a 32bit hash from a given byte array upto a certain length
+            </summary>
+            <param name="s">Byte array to calculate the hash on</param>
+            <param name="length">Number of bytes from the buffer to calculate the hash with</param>
+            <returns>A 32bit hash</returns>
+        </member>
+        <member name="M:Farmhash.Sharp.Farmhash.Hash32(System.Char[],System.Int32)">
+            <summary>
+            Calculates a 32bit hash from a given char array upto a certain length
+            </summary>
+            <param name="s">char[] to calculate the hash on</param>
+            <returns>A 32bit hash</returns>
+        </member>
+        <member name="M:Farmhash.Sharp.Farmhash.Hash32(System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Calculates a 32bit hash from a given char array upto a certain length
+            </summary>
+            <param name="s">char[] to calculate the hash on</param>
+            <returns>A 32bit hash</returns>
+        </member>
+        <member name="M:Farmhash.Sharp.Farmhash.Hash32(System.String)">
+            <summary>
+            Calculates a 32bit hash from a given string.
+            <para>
+            See the
+            <see href="/articles/guides/strings.html">article on strings</see>
+            for longform explanation
+            </para>
+            </summary>
+            <param name="s">String to hash</param>
+            <returns>A 32bit hash</returns>
+        </member>
+        <member name="M:Farmhash.Sharp.Farmhash.Hash64(System.Byte*,System.Int32)">
+            <summary>
+            Calculates a 64bit hash from a given byte array upto a certain length
+            </summary>
+            <param name="s">pointer to bytes that contain at least <paramref name="len"/> bytes</param>
+            <param name="length">number of bytes to consume to calculate hash</param>
+            <returns>A 64bit hash</returns>
+        </member>
+        <member name="M:Farmhash.Sharp.Farmhash.Hash64(System.Byte[],System.Int32)">
+            <summary>
+            Calculates a 64bit hash from a given byte array upto a certain length
+            </summary>
+            <param name="s">Byte array to calculate the hash on</param>
+            <param name="length">Number of bytes from the buffer to calculate the hash with</param>
+            <returns>A 64bit hash</returns>
+        </member>
+        <member name="M:Farmhash.Sharp.Farmhash.Hash64(System.String)">
+            <summary>
+            Calculates a 64bit hash from a given string.
+            <para>
+            See the
+            <see href="/articles/guides/strings.html">article on strings</see>
+            for longform explanation
+            </para>
+            </summary>
+            <param name="s">String to hash</param>
+            <returns>A 64bit hash</returns>
+        </member>
+        <member name="T:Unity.IL2CPP.CompilerServices.Option">
+            <summary>
+            The code generation options available for IL to C++ conversion.
+            Enable or disabled these with caution.
+            </summary>
+        </member>
+        <member name="F:Unity.IL2CPP.CompilerServices.Option.NullChecks">
+             <summary>
+             Enable or disable code generation for null checks.
+            
+             Global null check support is enabled by default when il2cpp.exe
+             is launched from the Unity editor.
+            
+             Disabling this will prevent NullReferenceException exceptions from
+             being thrown in generated code. In *most* cases, code that dereferences
+             a null pointer will crash then. Sometimes the point where the crash
+             happens is later than the location where the null reference check would
+             have been emitted though.
+             </summary>
+        </member>
+        <member name="F:Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks">
+             <summary>
+             Enable or disable code generation for array bounds checks.
+            
+             Global array bounds check support is enabled by default when il2cpp.exe
+             is launched from the Unity editor.
+            
+             Disabling this will prevent IndexOutOfRangeException exceptions from
+             being thrown in generated code. This will allow reading and writing to
+             memory outside of the bounds of an array without any runtime checks.
+             Disable this check with extreme caution.
+             </summary>
+        </member>
+        <member name="F:Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks">
+             <summary>
+             Enable or disable code generation for divide by zero checks.
+            
+             Global divide by zero check support is disabled by default when il2cpp.exe
+             is launched from the Unity editor.
+            
+             Enabling this will cause DivideByZeroException exceptions to be
+             thrown in generated code. Most code doesn't need to handle this
+             exception, so it is probably safe to leave it disabled.
+             </summary>
+        </member>
+        <member name="T:Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute">
+             <summary>
+             Use this attribute on a class, method, or property to inform the IL2CPP code conversion utility to override the
+             global setting for one of a few different runtime checks.
+            
+             Example:
+            
+                 [Il2CppSetOption(Option.NullChecks, false)]
+                 public static string MethodWithNullChecksDisabled()
+                 {
+                     var tmp = new Object();
+                     return tmp.ToString();
+                 }
+             </summary>
+        </member>
+    </members>
+</doc>

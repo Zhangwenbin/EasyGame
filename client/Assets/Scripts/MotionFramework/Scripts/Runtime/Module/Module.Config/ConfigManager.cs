@@ -29,7 +29,27 @@ namespace MotionFramework.Config
 
         private readonly Dictionary<string, AssetConfig> _configs = new Dictionary<string, AssetConfig>();
 
-        
+        public override void Initialize()
+        {
+            StartCoroutine(LoadConfig());
+        }
+
+        public  IEnumerator LoadConfig()
+        {
+            List<ConfigManager.LoadPair> loadPairs = new List<ConfigManager.LoadPair>();
+            foreach (int v in System.Enum.GetValues(typeof(EConfigType)))
+            {
+                string name = System.Enum.GetName(typeof(EConfigType), v);
+                System.Type type = System.Type.GetType("Cfg" + name);
+                if (type == null)
+                    throw new System.Exception($"Not found class {name}");
+
+                ConfigManager.LoadPair loadPair = new ConfigManager.LoadPair(type,  name+".bytes");
+                loadPairs.Add(loadPair);
+            }
+
+            yield return LoadConfigs(loadPairs);
+        }
 
         /// <summary>
         /// 按照列表顺序批量加载配表
@@ -37,8 +57,7 @@ namespace MotionFramework.Config
         public IEnumerator LoadConfigs(List<LoadPair> loadPairs)
         {
             float tmp = 0f;
- 
-
+            
             for (int i = 0; i < loadPairs.Count; i++)
             {
                 Type type = loadPairs[i].ClassType;
@@ -47,6 +66,8 @@ namespace MotionFramework.Config
                 
                 yield return config;
             }
+
+            m_Initialize = true;
         }
 
         public AssetConfig LoadConfig(Type configType, string location)

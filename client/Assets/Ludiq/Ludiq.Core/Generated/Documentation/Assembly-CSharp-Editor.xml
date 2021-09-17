@@ -1,0 +1,445 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Assembly-CSharp-Editor</name>
+    </assembly>
+    <members>
+        <member name="T:MotionFramework.Editor.AssetImporterProcessor">
+            <summary>
+            资源导入管理类
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.AssetImporterProcessor.OnPreprocessAsset">
+            <summary>
+            注意：该方法从Unity2018版本开始才起效
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.AssetImporterProcessor.OnPreprocessSpriteAtlas">
+            <summary>
+            处理图集
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.AssetImporterSetting.Toggle">
+            <summary>
+            开关
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.AssetImporterSetting.Elements">
+            <summary>
+            路径列表
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.AssetImporterSettingData._cacheTypes">
+            <summary>
+            导入器类型集合
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.AssetImporterSettingData._cacheProcessor">
+            <summary>
+            导入器实例集合
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.AssetImporterSettingData.LoadSettingData">
+            <summary>
+            加载配置文件
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.AssetImporterSettingData.GetProcessorNames">
+            <summary>
+            获取所有导入器名称列表
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.AssetImporterSettingData.SaveFile">
+            <summary>
+            存储文件
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.AssetImporterSettingData.GetCustomProcessor(System.String)">
+            <summary>
+            获取资源处理器实例
+            </summary>
+            <param name="importAssetPath">导入的资源路径</param>
+            <returns>如果该资源的路径没包含在列表里返回NULL</returns>
+        </member>
+        <member name="F:MotionFramework.Editor.AssetImporterWindow._lastOpenFolderPath">
+            <summary>
+            上次打开的文件夹路径
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.AssetImporterWindow._processorClassArray">
+            <summary>
+            资源处理器类列表
+            </summary>
+        </member>
+        <member name="T:MotionFramework.Editor.DefaultProcessor">
+            <summary>
+            默认的资源处理器
+            </summary>
+        </member>
+        <member name="T:MotionFramework.Editor.IAssetProcessor">
+            <summary>
+            资源处理器接口
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.ImporterCopyer.CopyModelImporter(UnityEditor.ModelImporter,UnityEditor.ModelImporter)">
+            <summary>
+            复制模型导入器
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.ImporterCopyer.CopyTextureImporter(UnityEditor.TextureImporter,UnityEditor.TextureImporter)">
+            <summary>
+            复制纹理导入器
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.ImporterCopyer.CopyAudioImporter(UnityEditor.AudioImporter,UnityEditor.AudioImporter)">
+            <summary>
+            复制音频导入器
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.ImporterCopyer.CopySpriteAtlasSetting(UnityEngine.U2D.SpriteAtlas,UnityEngine.U2D.SpriteAtlas)">
+            <summary>
+            复制图集设置
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.EditorDefine.AssetImporterSettingFilePath">
+            <summary>
+            资源导入工具的配置文件存储路径
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.EditorDefine.AssetBundleCollectorSettingFilePath">
+            <summary>
+            资源包收集工具的配置文件存储路径
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.EditorDefine.UIPanelSettingFilePath">
+            <summary>
+            UI面板的配置文件存储路径
+            </summary>
+        </member>
+        <member name="T:MotionFramework.Editor.EAssetSearchType">
+            <summary>
+            资源搜索类型
+            </summary>
+        </member>
+        <member name="T:MotionFramework.Editor.EAssetFileExtension">
+            <summary>
+            资源文件格式
+            </summary>
+        </member>
+        <member name="T:MotionFramework.Editor.EditorTools">
+            <summary>
+            编辑器工具类
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.DrawHeader(System.String)">
+            <summary>
+            Draw a distinctly different looking header label
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.OpenFolderPanel(System.String,System.String)">
+            <summary>
+            打开搜索面板
+            </summary>
+            <param name="title">标题名称</param>
+            <param name="defaultPath">默认搜索路径</param>
+            <returns>返回选择的文件夹绝对路径，如果无效返回NULL</returns>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.OpenFilePath(System.String,System.String)">
+            <summary>
+            打开搜索面板
+            </summary>
+            <param name="title">标题名称</param>
+            <param name="defaultPath">默认搜索路径</param>
+            <returns>返回选择的文件绝对路径，如果无效返回NULL</returns>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.GetClonePrefabInScene(UnityEngine.GameObject)">
+            <summary>
+            获取场景里的克隆预制体
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.FindReferencesInScene(UnityEngine.Object)">
+            <summary>
+            查找场景里的引用对象
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.FindReferencesInPrefabs(UnityEngine.Object,UnityEngine.GameObject[])">
+            <summary>
+            查找场景里的引用对象
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.ClearMaterialUnusedProperty(UnityEngine.Material)">
+            <summary>
+            清理无用的材质球属性
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.ClearUnityConsole">
+            <summary>
+            清空控制台
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.HasWriteAccess(System.String)">
+            <summary>
+            测试写入权限
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.CreateFileDirectory(System.String)">
+            <summary>
+            创建文件所在的目录
+            </summary>
+            <param name="filePath">文件路径</param>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.CreateDirectory(System.String)">
+            <summary>
+            创建文件夹
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.DeleteDirectory(System.String)">
+            <summary>
+            删除文件夹及子目录
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.FileRename(System.String,System.String)">
+            <summary>
+            文件重命名
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.FileMoveTo(System.String,System.String)">
+            <summary>
+            文件移动
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.CopyDirectory(System.String,System.String)">
+            <summary>
+            拷贝文件夹
+            注意：包括所有子目录的文件
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.CopyFile(System.String,System.String,System.Boolean)">
+            <summary>
+            拷贝文件
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.ClearFolder(System.String)">
+            <summary>
+            清空文件夹
+            </summary>
+            <param name="folderPath">要清理的文件夹路径</param>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.GetFileSize(System.String)">
+            <summary>
+            获取文件字节大小
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.ReadFileAllText(System.String)">
+            <summary>
+            读取文件的所有文本内容
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.ReadFileAllLine(System.String)">
+            <summary>
+            读取文本的所有文本内容
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.CheckBundleFileValid(System.Byte[])">
+            <summary>
+            检测AssetBundle文件是否合法
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.GetRegularPath(System.String)">
+            <summary>
+            获取规范的路径
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.GetProjectPath">
+            <summary>
+            获取项目工程路径
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.AbsolutePathToAssetPath(System.String)">
+            <summary>
+            转换文件的绝对路径为Unity资源路径
+            例如 D:\\YourPorject\\Assets\\Works\\file.txt 替换为 Assets/Works/file.txt
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.AssetPathToAbsolutePath(System.String)">
+            <summary>
+            转换Unity资源路径为文件的绝对路径
+            例如：Assets/Works/file.txt 替换为 D:\\YourPorject/Assets/Works/file.txt
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.FindFolder(System.String,System.String)">
+            <summary>
+            递归查找目标文件夹路径
+            </summary>
+            <param name="root">搜索的根目录</param>
+            <param name="folderName">目标文件夹名称</param>
+            <returns>返回找到的文件夹路径，如果没有找到返回空字符串</returns>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.IncludeChinese(System.String)">
+            <summary>
+            是否含有中文
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.IsNumber(System.String)">
+            <summary>
+            是否是数字
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.Capitalize(System.String)">
+            <summary>
+            首字母大写
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.EditorTools.Substring(System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            截取字符串
+            获取匹配到的后面内容
+            </summary>
+            <param name="content">内容</param>
+            <param name="key">关键字</param>
+            <param name="includeKey">分割的结果里是否包含关键字</param>
+            <param name="searchBegin">是否使用初始匹配的位置，否则使用末尾匹配的位置</param>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelModifier.Refresh(UnityEngine.UI.UIManifest)">
+            <summary>
+            刷新面板清单
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelModifier.CacheUIElement(UnityEngine.UI.UIManifest)">
+            <summary>
+            缓存所有UI元素
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelModifier.GetFullPath(UnityEngine.Transform,UnityEngine.Transform)">
+            <summary>
+            获取到根节点的全路径
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelModifier.AddElementToList(UnityEngine.UI.UIManifest,System.String,UnityEngine.Transform)">
+            <summary>
+            添加一个UI元素到列表
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelModifier.UpdateUIComponent(UnityEngine.UI.UIManifest)">
+            <summary>
+            更新组件
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelModifier.GetAtlasPath(System.String)">
+            <summary>
+            获取精灵所属图集
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.UIPanelSetting.UISpriteDirectory">
+            <summary>
+            精灵文件夹路径
+            </summary>
+        </member>
+        <member name="F:MotionFramework.Editor.UIPanelSetting.UIAtlasDirectory">
+            <summary>
+            图集文件夹路径
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelSettingData.LoadSettingData">
+            <summary>
+            加载配置文件
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelSettingData.SaveFile">
+            <summary>
+            存储文件
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelSettingData.SetUISpriteDirectory(System.String)">
+            <summary>
+            设置精灵文件夹路径
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelSettingData.SetUIAtlasDirectory(System.String)">
+            <summary>
+            设置图集文件夹路径
+            </summary>
+        </member>
+        <member name="M:MotionFramework.Editor.UIPanelSettingData.CheckValid">
+            <summary>
+            检测配置文件有效性
+            </summary>
+        </member>
+        <member name="M:EG.AddressbleTool.StartEditorMode">
+            <summary>
+            编辑器模式
+            </summary>
+        </member>
+        <member name="M:EG.AddressbleTool.ConfigAll">
+            <summary>
+            配置bundle group
+            </summary>
+        </member>
+        <member name="M:EG.AddressbleTool.QuickConfigAll">
+            <summary>
+            配置bundle group
+            </summary>
+        </member>
+        <member name="M:EG.AddressbleTool.AutoBuildAll">
+            <summary>
+            自动build 资源
+            </summary>
+        </member>
+        <member name="M:EG.AddressbleTool.OpenConigWindow">
+            <summary>
+            配置bundle group
+            </summary>
+        </member>
+        <member name="M:EG.AddressbleTool.LoadConfigs">
+            <summary>
+            加载配置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EG.AddressbleTool.SetBuildScript(System.Int32)">
+            <summary>
+            设置build脚本
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:EG.AddressbleTool.SetPlayMode(System.Int32)">
+            <summary>
+            设置运行模式
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:EG.AddressbleTool.CreateGroupAndEntry(EG.AddressbleTool.GroupConfigItem)">
+            <summary>
+            设置资源分组示例
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:EG.AddressbleTool.FormatAddress(System.String)">
+            <summary>
+            资源命名规则
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EG.AddressbleTool.InitAddressableAssetSettings">
+            <summary>
+            初始化设置  禁用自动更新,构建服务器目录
+            </summary>
+        </member>
+        <member name="M:EG.AddressbleTool.CleanBuild">
+            <summary>
+            清理构建内容
+            </summary>
+        </member>
+        <member name="M:EG.AddressbleTool.Build">
+            <summary>
+            构建addresble资源
+            </summary>
+        </member>
+        <member name="M:DG.DOTweenEditor.DOTweenPreviewManager.PreviewGUI(DG.Tweening.DOTweenAnimation)">
+            <summary>
+            Returns TRUE if its actually previewing animations
+            </summary>
+        </member>
+    </members>
+</doc>
