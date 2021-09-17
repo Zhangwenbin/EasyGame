@@ -100,44 +100,51 @@ namespace EG
             string      typeName    = type.Name;
             
             Debug.Log( "Create > " + type.ToString() );
-
-            UnityEngine.Object res = Resources.Load( "Singleton/" + typeName );
-            if( res == null )
-            {
-                Debug.LogError( "Not resource > " + "Singleton/" + typeName );
-                Application.Quit();
-                return null;
-            }
             
-            result = GameObject.Instantiate( res ) as GameObject;
-            if( result == null )
-            {
-                Debug.LogError( "Non instance > " + "Singleton/" + typeName );
-                Application.Quit();
-                return null;
-            }
+            // UnityEngine.Object res = Resources.Load( "Singleton/" + typeName );
+            // if( res == null )
+            // {
+            //     Debug.LogError( "Not resource > " + "Singleton/" + typeName );
+            //     Application.Quit();
+            //     return null;
+            // }
+            //
+            // result = GameObject.Instantiate( res ) as GameObject;
+            // if( result == null )
+            // {
+            //     Debug.LogError( "Non instance > " + "Singleton/" + typeName );
+            //     Application.Quit();
+            //     return null;
+            // }
+
+            result = new GameObject(typeName);
+            result.AddComponent(type);
             
             // 
             GameObject obj = GameObject.FindGameObjectWithTag( "SINGLETON_DIR" );
             if( obj == null )
             {
-                res = Resources.Load( "Singleton/singleton" );
-                if( res != null )
-                {
-                    obj = GameObject.Instantiate( res ) as GameObject;
-                    if( obj != null )
-                    {
-                        // 
-                        #if UNITY_EDITOR
-                        if( UnityEditor.EditorApplication.isPlaying )
-                        #endif
-                        {
-                            GameObject.DontDestroyOnLoad( obj );
-                        }
-                        
-                        result.transform.parent = obj.transform;
-                    }
-                }
+               // var res = Resources.Load( "Singleton/singleton" );
+               //  if( res != null )
+               //  {
+               //      obj = GameObject.Instantiate( res ) as GameObject;
+               //      if( obj != null )
+               //      {
+               //          // 
+               //          #if UNITY_EDITOR
+               //          if( UnityEditor.EditorApplication.isPlaying )
+               //          #endif
+               //          {
+               //              GameObject.DontDestroyOnLoad( obj );
+               //          }
+               //          
+               //          result.transform.parent = obj.transform;
+               //      }
+               //  }
+               obj = new GameObject("singleton");
+               obj.tag = "SINGLETON_DIR";
+               result.transform.parent = obj.transform;
+               GameObject.DontDestroyOnLoad( obj );
             }
             else
             {
