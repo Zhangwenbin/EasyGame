@@ -42,6 +42,7 @@ namespace EG
         private void OnConfirm()
         {
            Debug.Log("OnConfirm");
+           AssetManager.Instance.GetScene("home");
         }
 
         private void OnCancel()

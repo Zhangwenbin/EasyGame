@@ -35,6 +35,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8e2bb969bee14d5418d8237032d11f9c, type: 2}
   - {fileID: 11400000, guid: 4462db12b550d714c83f2e188f742c26, type: 2}
   - {fileID: 11400000, guid: d1fe441ab66bf1f4680e31b1a66184d8, type: 2}
+  - {fileID: 11400000, guid: 07855e611905de945817dcce5d83a3ff, type: 2}
+  - {fileID: 11400000, guid: dead6a54c7b603e44a8d409136c847ff, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -82,6 +84,8 @@ MonoBehaviour:
     - config
     - .prefab
     - UIPanel
+    - .spriteatlas
+    - UIAtlas
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: e6e870283553834448a0f81db4aef027, type: 2}
