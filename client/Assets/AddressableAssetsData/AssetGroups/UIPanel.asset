@@ -23,6 +23,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - .prefab
     - UIPanel
+  - m_GUID: b2c97ef9b69c0d140bcf7c91db7cc6a3
+    m_Address: UINewVersion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - .prefab
+    - UIPanel
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 19f8b50110acad240902cabfaaa0a33a, type: 2}
   m_SchemaSet:
