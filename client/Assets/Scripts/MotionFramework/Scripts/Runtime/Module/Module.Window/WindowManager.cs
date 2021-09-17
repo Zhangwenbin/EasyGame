@@ -6,23 +6,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using MotionFramework.Console;
+using EG;
 
 namespace MotionFramework.Window
 {
-	public class WindowManager : ModuleSingleton<WindowManager>, IModule
+	public class WindowManager : MonoSingleton<WindowManager>
 	{
 		private readonly List<UIWindow> _stack = new List<UIWindow>(100);
+		
 
-		/// <summary>
-		/// 反射服务接口
-		/// </summary>
-		public IActivatorServices ActivatorServices { get; set; }
-
-		void IModule.OnCreate(object createParam)
-		{
-		}
-		void IModule.OnUpdate()
+		void Update()
 		{
 			int count = _stack.Count;
 			for (int i = 0; i < _stack.Count; i++)
@@ -33,10 +26,6 @@ namespace MotionFramework.Window
 				if (window.IsPrepare)
 					window.InternalUpdate();
 			}
-		}
-		void IModule.OnGUI()
-		{
-			ConsoleGUI.Lable($"[{nameof(WindowManager)}] Window total count : {_stack.Count}");
 		}
 
 		/// <summary>
@@ -285,16 +274,10 @@ namespace MotionFramework.Window
 			UIWindow window;
 			WindowAttribute attribute;
 
-			if (ActivatorServices != null)
-			{
-				window = ActivatorServices.CreateInstance(type) as UIWindow;
-				attribute = ActivatorServices.GetAttribute(type) as WindowAttribute;
-			}
-			else
-			{
+
 				window = Activator.CreateInstance(type) as UIWindow;
 				attribute = Attribute.GetCustomAttribute(type, typeof(WindowAttribute)) as WindowAttribute;
-			}
+			
 
 			if (window == null)
 				throw new Exception($"Window {type.FullName} create instance failed.");

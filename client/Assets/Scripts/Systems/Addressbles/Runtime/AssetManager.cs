@@ -1,455 +1,29 @@
-﻿using System;
-using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
+using System.IO;
+using System;
+using System.Collections;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
-using Path = System.IO.Path;
 
 namespace EG
 {
-    public class AssetManager : MonoBehaviour
+    #region 定义
+
+    public enum ReleaseType
     {
-        public enum ReleaseType
-        {
-            OnNewScene,
-            Manual,
-            NoneRelease
-        }
-
-
-        public static AssetManager Instance;
-
-        public bool IsInitialize;
-        private bool enableHotUpdate = false;
-
-        public static AsyncOperationHandle defaultHandle;
-
-        public Dictionary<AsyncOperationHandle, GameObject> handleDic =
-            new Dictionary<AsyncOperationHandle, GameObject>();
-
-        private Dictionary<string, List<LoadRequest>> cancelRequests = new Dictionary<string, List<LoadRequest>>();
-        private List<LoadRequest> comingRequests = new List<LoadRequest>();
-        private List<LoadRequest> loadingRequests = new List<LoadRequest>();
-        private object lockObj = new object();
-        private int maxLoadingCount = 10;
-
-        private void Awake()
-        {
-            Instance = this;
-            GameObject.DontDestroyOnLoad(gameObject);
-        }
-
-        public void Initialize()
-        {
-            StartCoroutine(InitializeAsync());
-        }
-
-        IEnumerator InitializeAsync()
-        {
-            var inithandle = Addressables.InitializeAsync();
-            inithandle.Completed += InitialCompleted;
-            LoadingScreen.SetTipsStatic(1);
-            while (!inithandle.IsDone)
-            {
-                LoadingScreen.SetProgress(inithandle.PercentComplete);
-                yield return null;
-            }
-
-            yield return null;
-        }
-
-        private void InitialCompleted(AsyncOperationHandle<IResourceLocator> obj)
-        {
-            if (!enableHotUpdate)
-            {
-                IsInitialize = true;
-                return;
-            }
-
-            Addressables.CheckForCatalogUpdates(true).Completed += CheckComplete;
-        }
-
-        private void CheckComplete(AsyncOperationHandle<List<string>> obj)
-        {
-            if (obj.Status == AsyncOperationStatus.Failed)
-            {
-                Debug.LogError(" 检查 catalog失败");
-                return;
-            }
-
-            Debug.Log(obj.Result.Count);
-            if (obj.Result.Count == 0)
-            {
-                DownLoadSize();
-                return;
-            }
-
-            Addressables.UpdateCatalogs(obj.Result).Completed += UpdateCatalogsComplete;
-        }
-
-
-        private void UpdateCatalogsComplete(AsyncOperationHandle<List<IResourceLocator>> obj)
-        {
-            Debug.Log(obj.Status);
-            if (obj.Status == AsyncOperationStatus.Failed)
-            {
-                return;
-            }
-
-            DownLoadSize(obj.Result);
-        }
-
-        long updateSize;
-
-        public long GetDownloadSize()
-        {
-            return updateSize;
-        }
-
-        public void DownLoadSize(List<IResourceLocator> obj = null)
-        {
-            StartCoroutine(DownLoadSizeIe(obj));
-        }
-
-        public IEnumerator DownLoadSizeIe(List<IResourceLocator> obj = null)
-        {
-            long tempSize = 0;
-            updateSize = 0;
-            var locators = Addressables.ResourceLocators;
-            if (obj != null)
-            {
-                locators = obj;
-            }
-
-            Dictionary<IResourceLocator, long> dic = new Dictionary<IResourceLocator, long>();
-            float index = 0;
-            int count = obj == null ? 2 : obj.Count;
-            foreach (var item in locators)
-            {
-                var handle = Addressables.GetDownloadSizeAsync(item.Keys);
-                yield return handle;
-                if (handle.Result > 0)
-                {
-                    tempSize += handle.Result;
-                    dic.Add(item, handle.Result);
-                }
-
-                Addressables.Release(handle);
-                //if (progressHandler != null)
-                //{
-                //    index++;
-                //    progressHandler(0, index/count);
-                //}
-            }
-
-            updateSize = tempSize;
-            float currentDownloadSize = 0;
-            float totalDownLoadSize = 0;
-            float downloadPercent = 0;
-            LoadingScreen.SetTipsStatic(3);
-            if (updateSize > 0)
-            {
-                foreach (var item in dic)
-                {
-                    Debug.Log("download " + item.Key);
-                    var downloadHandle =
-                        Addressables.DownloadDependenciesAsync(item.Key.Keys, Addressables.MergeMode.Union);
-                    while (!downloadHandle.IsDone)
-                    {
-                        currentDownloadSize = downloadHandle.PercentComplete * item.Value;
-                        downloadPercent = (totalDownLoadSize + currentDownloadSize) / updateSize;
-                        LoadingScreen.SetProgress(downloadPercent);
-                        yield return null;
-                    }
-
-                    totalDownLoadSize += currentDownloadSize;
-                    Addressables.Release(downloadHandle);
-                }
-
-                LoadingScreen.SetProgress(1);
-                IsInitialize = true;
-            }
-            else
-            {
-                IsInitialize = true;
-            }
-        }
-
-        public void PreLoadAssets(Action callback, bool showProgress = false)
-        {
-            StartCoroutine(PreLoadAssetsIe(callback, showProgress));
-        }
-
-        private IEnumerator PreLoadAssetsIe(Action callback, bool showProgress = false)
-        {
-            if (showProgress)
-            {
-                LoadingScreen.SetTipsStatic(6);
-            }
-
-            var handle = Addressables.LoadAssetsAsync<Object>((IEnumerable) new List<string>() {".bytes", "lua"}, null,
-                Addressables.MergeMode.Intersection);
-            while (!handle.IsDone)
-            {
-                if (showProgress)
-                {
-                    LoadingScreen.SetProgress(handle.PercentComplete);
-                }
-
-                yield return null;
-            }
-
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                var list = handle.Result as List<Object>;
-                for (int i = 0; i < list.Count; i++)
-                {
-                    var txt = list[i] as TextAsset;
-                    if (txt)
-                    {
-                        luaBytes[txt.name + ".bytes"] = txt.bytes;
-                    }
-
-                }
-            }
-
-            ReleaseHandle(handle, true);
-
-
-            if (callback != null)
-            {
-                callback();
-            }
-        }
-
-        private Dictionary<string, byte[]> luaBytes = new Dictionary<string, byte[]>();
-
-        /// <summary>
-        /// 注册不需要加载的资源
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="obj"></param>
-        public virtual void RegisterAsset(string key, GameObject obj)
-        {
-            if (obj != null)
-            {
-                GameObjectPool.RecycleGameObject(key, obj);
-            }
-        }
-
-        public byte[] GetLuaBytes(string key)
-        {
-            if (luaBytes.ContainsKey(key))
-            {
-                return luaBytes[key];
-            }
-
-            return null;
-        }
-
-        public LoadRequest LoadAssetAsyncQueue(string key, bool isSprite = false)
-        {
-            var req = new LoadRequest(key);
-            req.isSprite = isSprite;
-            comingRequests.Add(req);
-            return req;
-        }
-
-        private void UpdateLoadQueue()
-        {
-            var count = comingRequests.Count;
-            var loadingCount = loadingRequests.Count;
-            while (loadingCount < maxLoadingCount && count > 0)
-            {
-                var req = comingRequests[0];
-                req.Load(this);
-                comingRequests.Remove(req);
-                loadingRequests.Add(req);
-                count = comingRequests.Count;
-                loadingCount = loadingRequests.Count;
-            }
-
-            while (loadingCount > 0)
-            {
-                var loadingReq = loadingRequests[0];
-                if (RemoveCancel(loadingReq.key, loadingReq.callback))
-                {
-                    loadingRequests.Remove(loadingReq);
-                    loadingCount = loadingRequests.Count;
-                    switch (loadingReq.aasetFrom)
-                    {
-                        case LoadRequest.AssetFrom.None:
-                            ReleaseHandle(loadingReq.handle, true);
-                            break;
-                        case LoadRequest.AssetFrom.GameobjectPool:
-                            GameObjectPool.RecycleGameObject(loadingReq.key, loadingReq.Result as GameObject);
-                            break;
-                        case LoadRequest.AssetFrom.RefPool:
-                            RefPool.ReleaseObject(loadingReq.key);
-                            break;
-                        case LoadRequest.AssetFrom.LoadGameobjectInstantiate:
-                            GameObjectPool.RecycleGameObject(loadingReq.key, loadingReq.Result as GameObject);
-                            break;
-                        case LoadRequest.AssetFrom.LoadGameobjectNotInstantiate:
-                            ReleaseHandle(loadingReq.handle, true);
-                            break;
-                        case LoadRequest.AssetFrom.LoadRefAsset:
-                            RefPool.ReleaseObject(loadingReq.key);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    continue;
-                }
-
-                if (loadingReq.IsDone)
-                {
-                    loadingReq.CallBack();
-                    loadingRequests.Remove(loadingReq);
-                    loadingCount = loadingRequests.Count;
-                    continue;
-                }
-
-                break;
-            }
-        }
-
-
-        public LoadRequest LoadAssetAsync(string key, bool isSprite = false, LoadRequest req = null)
-        {
-            if (req == null)
-            {
-                req = new LoadRequest(key);
-            }
-
-            req.isSprite = isSprite;
-            lock (loadingRequests)
-            {
-                loadingRequests.Insert(0, req);
-            }
-
-            req.Load(this);
-            return req;
-        }
-
-
-        public void LoadSceneAsync(string key, Action<string> callback,
-            LoadSceneMode loadSceneMode = LoadSceneMode.Single,
-            bool activateOnLoad = true, int priority = 100)
-        {
-            Addressables.LoadSceneAsync(key, loadSceneMode, activateOnLoad, priority).Completed += (res) =>
-            {
-                if (callback != null)
-                {
-                    callback(key);
-                }
-            };
-        }
-
-        public void ReleaseHandle(AsyncOperationHandle handle, bool forece = false)
-        {
-            if (handle.Equals(defaultHandle))
-            {
-                return;
-            }
-
-            if (forece)
-            {
-                Addressables.Release(handle);
-                return;
-            }
-
-            GameObject go;
-            if (handleDic.TryGetValue(handle, out go))
-            {
-                if (go != null)
-                {
-                    //加载的资源还在使用,不能释放,只能update释放
-                    return;
-                }
-                else
-                {
-                    handleDic.Remove(handle);
-                }
-            }
-
-            Addressables.Release(handle);
-        }
-
-
-        public void ReleaseRefAsset(string key)
-        {
-            RefPool.ReleaseObject(key);
-        }
-
-        public void UpdateHandles()
-        {
-            foreach (var item in handleDic)
-            {
-                if (item.Value == null)
-                {
-                    handleDic.Remove(item.Key);
-                    ReleaseHandle(item.Key);
-                    return;
-                }
-            }
-        }
-
-        public void ReleaseCallBack(string key, Action<string, UnityEngine.Object> callback)
-        {
-            for (int i = 0; i < comingRequests.Count; i++)
-            {
-                var req = comingRequests[i];
-                if (req.key == key && req.callback.Equals(callback))
-                {
-                    comingRequests.Remove(req);
-                    return;
-                }
-            }
-
-            var cancelReq = new LoadRequest(key);
-            cancelReq.callback = callback;
-            if (cancelRequests.TryGetValue(key, out List<LoadRequest> list))
-            {
-                list.Add(cancelReq);
-            }
-            else
-            {
-                list = new List<LoadRequest>();
-                list.Add(cancelReq);
-                cancelRequests.Add(key, list);
-            }
-        }
-
-        private bool RemoveCancel(string key, Action<string, UnityEngine.Object> callback)
-        {
-            if (cancelRequests.TryGetValue(key, out List<LoadRequest> list))
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    var req = list[i];
-                    if (req.callback.Equals(callback))
-                    {
-                        list.Remove(req);
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private void Update()
-        {
-            UpdateHandles();
-            UpdateLoadQueue();
-        }
+        OnNewScene,
+        Manual,
+        NoneRelease
+    }
+
+    public enum LoadPriority
+    {
+        Default = 0, //默认加载 异步 队列
+        Prior = 10, // 异步  不队列
     }
 
     public class LoadRequest : IEnumerator
@@ -463,8 +37,6 @@ namespace EG
             LoadGameobjectInstantiate,
             LoadRefAsset
         }
-
-        private AssetManager rgr;
 
         public string key;
         public bool isSprite;
@@ -482,9 +54,8 @@ namespace EG
         /// </summary>
         public AsyncOperationHandle handle;
 
-        public void Load(AssetManager rgr)
+        public void Load()
         {
-            this.rgr = rgr;
             aasetFrom = AssetFrom.None;
 
             var item = GameObjectPool.GetGameObject(key);
@@ -577,10 +148,9 @@ namespace EG
                                 {
                                     var instance = UnityEngine.GameObject.Instantiate(go);
                                     result = instance;
-                                    rgr.handleDic[handle] = instance;
+                                    AssetManager.Instance.handleDic[handle] = instance;
                                     aasetFrom = LoadRequest.AssetFrom.LoadGameobjectInstantiate;
                                 }
-
                             }
                             else
                             {
@@ -588,8 +158,6 @@ namespace EG
                                 RefPool.OnLoadObject(key, handle);
                                 result = handle.Result as Object;
                             }
-
-
                         }
                     }
                     else
@@ -646,6 +214,549 @@ namespace EG
         public LoadRequest(string key)
         {
             this.key = key;
+        }
+
+        public void Release()
+        {
+            AssetManager.Instance.ReleaseAsset(key, result);
+        }
+    }
+
+    #endregion
+
+    public class AssetManager : MonoSingleton<AssetManager>
+    {
+        #region Public Interface
+
+        public override void Initialize()
+        {
+            StartCoroutine(InitializeAsync());
+        }
+
+
+        /// <summary>
+        /// 从assetbundle中加载asset
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="callback"></param>
+        /// <param name="priority"></param>
+        public virtual void GetAsset(string name, Action<string, UnityEngine.Object> callback,
+            LoadPriority priority = LoadPriority.Default, ReleaseType type = ReleaseType.Manual)
+        {
+            // resourceMgr.AssetBundleGroup.GetAsset(name, callback, priority, type);
+            if (string.IsNullOrEmpty(name))
+            {
+                callback(name, null);
+                return;
+            }
+
+            if (priority == LoadPriority.Default)
+            {
+                LoadAssetAsyncQueue(name).callback = callback;
+            }
+            else
+            {
+                LoadAssetAsync(name).callback = callback;
+            }
+        }
+
+        public void LoadSpriteAsync(string name, Action<string, UnityEngine.Sprite> callback)
+        {
+            LoadAssetAsync(name, true).callback = (key, res) => { callback(key, res as Sprite); };
+        }
+
+
+        /// <summary>
+        /// 注册不需要加载的资源
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="obj"></param>
+        public virtual void RegisterAsset(string key, GameObject obj)
+        {
+            if (obj != null)
+            {
+                GameObjectPool.RecycleGameObject(key, obj);
+            }
+        }
+
+        //load scene
+        public virtual void GetScene(string name, Action callBack = null)
+        {
+            LoadSceneAsync(name + ".unity", (res) =>
+            {
+                if (callBack != null)
+                {
+                    callBack();
+                }
+            });
+        }
+
+
+        /// <summary>
+        /// 加载二进制文件
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="callback"></param>
+        public virtual void GetBytes(string name, Action<string, byte[]> callback)
+        {
+            LoadAssetAsync(name).callback =
+                (key, res) =>
+                {
+                    var txt = res as TextAsset;
+                    callback(name, txt.bytes);
+                };
+        }
+
+        public byte[] GetLuaBytes(string key)
+        {
+            if (luaBytes.ContainsKey(key))
+            {
+                return luaBytes[key];
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 从assetbundle中读取字符串
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        public virtual void GetString(string name, Action<string, string> callback)
+        {
+            LoadAssetAsync(name).callback =
+                (key, res) =>
+                {
+                    var txt = res as TextAsset;
+                    callback(name, txt.text);
+                }
+                ;
+        }
+
+
+        //ɾ����Դ����
+        public virtual void ReleaseAsset(string name, UnityEngine.Object obj, bool recycle = true)
+        {
+            if (obj is GameObject)
+            {
+                if (recycle)
+                {
+                    GameObjectPool.RecycleGameObject(name, obj as GameObject);
+                }
+                else
+                {
+                    GameObject.Destroy(obj);
+                }
+            }
+            else
+            {
+                ReleaseRefAsset(name);
+            }
+        }
+
+        public void ReleaseRefAsset(string key)
+        {
+            RefPool.ReleaseObject(key);
+        }
+
+
+        public string GetLocalVersionStr()
+        {
+            return "1.0.0";
+        }
+
+        public void ReleaseCallBack(string key, Action<string, UnityEngine.Object> callback)
+        {
+            for (int i = 0; i < comingRequests.Count; i++)
+            {
+                var req = comingRequests[i];
+                if (req.key == key && req.callback.Equals(callback))
+                {
+                    comingRequests.Remove(req);
+                    return;
+                }
+            }
+
+            var cancelReq = new LoadRequest(key);
+            cancelReq.callback = callback;
+            if (cancelRequests.TryGetValue(key, out List<LoadRequest> list))
+            {
+                list.Add(cancelReq);
+            }
+            else
+            {
+                list = new List<LoadRequest>();
+                list.Add(cancelReq);
+                cancelRequests.Add(key, list);
+            }
+        }
+
+        public void PreLoadAssets(Action callback, bool showProgress = false)
+        {
+            StartCoroutine(PreLoadAssetsIe(callback, showProgress));
+        }
+
+        #endregion
+
+
+        private bool enableHotUpdate = false;
+
+        public static AsyncOperationHandle defaultHandle;
+
+        internal Dictionary<AsyncOperationHandle, GameObject> handleDic =
+            new Dictionary<AsyncOperationHandle, GameObject>();
+
+        private Dictionary<string, List<LoadRequest>> cancelRequests = new Dictionary<string, List<LoadRequest>>();
+        private List<LoadRequest> comingRequests = new List<LoadRequest>();
+        private List<LoadRequest> loadingRequests = new List<LoadRequest>();
+        private object lockObj = new object();
+        private int maxLoadingCount = 10;
+
+
+        IEnumerator InitializeAsync()
+        {
+            var inithandle = Addressables.InitializeAsync();
+            inithandle.Completed += InitialCompleted;
+            LoadingScreen.SetTipsStatic(1);
+            while (!inithandle.IsDone)
+            {
+                LoadingScreen.SetProgress(inithandle.PercentComplete);
+                yield return null;
+            }
+
+            yield return null;
+        }
+
+        private void InitialCompleted(AsyncOperationHandle<IResourceLocator> obj)
+        {
+            if (!enableHotUpdate)
+            {
+                m_Initialize = true;
+                return;
+            }
+
+            Addressables.CheckForCatalogUpdates(true).Completed += CheckComplete;
+        }
+
+        private void CheckComplete(AsyncOperationHandle<List<string>> obj)
+        {
+            if (obj.Status == AsyncOperationStatus.Failed)
+            {
+                Debug.LogError(" 检查 catalog失败");
+                return;
+            }
+
+            Debug.Log(obj.Result.Count);
+            if (obj.Result.Count == 0)
+            {
+                DownLoadResource();
+                return;
+            }
+
+            Addressables.UpdateCatalogs(obj.Result).Completed += UpdateCatalogsComplete;
+        }
+
+
+        private void UpdateCatalogsComplete(AsyncOperationHandle<List<IResourceLocator>> obj)
+        {
+            Debug.Log(obj.Status);
+            if (obj.Status == AsyncOperationStatus.Failed)
+            {
+                return;
+            }
+
+            DownLoadResource(obj.Result);
+        }
+
+        long updateSize;
+
+        public long GetDownloadSize()
+        {
+            return updateSize;
+        }
+
+        public void DownLoadResource(List<IResourceLocator> obj = null)
+        {
+            StartCoroutine(DownLoadSizeIe(obj));
+        }
+
+        public IEnumerator DownLoadSizeIe(List<IResourceLocator> obj = null)
+        {
+            long tempSize = 0;
+            updateSize = 0;
+            var locators = Addressables.ResourceLocators;
+            if (obj != null)
+            {
+                locators = obj;
+            }
+
+            Dictionary<IResourceLocator, long> dic = new Dictionary<IResourceLocator, long>();
+            float index = 0;
+            int count = obj == null ? 2 : obj.Count;
+            foreach (var item in locators)
+            {
+                var handle = Addressables.GetDownloadSizeAsync(item.Keys);
+                yield return handle;
+                if (handle.Result > 0)
+                {
+                    tempSize += handle.Result;
+                    dic.Add(item, handle.Result);
+                }
+
+                Addressables.Release(handle);
+                //if (progressHandler != null)
+                //{
+                //    index++;
+                //    progressHandler(0, index/count);
+                //}
+            }
+
+            updateSize = tempSize;
+            float currentDownloadSize = 0;
+            float totalDownLoadSize = 0;
+            float downloadPercent = 0;
+            LoadingScreen.SetTipsStatic(3);
+            if (updateSize > 0)
+            {
+                foreach (var item in dic)
+                {
+                    Debug.Log("download " + item.Key);
+                    var downloadHandle =
+                        Addressables.DownloadDependenciesAsync(item.Key.Keys, Addressables.MergeMode.Union);
+                    while (!downloadHandle.IsDone)
+                    {
+                        currentDownloadSize = downloadHandle.PercentComplete * item.Value;
+                        downloadPercent = (totalDownLoadSize + currentDownloadSize) / updateSize;
+                        LoadingScreen.SetProgress(downloadPercent);
+                        yield return null;
+                    }
+
+                    totalDownLoadSize += currentDownloadSize;
+                    Addressables.Release(downloadHandle);
+                }
+
+                LoadingScreen.SetProgress(1);
+                m_Initialize = true;
+            }
+            else
+            {
+                m_Initialize = true;
+            }
+        }
+
+
+        private IEnumerator PreLoadAssetsIe(Action callback, bool showProgress = false)
+        {
+            if (showProgress)
+            {
+                LoadingScreen.SetTipsStatic(6);
+            }
+
+            var handle = Addressables.LoadAssetsAsync<Object>((IEnumerable) new List<string>() {".bytes", "lua"}, null,
+                Addressables.MergeMode.Intersection);
+            while (!handle.IsDone)
+            {
+                if (showProgress)
+                {
+                    LoadingScreen.SetProgress(handle.PercentComplete);
+                }
+
+                yield return null;
+            }
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                var list = handle.Result as List<Object>;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    var txt = list[i] as TextAsset;
+                    if (txt)
+                    {
+                        luaBytes[txt.name + ".bytes"] = txt.bytes;
+                    }
+                }
+            }
+
+            ReleaseHandle(handle, true);
+
+
+            if (callback != null)
+            {
+                callback();
+            }
+        }
+
+        private Dictionary<string, byte[]> luaBytes = new Dictionary<string, byte[]>();
+
+
+        private LoadRequest LoadAssetAsyncQueue(string key, bool isSprite = false)
+        {
+            var req = new LoadRequest(key);
+            req.isSprite = isSprite;
+            comingRequests.Add(req);
+            return req;
+        }
+
+        private void UpdateLoadQueue()
+        {
+            var count = comingRequests.Count;
+            var loadingCount = loadingRequests.Count;
+            while (loadingCount < maxLoadingCount && count > 0)
+            {
+                var req = comingRequests[0];
+                req.Load();
+                comingRequests.Remove(req);
+                loadingRequests.Add(req);
+                count = comingRequests.Count;
+                loadingCount = loadingRequests.Count;
+            }
+
+            while (loadingCount > 0)
+            {
+                var loadingReq = loadingRequests[0];
+                if (RemoveCancel(loadingReq.key, loadingReq.callback))
+                {
+                    loadingRequests.Remove(loadingReq);
+                    loadingCount = loadingRequests.Count;
+                    switch (loadingReq.aasetFrom)
+                    {
+                        case LoadRequest.AssetFrom.None:
+                            ReleaseHandle(loadingReq.handle, true);
+                            break;
+                        case LoadRequest.AssetFrom.GameobjectPool:
+                            GameObjectPool.RecycleGameObject(loadingReq.key, loadingReq.Result as GameObject);
+                            break;
+                        case LoadRequest.AssetFrom.RefPool:
+                            RefPool.ReleaseObject(loadingReq.key);
+                            break;
+                        case LoadRequest.AssetFrom.LoadGameobjectInstantiate:
+                            GameObjectPool.RecycleGameObject(loadingReq.key, loadingReq.Result as GameObject);
+                            break;
+                        case LoadRequest.AssetFrom.LoadGameobjectNotInstantiate:
+                            ReleaseHandle(loadingReq.handle, true);
+                            break;
+                        case LoadRequest.AssetFrom.LoadRefAsset:
+                            RefPool.ReleaseObject(loadingReq.key);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    continue;
+                }
+
+                if (loadingReq.IsDone)
+                {
+                    loadingReq.CallBack();
+                    loadingRequests.Remove(loadingReq);
+                    loadingCount = loadingRequests.Count;
+                    continue;
+                }
+
+                break;
+            }
+        }
+
+
+        public LoadRequest LoadAssetAsync(string key, bool isSprite = false, LoadRequest req = null)
+        {
+            if (req == null)
+            {
+                req = new LoadRequest(key);
+            }
+
+            req.isSprite = isSprite;
+            lock (loadingRequests)
+            {
+                loadingRequests.Insert(0, req);
+            }
+
+            req.Load();
+            return req;
+        }
+
+
+        public void LoadSceneAsync(string key, Action<string> callback,
+            LoadSceneMode loadSceneMode = LoadSceneMode.Single,
+            bool activateOnLoad = true, int priority = 100)
+        {
+            Addressables.LoadSceneAsync(key, loadSceneMode, activateOnLoad, priority).Completed += (res) =>
+            {
+                if (callback != null)
+                {
+                    callback(key);
+                }
+            };
+        }
+
+        public void ReleaseHandle(AsyncOperationHandle handle, bool forece = false)
+        {
+            if (handle.Equals(defaultHandle))
+            {
+                return;
+            }
+
+            if (forece)
+            {
+                Addressables.Release(handle);
+                return;
+            }
+
+            GameObject go;
+            if (handleDic.TryGetValue(handle, out go))
+            {
+                if (go != null)
+                {
+                    //加载的资源还在使用,不能释放,只能update释放
+                    return;
+                }
+                else
+                {
+                    handleDic.Remove(handle);
+                }
+            }
+
+            Addressables.Release(handle);
+        }
+
+
+        private void UpdateHandles()
+        {
+            foreach (var item in handleDic)
+            {
+                if (item.Value == null)
+                {
+                    handleDic.Remove(item.Key);
+                    ReleaseHandle(item.Key);
+                    return;
+                }
+            }
+        }
+
+
+        private bool RemoveCancel(string key, Action<string, UnityEngine.Object> callback)
+        {
+            if (cancelRequests.TryGetValue(key, out List<LoadRequest> list))
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    var req = list[i];
+                    if (req.callback.Equals(callback))
+                    {
+                        list.Remove(req);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        void Update()
+        {
+            UpdateHandles();
+            UpdateLoadQueue();
         }
     }
 }

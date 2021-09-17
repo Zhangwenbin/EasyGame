@@ -142,12 +142,6 @@ namespace EG
             
             base.Initialize();
             
-            Application.targetFrameRate = -1;
-            
-            // タイマー時間を固定にする
-    #if FIX_FRAMERATE
-            Time.captureFramerate = m_FrameRate;
-    #endif
         }
         
         #endregion

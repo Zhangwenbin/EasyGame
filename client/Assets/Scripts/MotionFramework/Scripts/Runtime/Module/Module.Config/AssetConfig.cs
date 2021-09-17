@@ -6,9 +6,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using EG;
 using UnityEngine;
 using MotionFramework.IO;
-using MotionFramework.Resource;
 
 namespace MotionFramework.Config
 {
@@ -26,7 +26,6 @@ namespace MotionFramework.Config
 	/// </summary>
 	public abstract class AssetConfig : IEnumerator
 	{
-		private AssetOperationHandle _handle;
 		private bool _isLoadAsset = false;
 
 		/// <summary>
@@ -54,15 +53,15 @@ namespace MotionFramework.Config
 				return;
 
 			_isLoadAsset = true;
-			Location = location;
-			_handle = ResourceManager.Instance.LoadAssetAsync<TextAsset>(location);
-			_handle.Completed += Handle_Completed;
+			Location = location; 
+			AssetManager.Instance.GetAsset(location,Handle_Completed);
+
 		}
-		private void Handle_Completed(AssetOperationHandle obj)
+		private void Handle_Completed(string key ,UnityEngine.Object obj)
 		{
 			try
 			{
-				TextAsset txt = _handle.AssetObject as TextAsset;
+				TextAsset txt = obj as TextAsset;
 				if (txt != null)
 				{
 					// 解析数据
@@ -71,11 +70,11 @@ namespace MotionFramework.Config
 			}
 			catch (Exception ex)
 			{
-				MotionLog.Error($"Failed to parse config {Location}. Error : {ex.ToString()}");
+				Debug.LogError($"Failed to parse config {Location}. Error : {ex.ToString()}");
 			}
 
 			// 注意：为了节省内存这里立即释放了资源
-			_handle.Release();
+			AssetManager.Instance.ReleaseAsset(Location,obj);
 
 			IsPrepare = true;
 			_userCallback?.Invoke(this);
@@ -157,7 +156,7 @@ namespace MotionFramework.Config
 			}
 			else
 			{
-				MotionLog.Warning($"Faild to get table. File is {Location}, key is {key}");
+				Debug.LogWarning($"Faild to get table. File is {Location}, key is {key}");
 				return null;
 			}
 		}

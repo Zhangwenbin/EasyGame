@@ -29,13 +29,13 @@ public class CanvasRoot : UIRoot
 		if (desktopTrans != null)
 			UIDesktop = desktopTrans.gameObject;
 		else
-			MotionLog.Error("Not found UIDesktop gameObject in UIRoot");
+			Debug.LogError("Not found UIDesktop gameObject in UIRoot");
 
 		var cameraTrans = Go.transform.BFSearch("UICamera");
 		if (cameraTrans != null)
 			UICamera = cameraTrans.GetComponent<Camera>();
 		else
-			MotionLog.Error("Not found UICamera gameObject in UIRoot");
+			Debug.LogError("Not found UICamera gameObject in UIRoot");
 	}
 
 	/// <summary>

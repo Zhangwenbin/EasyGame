@@ -6,13 +6,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using EG;
+using UnityEngine;
 
 namespace MotionFramework.Config
 {
     /// <summary>
     /// 配表管理器
     /// </summary>
-    public sealed class ConfigManager : ModuleSingleton<ConfigManager>, IModule
+    public sealed class ConfigManager : MonoSingleton<ConfigManager>
     {
         public class LoadPair
         {
@@ -27,46 +29,22 @@ namespace MotionFramework.Config
 
         private readonly Dictionary<string, AssetConfig> _configs = new Dictionary<string, AssetConfig>();
 
-        /// <summary>
-        /// 反射服务接口
-        /// </summary>
-        public IActivatorServices ActivatorServices { get; set; }
-
-        void IModule.OnCreate(System.Object param)
-        {
-
-        }
-
-        void IModule.OnUpdate()
-        {
-        }
-
-        void IModule.OnGUI()
-        {
-        }
+        
 
         /// <summary>
         /// 按照列表顺序批量加载配表
         /// </summary>
-        public IEnumerator LoadConfigs(List<LoadPair> loadPairs, GameLauncher launcher = null, float targetProcess = 0f)
+        public IEnumerator LoadConfigs(List<LoadPair> loadPairs)
         {
             float tmp = 0f;
-            if (launcher != null)
-            {
-                tmp = (targetProcess - launcher.TargetNum) / loadPairs.Count;
-            }
+ 
 
             for (int i = 0; i < loadPairs.Count; i++)
             {
                 Type type = loadPairs[i].ClassType;
                 string location = loadPairs[i].Location;
                 AssetConfig config = LoadConfig(type, location);
-
-                if (launcher != null)
-                {
-                    launcher.TargetNum += tmp;
-                    launcher.TargetNum = launcher.TargetNum > targetProcess ? targetProcess : launcher.TargetNum;
-                }
+                
                 yield return config;
             }
         }
@@ -78,19 +56,16 @@ namespace MotionFramework.Config
             // 防止重复加载
             if (_configs.ContainsKey(configName))
             {
-                MotionLog.Error($"Config {configName} is already existed.");
+                 Debug.LogError($"Config {configName} is already existed.");
                 return null;
             }
 
             AssetConfig config;
-            if (ActivatorServices != null)
-                config = ActivatorServices.CreateInstance(configType) as AssetConfig;
-            else
-                config = Activator.CreateInstance(configType) as AssetConfig;
+            config = Activator.CreateInstance(configType) as AssetConfig;
 
             if (config == null)
             {
-                MotionLog.Error($"Config {configName} create instance  failed.");
+                Debug.LogError($"Config {configName} create instance  failed.");
             }
             else
             {
@@ -117,7 +92,7 @@ namespace MotionFramework.Config
                     return pair.Value;
             }
 
-            MotionLog.Error($"Not found config {configName}");
+             Debug.LogError($"Not found config {configName}");
             return null;
         }
 
@@ -131,7 +106,7 @@ namespace MotionFramework.Config
                 return _configs[configName];
             }
 
-            MotionLog.Error($"Not found config {configName}");
+             Debug.LogError($"Not found config {configName}");
             return null;
         }
     }

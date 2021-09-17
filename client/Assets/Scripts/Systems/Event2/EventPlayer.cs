@@ -29,7 +29,6 @@ namespace EG
         [CustomFieldAttribute("MaxDeltaTime",CustomFieldAttribute.Type.Float)]
         public float                                MaxDeltaTime    = 0.3333f;
         
-        private List<EventLoadRequest>                   _load_requests  = new List<EventLoadRequest>();
         private Dictionary<string, EventParam>      _loaded_events  = new Dictionary<string, EventParam>();
         
         private List<EventPlayerStatus>             _play_events    = new List<EventPlayerStatus>();
@@ -40,9 +39,9 @@ namespace EG
 
         public bool isError;
         
-        public bool                                 IsEventLoading  { get { return _load_requests.Count > 0; } }
-        
-        
+        // public bool                                 IsEventLoading  { get { return _load_requests.Count > 0; } }
+        //
+        //
         //
         // protected void SetError( Error.Code code )
         // {
@@ -94,11 +93,6 @@ namespace EG
             }
             _play_events.Clear( );
             
-            for( int i = 0; i < _load_requests.Count; ++i )
-            {
-                AssetManager.Instance.ReleaseRefAsset(_load_requests[ i ]._request.key);
-            }
-            _load_requests.Clear( );
             
             _loaded_events.Clear();
         }
@@ -162,57 +156,22 @@ namespace EG
         
         public void LoadEventAsync( string id, string path )
         {
-            var loadReq = AssetManager.Instance.LoadAssetAsync( path,false );
-            if( loadReq != null )
+            void GetParams(string key, UnityEngine.Object obj)
             {
-                EventLoadRequest req = new EventLoadRequest();
-                
-                req._id = id;
-                req._path = path;
-                req._request = loadReq;
-                
-                _load_requests.Add( req );
-                
-                if( _load_requests.Count == 1 )
+                EventParam asset = obj as EventParam;
+                    
+                // 
+                if( asset == null )
                 {
-                    StartCoroutine( AsyncLoad( ) );
+                    asset = EventParam.DefaultEventParam;
                 }
+                    
+                _loaded_events[ id ] = asset;
+                AssetManager.Instance.ReleaseAsset(key,obj );
+
             }
-        }
-        
-        private System.Collections.IEnumerator AsyncLoad( )
-        {
-            do
-            {
-                for( int i = _load_requests.Count - 1; i >= 0; --i )
-                {
-                    if( !_load_requests[ i ]._request.IsDone )
-                    {
-                        continue;
-                    }
-                    
-                    EventParam asset = _load_requests[ i ]._request.Result as EventParam;
-                    
-                    // 
-                    if( asset == null )
-                    {
-                        Debug.LogError( "EventPlayer"+ "Failed to load animation > " + _load_requests[ i ]._path );
-                        asset = EventParam.DefaultEventParam;
-                    }
-                    
-                    _loaded_events[ _load_requests[ i ]._id ] = asset;
-                    
-                   AssetManager.Instance.ReleaseRefAsset(_load_requests[ i ]._request.key );
-                    
-                    // 
-                    _load_requests.RemoveAt( i );
-                }
-                
-                yield return new WaitForEndOfFrame( );
-            }
-            while ( _load_requests.Count > 0 );
-            
-            yield return null;
+            AssetManager.Instance.GetAsset( path, GetParams);
+     
         }
         
         
@@ -482,14 +441,14 @@ namespace EG
                 GUIStyle itemStyle = new GUIStyle( GUI.skin.label );
                 itemStyle.padding.left = 10;
                 
-                UnityEditor.EditorGUILayout.LabelField( "Load Requests:" );
-                for( int i = 0; i < player._load_requests.Count; ++i )
-                {
-                    UnityEditor.EditorGUILayout.BeginHorizontal( );
-                    GUILayout.Space( 10 );
-                    UnityEditor.EditorGUILayout.LabelField( player._load_requests[ i ]._path );
-                    UnityEditor.EditorGUILayout.EndHorizontal( );
-                }
+                // UnityEditor.EditorGUILayout.LabelField( "Load Requests:" );
+                // for( int i = 0; i < player._load_requests.Count; ++i )
+                // {
+                //     UnityEditor.EditorGUILayout.BeginHorizontal( );
+                //     GUILayout.Space( 10 );
+                //     UnityEditor.EditorGUILayout.LabelField( player._load_requests[ i ]._path );
+                //     UnityEditor.EditorGUILayout.EndHorizontal( );
+                // }
                 
                 GUILayout.Space( 10 );
                 

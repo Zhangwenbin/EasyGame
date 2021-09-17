@@ -4,7 +4,7 @@
       "EG.MUPackBundleV5, Assembly-CSharp-Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" : "2"
    },
    "$type" : "1",
-   "SrcDir" : "Assets/Res/ILCode/",
+   "SrcDir" : "Assets/ResDLC/ILCode/",
    "PackItems" : [
       {
          "$type" : "2",

@@ -5,15 +5,13 @@
 //--------------------------------------------------
 using System;
 using System.Collections;
+using EG;
 using UnityEngine;
-using MotionFramework.Resource;
-using MotionFramework.Event;
 
 namespace MotionFramework.Window
 {
 	public abstract class UIWindow : IEnumerator
 	{
-		private AssetOperationHandle _handle;
 		private System.Action<UIWindow> _prepareCallback;
 		private bool _isLoadAsset = false;
 
@@ -21,13 +19,7 @@ namespace MotionFramework.Window
 		/// 是否已经创建
 		/// </summary>
 		protected bool IsCreate { private set; get; } = false;
-
-		/// <summary>
-		/// 事件组
-		/// 在窗口销毁的时候，自动移除注册的事件
-		/// </summary>
-		protected readonly EventGroup EventGrouper = new EventGroup();
-
+		
 		/// <summary>
 		/// 窗口名称
 		/// </summary>
@@ -56,7 +48,7 @@ namespace MotionFramework.Window
 		/// <summary>
 		/// 是否加载完毕
 		/// </summary>
-		public bool IsDone { get { return _handle.IsDone; } }
+		public bool IsDone { get; private set; }
 
 		/// <summary>
 		/// 是否准备完毕
@@ -101,8 +93,7 @@ namespace MotionFramework.Window
 			UserData = userData;
 			_isLoadAsset = true;
 			_prepareCallback = prepareCallback;
-			_handle = ResourceManager.Instance.LoadAssetAsync<GameObject>(location);
-			_handle.Completed += Handle_Completed;
+			 AssetManager.Instance.GetAsset(location,Handle_Completed);
 		}
 		internal void InternalCreate()
 		{
@@ -110,7 +101,6 @@ namespace MotionFramework.Window
 			{
 				IsCreate = true;
 				OnCreate();
-				GuideManager.Instance.CheckGuide(WindowName);
 			}
 		}
 		internal void InternalRefresh()
@@ -134,21 +124,16 @@ namespace MotionFramework.Window
 				GameObject.Destroy(Go);
 				Go = null;
 			}
-
-			// 卸载面板资源
-			_handle.Release();		
-
-			// 移除所有缓存的事件监听
-			EventGrouper.RemoveAllListener();
+			
 		}
 
-		private void Handle_Completed(AssetOperationHandle obj)
+		private void Handle_Completed(string key,UnityEngine.Object obj)
 		{
-			if (_handle.AssetObject == null)
+			if (obj == null)
 				return;
 
 			// 实例化对象
-			Go = _handle.InstantiateObject;
+			Go = obj as GameObject;
 
 			// 设置UI桌面
 			if (WindowManager.Instance.Root == null)
@@ -163,6 +148,7 @@ namespace MotionFramework.Window
 
 			// 通知UI管理器
 			_prepareCallback?.Invoke(this);
+			IsDone = true;
 		}
 		protected abstract void OnAssetLoad(GameObject go);
 

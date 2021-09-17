@@ -4,3 +4,5 @@ C:\zwb\EasyGame\client\Assets\ILRuntime\HotFix_Project~\obj\Release\HotFix_Proje
 C:\zwb\EasyGame\client\Assets\ILRuntime\HotFix_Project~\obj\Release\HotFix_Project.csproj.CoreCompileInputs.cache
 C:\zwb\EasyGame\client\Assets\ILRuntime\HotFix_Project~\obj\Release\HotFix_Project.dll
 C:\zwb\EasyGame\client\Assets\ILRuntime\HotFix_Project~\obj\Release\HotFix_Project.pdb
+C:\zwb\EasyGame\client\Assets\ResDLC\ILCode\HotFix_Project.dll
+C:\zwb\EasyGame\client\Assets\ResDLC\ILCode\HotFix_Project.pdb

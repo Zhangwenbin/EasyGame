@@ -6,15 +6,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using EG;
 using UnityEngine;
-using MotionFramework.Resource;
-using MotionFramework.Event;
 
 namespace MotionFramework.Window
 {
 	public abstract class UIRoot : IEnumerator
 	{
-		private AssetOperationHandle _handle;
 		private bool _isLoadAsset = false;
 
 		/// <summary>
@@ -25,7 +23,7 @@ namespace MotionFramework.Window
 		/// <summary>
 		/// 是否加载完毕
 		/// </summary>
-		public bool IsDone { get { return _handle.IsDone; } }
+		public bool IsDone { get; private set; }
 
 		/// <summary>
 		/// 是否准备完毕
@@ -49,8 +47,7 @@ namespace MotionFramework.Window
 				return;
 
 			_isLoadAsset = true;
-			_handle = ResourceManager.Instance.LoadAssetAsync<GameObject>(location);
-			_handle.Completed += Handle_Completed;
+			 AssetManager.Instance.GetAsset(location,Handle_Completed);
 		}
 		internal void InternalDestroy()
 		{
@@ -59,20 +56,20 @@ namespace MotionFramework.Window
 				GameObject.Destroy(Go);
 				Go = null;
 			}
-
-			_handle.Release();
+			
 		}
-		private void Handle_Completed(AssetOperationHandle obj)
+		private void Handle_Completed(string key,UnityEngine.Object obj)
 		{
-			if (_handle.AssetObject == null)
+			if (obj == null)
 				return;
 
 			// 实例化对象
-			Go = _handle.InstantiateObject;
+			Go = obj as GameObject;
 			GameObject.DontDestroyOnLoad(Go);
 
 			// 调用重载函数
 			OnAssetLoad(Go);
+			IsDone = true;
 		}
 		protected abstract void OnAssetLoad(GameObject go);
 

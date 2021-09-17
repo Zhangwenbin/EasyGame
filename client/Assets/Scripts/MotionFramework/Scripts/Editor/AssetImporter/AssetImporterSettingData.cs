@@ -7,9 +7,9 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using MotionFramework.Utility;
 using UnityEngine;
 using UnityEditor;
-using MotionFramework.Utility;
 
 namespace MotionFramework.Editor
 {
