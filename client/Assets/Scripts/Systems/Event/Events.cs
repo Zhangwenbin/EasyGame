@@ -5,9 +5,9 @@ using System.Reflection;
 
 internal static class EventInternal
 {
-    public static Dictionary<object, Delegate> eventTable = new Dictionary<object, Delegate>();
+    public static Dictionary<EventsType, Delegate> eventTable = new Dictionary<EventsType, Delegate>();
 
-    public static void OnListenerAdding(object eventType, Delegate listenerBeingAdded)
+    public static void OnListenerAdding(EventsType eventType, Delegate listenerBeingAdded)
     {
         if (!eventTable.ContainsKey(eventType))
         {
@@ -21,7 +21,7 @@ internal static class EventInternal
         }
     }
 
-    public static void OnListenerRemoving(object eventType, Delegate listenerBeingRemoved)
+    public static void OnListenerRemoving(EventsType eventType, Delegate listenerBeingRemoved)
     {
         if (eventTable.ContainsKey(eventType))
         {
@@ -41,12 +41,12 @@ internal static class EventInternal
         }
     }
 
-    public static bool HasListener(object eventType)
+    public static bool HasListener(EventsType eventType)
     {
         return eventTable.ContainsKey(eventType);
     }
 
-    public static void OnListenerRemoved(object eventType)
+    public static void OnListenerRemoved(EventsType eventType)
     {
         if (eventTable[eventType] == null)
         {
@@ -54,7 +54,7 @@ internal static class EventInternal
         }
     }
 
-    public static void OnBroadcasting(object eventType)
+    public static void OnBroadcasting(EventsType eventType)
     {
         //
     }
@@ -65,14 +65,14 @@ public static class Events
 {
     #region 常量与字段
 
-    private static readonly Dictionary<object, Delegate> eventTable = EventInternal.eventTable;
-    private static readonly Dictionary<object, Dictionary<string, object>> _listenerDic = new Dictionary<object, Dictionary<string, object>>();
+    private static readonly Dictionary<EventsType, Delegate> eventTable = EventInternal.eventTable;
+    private static readonly Dictionary<EventsType, Dictionary<string, EventsType>> _listenerDic = new Dictionary<EventsType, Dictionary<string, EventsType>>();
 
     #endregion
 
     #region 方法
 
-    public static void AddListener(object eventType, Action handler, Type type=null)
+    public static void AddListener(EventsType eventType, Action handler, Type type=null)
     {
         EventInternal.OnListenerAdding(eventType, handler);
         Delegate d = eventTable[eventType];
@@ -88,10 +88,10 @@ public static class Events
         {
             return;
         }
-        Dictionary<string, object> types;
+        Dictionary<string, EventsType> types;
         if (!_listenerDic.ContainsKey(eventType))
         {
-            types = new Dictionary<string, object>();
+            types = new Dictionary<string, EventsType>();
             types.Add(type.Name, eventType);
             _listenerDic.Add(eventType, types);
         }
@@ -109,7 +109,7 @@ public static class Events
         }
     }
 
-    public static void RemoveListener(object eventType, Action handler, Type type=null)
+    public static void RemoveListener(EventsType eventType, Action handler, Type type=null)
     {
         if (!EventInternal.HasListener(eventType)) return;
 
@@ -129,7 +129,7 @@ public static class Events
         {
             return;
         }
-        Dictionary<string, object> types;
+        Dictionary<string, EventsType> types;
         if (!_listenerDic.ContainsKey(eventType))
         {
             //no listener!!!
@@ -154,7 +154,7 @@ public static class Events
 
     public static void RemoveAllListener()
     {
-        List<object> eventTypes = new List<object>();
+        List<EventsType> eventTypes = new List<EventsType>();
         List<Action> handlers = new List<Action>();
         var iter = eventTable.GetEnumerator();
         while (iter.MoveNext())
@@ -185,7 +185,7 @@ public static class Events
     
 
     //dispatch
-    public static void Broadcast(object eventType)
+    public static void Broadcast(EventsType eventType)
     {
 
         EventInternal.OnBroadcasting(eventType);
@@ -213,22 +213,22 @@ public static class Events<T>
 {
     #region 常量与字段
 
-    private static readonly Dictionary<object, Delegate> eventTable = EventInternal.eventTable;
-    private static readonly Dictionary<object, Dictionary<string, object>> _listenerDic = new Dictionary<object, Dictionary<string, object>>();
+    private static readonly Dictionary<EventsType, Delegate> eventTable = EventInternal.eventTable;
+    private static readonly Dictionary<EventsType, Dictionary<string, EventsType>> _listenerDic = new Dictionary<EventsType, Dictionary<string, EventsType>>();
 
     #endregion
 
     #region 方法
 
-    public static void AddListener(object eventType, Action<T> handler, Type type)
+    public static void AddListener(EventsType eventType, Action<T> handler, Type type)
     {
         EventInternal.OnListenerAdding(eventType, handler);
         eventTable[eventType] = (Action<T>)eventTable[eventType] + handler;
 
-        Dictionary<string, object> types;
+        Dictionary<string, EventsType> types;
         if (!_listenerDic.ContainsKey(eventType))
         {
-            types = new Dictionary<string, object>();
+            types = new Dictionary<string, EventsType>();
             types.Add(type.Name, eventType);
             _listenerDic.Add(eventType, types);
         }
@@ -246,14 +246,14 @@ public static class Events<T>
         }
     }
 
-    public static void RemoveListener(object eventType, Action<T> handler, Type type)
+    public static void RemoveListener(EventsType eventType, Action<T> handler, Type type)
     {
         if (!EventInternal.HasListener(eventType)) return;
         EventInternal.OnListenerRemoving(eventType, handler);
         eventTable[eventType] = (Action<T>)eventTable[eventType] - handler;
         EventInternal.OnListenerRemoved(eventType);
 
-        Dictionary<string, object> types;
+        Dictionary<string, EventsType> types;
         if (!_listenerDic.ContainsKey(eventType))
         {
             //no listener!!!
@@ -277,7 +277,7 @@ public static class Events<T>
     }
 
     //dispatch
-    public static void Broadcast(object eventType, T arg1)
+    public static void Broadcast(EventsType eventType, T arg1)
     {
         EventInternal.OnBroadcasting(eventType);
         Delegate d;
@@ -298,4 +298,9 @@ public static class Events<T>
     }
 
     #endregion
+}
+
+public enum EventsType
+{
+    sceneLoadingPercent,
 }

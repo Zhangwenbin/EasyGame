@@ -37,7 +37,6 @@ namespace EG
 
             AddButtonListener("cancel", OnCancel);
             AddButtonListener("confirm", OnConfirm);
-            Events<(float,string)>.AddListener("updatetime",OnUpateTime,typeof(UITest));
         }
 
         private void OnUpateTime((float,string) time)
@@ -68,7 +67,7 @@ namespace EG
 
         public override void OnDestroy()
         {
-            Events<(float,string)>.RemoveListener("updatetime",OnUpateTime,typeof(UITest));
+           
         }
     }
 }

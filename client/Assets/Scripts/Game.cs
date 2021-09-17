@@ -17,7 +17,7 @@ namespace EG
         {
             DontDestroyOnLoad(gameObject);
             _fsmMachine = new FsmMachine();
-            _fsmMachine.Initialize("InitState",this);
+            _fsmMachine.Initialize(InitState.name,this);
         }
 
         private void Update()

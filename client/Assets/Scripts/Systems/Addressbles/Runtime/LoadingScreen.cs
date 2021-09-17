@@ -1,13 +1,20 @@
 ﻿using System;
+using UnityEngine;
 
-internal class LoadingScreen
+public class LoadingScreen:MonoBehaviour
 {
-    internal static void SetTipsStatic(int v)
+    public static LoadingScreen Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public static void SetTipsStatic(int v)
     {
         
     }
 
-    internal static void SetProgress(float v)
+    public static void SetProgress(float v)
     {
        
     }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Scenes_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
   m_Group: {fileID: 11400000, guid: dead6a54c7b603e44a8d409136c847ff, type: 2}
-  m_StaticContent: 0
+  m_StaticContent: 1

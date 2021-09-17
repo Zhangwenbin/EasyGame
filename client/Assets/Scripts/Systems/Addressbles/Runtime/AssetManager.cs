@@ -280,9 +280,9 @@ namespace EG
         }
 
         //load scene
-        public virtual void GetScene(string name, Action callBack = null)
+        public virtual AsyncOperationHandle GetScene(string name, Action callBack = null)
         {
-            LoadSceneAsync(name + ".unity", (res) =>
+            return LoadSceneAsync(name + ".unity", (res) =>
             {
                 if (callBack != null)
                 {
@@ -677,17 +677,19 @@ namespace EG
         }
 
 
-        public void LoadSceneAsync(string key, Action<string> callback,
+        public AsyncOperationHandle LoadSceneAsync(string key, Action<string> callback,
             LoadSceneMode loadSceneMode = LoadSceneMode.Single,
             bool activateOnLoad = true, int priority = 100)
         {
-            Addressables.LoadSceneAsync(key, loadSceneMode, activateOnLoad, priority).Completed += (res) =>
+           var handle= Addressables.LoadSceneAsync(key, loadSceneMode, activateOnLoad, priority);
+               handle.Completed += (res) =>
             {
                 if (callback != null)
                 {
                     callback(key);
                 }
             };
+               return handle;
         }
 
         public void ReleaseHandle(AsyncOperationHandle handle, bool forece = false)

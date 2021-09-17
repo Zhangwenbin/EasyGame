@@ -6,9 +6,10 @@ namespace EG
 {
     public class InitState:IGameState
     {
+        public const string name = "init";
         public override string Name
         {
-            get { return "InitState"; }
+            get { return name; }
         }
 
         public override IEnumerator OnEnter()
@@ -27,20 +28,22 @@ namespace EG
             yield return uiRoot;
             uiRoot.Go.transform.position = new Vector3(1000, 0, 1);
             
-            // 常驻面板加载
-            WindowManager.Instance.OpenWindow<UITest>();
-            Debug.Log(GetLanguage("UILogin1"));
+            DataManager.Instance.Initialize();
             
-        }
-        public  string GetLanguage(string key, params object[] args)
-        {
-            var cfgLanguage = ConfigManager.Instance.GetConfig<CfgLanguage>();
-            var table = cfgLanguage.GetTable(key.GetHashCode()) as CfgLanguageTable;
-            if (table != null)
+            //todo audio
+            
+            // 常驻面板加载
+            // WindowManager.Instance.OpenWindow<UITest>();
+            // Debug.Log(GetLanguage("UILogin1"));
+            Debug.Log("init finish");
+            var loading= WindowManager.Instance.OpenWindow<UILoading>();
+            while (!loading.IsDone)
             {
-                return string.Format(table.Lang, args);
+                yield return null;
             }
-            return key;
+            LoadingScreen.Instance.gameObject.SetActive(false);
+            Game.Goto("home");
+            
         }
 
         public override void OnUpdate()

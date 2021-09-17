@@ -86,6 +86,8 @@ MonoBehaviour:
     - UIPanel
     - .spriteatlas
     - UIAtlas
+    - .unity
+    - Scenes
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: e6e870283553834448a0f81db4aef027, type: 2}

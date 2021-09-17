@@ -28,6 +28,7 @@ namespace EG
             _states = new Dictionary<string, IGameState>();
             var state = AddState(startState);
             StartCoroutine(state.OnEnter());
+            currentState = state;
         }
         
         private Coroutine StartCoroutine(IEnumerator routine)
@@ -51,8 +52,11 @@ namespace EG
                 IGameState state;
                 switch (name)
                 {
-                    case nameof(InitState):
+                    case InitState.name:
                         state = new InitState();
+                        break;
+                    case HomeState.name:
+                        state = new HomeState();
                         break;
                     default:
                         state = new IGameState();
@@ -85,6 +89,7 @@ namespace EG
             var next = GetState(name);
             if (CanGo(currentState,next))
             {
+                Debug.Log("goto "+name);
                 requestState = next;
             }
             else
