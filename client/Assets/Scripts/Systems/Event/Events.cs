@@ -302,5 +302,10 @@ public static class Events<T>
 
 public enum EventsType
 {
+    //场景相关
     sceneLoadingPercent,
+    
+    //资源相关
+    assetStatusChange=100,
+    assetProgressChange=101,
 }

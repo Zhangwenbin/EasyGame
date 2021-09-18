@@ -26,6 +26,16 @@ namespace EG
         Prior = 10, // 异步  不队列
     }
 
+    public enum AssetStatus
+    {
+        Init,
+        CheckUpdate,
+        ConfirmUpdate,
+        Update,
+        Ready,
+        Preload
+    }
+
     public class LoadRequest : IEnumerator
     {
         public enum AssetFrom
@@ -400,6 +410,7 @@ namespace EG
         #endregion
 
 
+        private AssetStatus _status;
         private bool enableHotUpdate = false;
 
         public static AsyncOperationHandle defaultHandle;
@@ -414,14 +425,23 @@ namespace EG
         private int maxLoadingCount = 10;
 
 
+        private void SetStatus(AssetStatus status)
+        {
+            _status = status;
+            Events<AssetStatus>.Broadcast(EventsType.assetStatusChange,status);
+        }
+        private void SetProgress(float progress)
+        {
+            Events<float>.Broadcast(EventsType.assetProgressChange,progress);
+        }
         IEnumerator InitializeAsync()
         {
             var inithandle = Addressables.InitializeAsync();
             inithandle.Completed += InitialCompleted;
-            LoadingScreen.SetTipsStatic(1);
+            SetStatus(AssetStatus.Init);
             while (!inithandle.IsDone)
             {
-                LoadingScreen.SetProgress(inithandle.PercentComplete);
+                SetProgress(inithandle.PercentComplete);
                 yield return null;
             }
 
@@ -432,10 +452,13 @@ namespace EG
         {
             if (!enableHotUpdate)
             {
+                SetStatus(AssetStatus.Ready);
+                SetProgress(1);
                 m_Initialize = true;
                 return;
             }
-
+            SetStatus(AssetStatus.CheckUpdate);
+            SetProgress(0);
             Addressables.CheckForCatalogUpdates(true).Completed += CheckComplete;
         }
 
@@ -444,13 +467,16 @@ namespace EG
             if (obj.Status == AsyncOperationStatus.Failed)
             {
                 Debug.LogError(" 检查 catalog失败");
+                m_Initialize = true;
+                SetStatus(AssetStatus.Ready);
+                SetProgress(1);
                 return;
             }
 
             Debug.Log(obj.Result.Count);
             if (obj.Result.Count == 0)
             {
-                DownLoadResource();
+                CalcDownLoadSize();
                 return;
             }
 
@@ -463,10 +489,13 @@ namespace EG
             Debug.Log(obj.Status);
             if (obj.Status == AsyncOperationStatus.Failed)
             {
+                m_Initialize = true;
+                SetStatus(AssetStatus.Ready);
+                SetProgress(1);
                 return;
             }
 
-            DownLoadResource(obj.Result);
+            CalcDownLoadSize(obj.Result);
         }
 
         long updateSize;
@@ -476,13 +505,15 @@ namespace EG
             return updateSize;
         }
 
-        public void DownLoadResource(List<IResourceLocator> obj = null)
+       private Dictionary<IResourceLocator, long> needDownLoadDic = new Dictionary<IResourceLocator, long>();
+        public void CalcDownLoadSize(List<IResourceLocator> obj = null)
         {
-            StartCoroutine(DownLoadSizeIe(obj));
+            StartCoroutine(CalcDownLoadSizeIe(obj));
         }
 
-        public IEnumerator DownLoadSizeIe(List<IResourceLocator> obj = null)
+        public IEnumerator CalcDownLoadSizeIe(List<IResourceLocator> obj = null)
         {
+            needDownLoadDic.Clear();
             long tempSize = 0;
             updateSize = 0;
             var locators = Addressables.ResourceLocators;
@@ -490,8 +521,7 @@ namespace EG
             {
                 locators = obj;
             }
-
-            Dictionary<IResourceLocator, long> dic = new Dictionary<IResourceLocator, long>();
+            
             float index = 0;
             int count = obj == null ? 2 : obj.Count;
             foreach (var item in locators)
@@ -501,25 +531,31 @@ namespace EG
                 if (handle.Result > 0)
                 {
                     tempSize += handle.Result;
-                    dic.Add(item, handle.Result);
+                    needDownLoadDic.Add(item, handle.Result);
                 }
-
                 Addressables.Release(handle);
-                //if (progressHandler != null)
-                //{
-                //    index++;
-                //    progressHandler(0, index/count);
-                //}
             }
 
             updateSize = tempSize;
+            SetStatus(AssetStatus.ConfirmUpdate);
+            SetProgress(0);
+        }
+        
+         public void DownLoadResource()
+        {
+            StartCoroutine(DownLoadResourceIe());
+        }
+
+        public IEnumerator DownLoadResourceIe()
+        {
+            SetStatus(AssetStatus.Update);
+            SetProgress(0);
             float currentDownloadSize = 0;
             float totalDownLoadSize = 0;
             float downloadPercent = 0;
-            LoadingScreen.SetTipsStatic(3);
             if (updateSize > 0)
             {
-                foreach (var item in dic)
+                foreach (var item in needDownLoadDic)
                 {
                     Debug.Log("download " + item.Key);
                     var downloadHandle =
@@ -528,29 +564,31 @@ namespace EG
                     {
                         currentDownloadSize = downloadHandle.PercentComplete * item.Value;
                         downloadPercent = (totalDownLoadSize + currentDownloadSize) / updateSize;
-                        LoadingScreen.SetProgress(downloadPercent);
+                        SetProgress(downloadPercent);
                         yield return null;
                     }
 
                     totalDownLoadSize += currentDownloadSize;
                     Addressables.Release(downloadHandle);
                 }
-
-                LoadingScreen.SetProgress(1);
+                SetStatus(AssetStatus.Ready);
+                SetProgress(1);
                 m_Initialize = true;
             }
             else
             {
+                SetStatus(AssetStatus.Ready);
                 m_Initialize = true;
             }
         }
+
 
 
         private IEnumerator PreLoadAssetsIe(Action callback, bool showProgress = false)
         {
             if (showProgress)
             {
-                LoadingScreen.SetTipsStatic(6);
+               SetStatus(AssetStatus.Preload);
             }
 
             var handle = Addressables.LoadAssetsAsync<Object>((IEnumerable) new List<string>() {".bytes", "lua"}, null,
@@ -559,7 +597,7 @@ namespace EG
             {
                 if (showProgress)
                 {
-                    LoadingScreen.SetProgress(handle.PercentComplete);
+                    SetProgress(handle.PercentComplete);
                 }
 
                 yield return null;
