@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <bool name="lg_debug_switch">false</bool>
+    <string name="lg_app_channel">jrtt</string>
+    <string name="lg_app_name">赶海大师</string>
+    <bool name="lg_ad_support_multi_process">false</bool>
+    <bool name="lg_ad_use_textureview">false</bool>
+    <bool name="lg_ad_allow_show_page_when_screen_lock">false</bool>
+    <bool name="lg_ad_allow_show_notify">false</bool>
+    <bool name="lg_ad_is_async_init">false</bool>
+    <string name="lg_ad_data">
+    </string>
+    <string name="lg_ad_keywords">
+    </string>
+    <string name="lg_app_company_name">ohayoo</string>
+    <string name="lg_app_company_register_address">北京市海淀区海龙大厦</string>
+    <integer name="lg_age_tips_type">0</integer>
+    <bool name="lg_splash_effect_switch">false</bool>
+    <integer name="lg_account_login_mode">1</integer>
+    <bool name="lg_app_is_ohayoo_product">false</bool>
+    <bool name="lg_account_silent_login_fail_show_toast_switch">false</bool>
+    <bool name="lg_account_nick_name_system_switch">false</bool>
+    <bool name="lg_push_debug_switch">false</bool>
+    <bool name="lg_dan_juan_float_ball_switch">false</bool>
+</resources>

@@ -23,18 +23,19 @@ namespace EG
             
             //初始化配置
             yield return ConfigManager.Instance.LoadConfig();
-            // 加载UIRoot
+            
+            // 初始化UI
             var uiRoot = WindowManager.Instance.CreateUIRoot<CanvasRoot>("UIRoot.prefab");
             yield return uiRoot;
             uiRoot.Go.transform.position = new Vector3(1000, 0, 1);
             
+            //初始化数据
             DataManager.Instance.Initialize();
             
-            //todo audio
+            //todo 初始化音频
             
-            // 常驻面板加载
-            // WindowManager.Instance.OpenWindow<UITest>();
-            // Debug.Log(GetLanguage("UILogin1"));
+            
+            //进入主场景
             Debug.Log("init finish");
             var loading= WindowManager.Instance.OpenWindow<UILoading>();
             while (!loading.IsDone)

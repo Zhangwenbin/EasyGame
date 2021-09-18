@@ -1,0 +1,4 @@
+include ':mylibrary'
+include ':ohayooSdkLib'
+include ':app'
+rootProject.name = "OhayooSdkApp"
