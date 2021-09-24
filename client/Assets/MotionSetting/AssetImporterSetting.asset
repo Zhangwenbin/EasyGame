@@ -13,6 +13,4 @@ MonoBehaviour:
   m_Name: AssetImporterSetting
   m_EditorClassIdentifier: 
   Toggle: 1
-  Elements:
-  - ProcessDirectory: Assets/ResDLC/Config
-    ProcessorName: DefaultProcessor
+  Elements: []

@@ -16,7 +16,19 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 4c9182dacd548684881b6613d522bc0c
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: ade770ceaeb11e04b982523407fb138c
+    m_Address: Loading1.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - .png
+    - UITexture
+  - m_GUID: fadb97641dcadb149bddc0968bffa23f
+    m_Address: Room_scene_bg02.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - .png
+    - UITexture
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 19f8b50110acad240902cabfaaa0a33a, type: 2}
   m_SchemaSet:

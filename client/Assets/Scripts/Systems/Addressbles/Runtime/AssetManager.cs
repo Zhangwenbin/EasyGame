@@ -627,6 +627,8 @@ namespace EG
 
         private Dictionary<string, byte[]> luaBytes = new Dictionary<string, byte[]>();
 
+        public static readonly string RESOURCE_ASSETBUNDLE_PATH = "ResDLC";
+
 
         private LoadRequest LoadAssetAsyncQueue(string key, bool isSprite = false)
         {
