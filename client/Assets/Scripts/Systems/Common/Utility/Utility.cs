@@ -33,9 +33,8 @@ namespace EG
         public static System.Type TYPE_BUTTON       = typeof(UnityEngine.UI.Button);
         public static System.Type TYPE_TOGGLE       = typeof(UnityEngine.UI.Toggle);
         public static System.Type TYPE_SCRIPTABLE   = typeof(ScriptableObject);
-        //todo no SerializeValueList
-        // public static System.Type TYPE_VALUELIST    = typeof(SerializeValueList);
-        // public static System.Type TYPE_VALUE        = typeof(SerializeValue);
+        public static System.Type TYPE_VALUELIST    = typeof(SerializeValueList);
+        public static System.Type TYPE_VALUE        = typeof(SerializeValue);
         public static System.Type TYPE_FONT         = typeof(Font);
         public static System.Type TYPE_MATERIAL     = typeof(Material);
         
@@ -113,15 +112,14 @@ namespace EG
             }
         }
 
-
-        //todo SerializeValueList
-        // public static void SetPositionToZero( this SerializeValueList self, string key, bool value )
-        // {
-        //     if (self == null)
-        //         return;
-        //
-        //     self.GetGameObject(key).SetPositionToZero(value);
-        // }
+        
+        public static void SetPositionToZero( this SerializeValueList self, string key, bool value )
+        {
+            if (self == null)
+                return;
+        
+            self.GetGameObject(key).SetPositionToZero(value);
+        }
 
 
         public static void SetParent( this GameObject self, GameObject parent, bool worldPositionStays )
@@ -275,38 +273,37 @@ namespace EG
             return sb.ToString( );
         }
         
-        //todo no DataSource
-        // public static DataSource GetDataSource( this GameObject go )
-        // {
-        //     if( go != null )
-        //     {
-        //         DataSource source = go.GetComponent<DataSource>( );
-        //         if( source == null )
-        //         {
-        //             source = go.GetComponentInParent<DataSource>( );
-        //         }
-        //         return source;
-        //     }
-        //     return null;
-        // }
+        public static DataSource GetDataSource( this GameObject go )
+        {
+            if( go != null )
+            {
+                DataSource source = go.GetComponent<DataSource>( );
+                if( source == null )
+                {
+                    source = go.GetComponentInParent<DataSource>( );
+                }
+                return source;
+            }
+            return null;
+        }
         
-        //
-        // public static T GetDataSource<T>( this GameObject go )
-        // {
-        //     if( go != null )
-        //     {
-        //         DataSource source = go.GetComponent<DataSource>( );
-        //         if( source == null )
-        //         {
-        //             source = go.GetComponentInParent<DataSource>( );
-        //         }
-        //         if( source != null )
-        //         {
-        //             return source.FindDataOfClass<T>( default(T) );
-        //         }
-        //     }
-        //     return default(T);
-        // }
+        
+        public static T GetDataSource<T>( this GameObject go )
+        {
+            if( go != null )
+            {
+                DataSource source = go.GetComponent<DataSource>( );
+                if( source == null )
+                {
+                    source = go.GetComponentInParent<DataSource>( );
+                }
+                if( source != null )
+                {
+                    return source.FindDataOfClass<T>( default(T) );
+                }
+            }
+            return default(T);
+        }
         
 
         static public GameObject FindChild( this GameObject parent, string targetName, bool includeInactive )
@@ -584,25 +581,24 @@ namespace EG
             return comp;
         }
         
-        //todo MonoEvent
-        // public static MonoEvent AddMonoEvent( this GameObject go, MonoEvent.Action action )
-        // {
-        //     MonoEvent monoEv = go.RequireComponent<MonoEvent>( );
-        //     if( monoEv != null )
-        //     {
-        //         monoEv += action;
-        //     }
-        //     return monoEv;
-        // }
+        public static MonoEvent AddMonoEvent( this GameObject go, MonoEvent.Action action )
+        {
+            MonoEvent monoEv = go.RequireComponent<MonoEvent>( );
+            if( monoEv != null )
+            {
+                monoEv += action;
+            }
+            return monoEv;
+        }
         
-        // public static void RemoveMonoEvent( this GameObject go, MonoEvent.Action action )
-        // {
-        //     MonoEvent monoEv = go.GetComponent<MonoEvent>( );
-        //     if( monoEv != null )
-        //     {
-        //         monoEv -= action;
-        //     }
-        // }
+        public static void RemoveMonoEvent( this GameObject go, MonoEvent.Action action )
+        {
+            MonoEvent monoEv = go.GetComponent<MonoEvent>( );
+            if( monoEv != null )
+            {
+                monoEv -= action;
+            }
+        }
         
         #endregion
         

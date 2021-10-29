@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ctrl_excavatro_01
+  m_Controller: {fileID: 9100000, guid: dd89d944df8f15e46ab52b3518f8b6be, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: c53ea71e40f36a14c89f8b0df60458b4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 236105a4f8d52a64a9a56249f2a63bc4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 20629840199b47748b999f0002d5f659, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7e532f2fb4d785e41886cdcdae34f84c, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 931f1d4916e162f40a092defcf3451f0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9e7493b655dffe5478d877a506b0c3ae, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a7b37f8e5cfdd8049bf1e2ee2b2f15a8, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7b2e5c6ef1010b04a9c040eac1d38641, type: 2}

@@ -3,10 +3,18 @@
 // Copyright©2019-2020 何冠峰
 // Licensed under the MIT license
 //--------------------------------------------------
+
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using Bolt;
+using EG;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.U2D;
+using Object = UnityEngine.Object;
 
 namespace MotionFramework.Editor
 {
@@ -29,12 +37,26 @@ namespace MotionFramework.Editor
 		/// </summary>
 		private static void CacheUIElement(UIManifest manifest)
 		{
+			SerializeValueBehaviour serializeValueBehaviour = manifest.SetupSerializeValueBehaviour();
+				List<string> removeKeys = new List<string>();
+			for (int i = 0; i < serializeValueBehaviour.list.Count; i++)
+			{
+				var sv = serializeValueBehaviour.list[i];
+				if (sv.isGameObject)
+				{
+					if (sv.v_GameObject==null)
+					{
+						removeKeys.Add(sv.key);
+					}
+				}
+			}
+			
+			for (int i = 0; i < removeKeys.Count; i++)
+			{
+				serializeValueBehaviour.list.RemoveField(removeKeys[i]);
+			}
+			removeKeys.Clear();
 			Transform root = manifest.transform;
-
-			// 清空旧数据
-			manifest.ElementPath.Clear();
-			manifest.ElementTrans.Clear();
-
 			Transform[] allTrans = root.GetComponentsInChildren<Transform>(true);
 			for (int i = 0; i < allTrans.Length; i++)
 			{
@@ -79,19 +101,10 @@ namespace MotionFramework.Editor
 		{
 			if (string.IsNullOrEmpty(path) || trans == null)
 				throw new System.NullReferenceException();
-
-			// 如果有重复路径的元素
-			for (int i = 0; i < manifest.ElementPath.Count; i++)
-			{
-				if (manifest.ElementPath[i] == path)
-				{
-					Debug.LogError($"发现重复路径的元素 : {path}");
-					return;
-				}
-			}
-
-			manifest.ElementPath.Add(path);
-			manifest.ElementTrans.Add(trans);
+			
+			SerializeValueBehaviour serializeValueBehaviour =
+				manifest.gameObject.RequireComponent<SerializeValueBehaviour>();
+			serializeValueBehaviour.list.AddField(path, trans.gameObject);
 		}
 
 		/// <summary>

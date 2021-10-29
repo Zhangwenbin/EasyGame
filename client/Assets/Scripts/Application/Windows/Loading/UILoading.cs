@@ -27,7 +27,7 @@ namespace EG
         {
             _slider = GetUIComponent<Slider>("Slider");
 
-            Events<float>.AddListener(EventsType.sceneLoadingPercent,OnUpateTime,typeof(UILoading));
+            Events<float>.AddListener(EventsType.sceneLoadingPercent,OnUpateTime);
         }
 
         private void OnUpateTime(float time)
@@ -47,7 +47,8 @@ namespace EG
 
         public override void OnDestroy()
         {
-            Events<float>.RemoveListener(EventsType.sceneLoadingPercent,OnUpateTime,typeof(UILoading));
+            Events<float>.RemoveListener(EventsType.sceneLoadingPercent,OnUpateTime);
         }
+        
     }
 }

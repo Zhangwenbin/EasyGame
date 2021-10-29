@@ -1,4 +1,5 @@
 ﻿using System;
+using Bolt;
 using EG;
 using UnityEngine;
 using UnityEngine.UI;
@@ -159,21 +160,12 @@ public abstract class CanvasWindow : UIWindow
 	protected virtual void OnSetVisible(bool visible) { }
 
 	#region UI组件相关
-	/// <summary>
-	/// 克隆一个附加的预制体
-	/// </summary>
-	protected GameObject CloneAttachPrefab(string name)
-	{
-		if (_manifest == null)
-			return null;
-		return _manifest.CloneAttachPrefab(name);
-	}
-
+	
 	/// <summary>
 	/// 获取窗口里缓存的元素对象
 	/// </summary>
 	/// <param name="path">对象路径</param>
-	protected Transform GetUIElement(string path)
+	protected GameObject GetUIElement(string path)
 	{
 		if (_manifest == null)
 			return null;
@@ -213,6 +205,11 @@ public abstract class CanvasWindow : UIWindow
 		if (btn != null)
 			btn.onClick.AddListener(call);
 		return btn;
+	}
+
+	protected void Close<T>()
+	{
+		WindowManager.Instance.CloseWindow(typeof(T));
 	}
 	#endregion
 }

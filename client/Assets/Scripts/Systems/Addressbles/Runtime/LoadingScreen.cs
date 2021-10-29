@@ -51,14 +51,14 @@ public class LoadingScreen:MonoBehaviour
 
     private void OnEnable()
     {
-        Events<AssetStatus>.AddListener(EventsType.assetStatusChange,SetTipsStatic,typeof(LoadingScreen));
-        Events<float>.AddListener(EventsType.assetProgressChange,SetProgress,typeof(LoadingScreen));
+        Events<AssetStatus>.AddListener(EventsType.assetStatusChange,SetTipsStatic);
+        Events<float>.AddListener(EventsType.assetProgressChange,SetProgress);
 
     }
 
     private void OnDisable()
     {
-        Events<AssetStatus>.RemoveListener(EventsType.assetStatusChange,SetTipsStatic,typeof(LoadingScreen));
-        Events<float>.RemoveListener(EventsType.assetProgressChange,SetProgress,typeof(LoadingScreen));
+        Events<AssetStatus>.RemoveListener(EventsType.assetStatusChange,SetTipsStatic);
+        Events<float>.RemoveListener(EventsType.assetProgressChange,SetProgress);
     }
 }

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - SINGLETON_DIR
+  - canDestroy
   layers:
   - Default
   - TransparentFX
@@ -12,11 +13,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - ground
+  - player
+  - monster
+  - 3DUI
+  - EFFECT
   - 
   - 
   - 

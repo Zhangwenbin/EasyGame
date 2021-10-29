@@ -2,8 +2,11 @@
 /*@brief  简要描述   
   @author zwb
 ***************************************************************************/
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -13,132 +16,17 @@ namespace EG
     //=========================================================================
     //简要注释
     //=========================================================================
-    public class FsmMachine
-    {
-        private Dictionary<string, IGameState> _states;
-        private IGameState pretState { get;  set; }
-        private IGameState requestState { get;  set; }
-        public IGameState currentState { get; private set; }
-
-        private MonoBehaviour owner;
-
-        public void Initialize(string startState,MonoBehaviour owner)
-        {
-            this.owner = owner;
-            _states = new Dictionary<string, IGameState>();
-            var state = AddState(startState);
-            StartCoroutine(state.OnEnter());
-            currentState = state;
-        }
-        
-        private Coroutine StartCoroutine(IEnumerator routine)
-        {
-            return owner.StartCoroutine(routine);
-        }
-
-        public void AddState(IGameState state)
-        {
-            var name = state.Name;
-            if (!_states.ContainsKey(name))
-            {
-                _states.Add(name,state);
-            }
-        }
-        
-        public IGameState AddState(string name)
-        {
-            if (!_states.ContainsKey(name))
-            {
-                IGameState state;
-                switch (name)
-                {
-                    case InitState.name:
-                        state = new InitState();
-                        break;
-                    case HomeState.name:
-                        state = new HomeState();
-                        break;
-                    default:
-                        state = new IGameState();
-                        break;
-                }
-                _states.Add(name,state);
-            }
-            return _states[name];
-        }
-
-        public bool HasState(string name)
-        {
-            return _states.ContainsKey(name);
-        }
-
-        public IGameState GetState(string name)
-        {
-            if (HasState(name))
-            {
-                return _states[name];
-            }
-            else
-            {
-                return AddState(name);
-            }
-        }
-        
-        public void GoTo(string name)
-        {
-            var next = GetState(name);
-            if (CanGo(currentState,next))
-            {
-                Debug.Log("goto "+name);
-                requestState = next;
-            }
-            else
-            {
-                Debug.LogWarning("can not goto "+name);
-            }
-            
-        }
-
-        public void Update()
-        {
-            while( requestState != null )
-            {
-                currentState.OnExit();
-                
-                pretState     = currentState;
-                currentState  = requestState;
-                requestState  = null;
-                StartCoroutine(currentState.OnEnter());
-            }
-
-            if (currentState!=null)
-            {
-                currentState.OnUpdate();
-            }
-                
-        }
-
-        private bool CanGo(IGameState cur, IGameState next)
-        {
-            return cur.Name != next.Name;
-        }
-        //=========================================================================
-        //Editor 编辑器
-        //=========================================================================
-        #region 编辑器
-        #if UNITY_EDITOR
-
-        #endif
-        #endregion
-    }
-
-    public class IGameState
+    public class IState
     {
         public bool IsStarted;
         public virtual string Name { get;}
 
-        public virtual IEnumerator OnEnter()
+        public object arg;
+        private FsmMachine _fsmMachine;
+        
+        public virtual IEnumerator OnEnter(FsmMachine fsmMachine)
         {
+            _fsmMachine = fsmMachine;
             IsStarted = true;
             yield return null;
         }
@@ -155,6 +43,133 @@ namespace EG
         {
             IsStarted = false;
         }
+
+        public virtual bool CanGoto(IState next)
+        {
+            return true;
+        }
+        
+        public void GotoState(string next,object args=null)
+        {
+            if (_fsmMachine!=null)
+            {
+                _fsmMachine.GoTo(next,args);
+            }
+        }
     }
-  
+    public class FsmMachine
+    {
+        private Dictionary<string, IState> _states;
+        private IState pretState { get;  set; }
+        private IState requestState { get;  set; }
+        public IState currentState { get; private set; }
+
+        private MonoBehaviour owner;
+
+        public void Initialize(string startState,MonoBehaviour owner,string nameSpace)
+        {
+            this.owner = owner;
+            _states = new Dictionary<string, IState>();
+            InitStates(nameSpace);
+            var state = GetState(startState);
+            if (state!=null)
+            {
+                StartCoroutine(state.OnEnter(this));
+                currentState = state;
+            }
+        }
+
+        private void InitStates(string nameSpace)
+        {
+            foreach( System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies() )
+            {
+                if( assembly.FullName.StartsWith( "Mono.Cecil" ) ) continue;
+                if( assembly.FullName.StartsWith( "UnityScript" ) ) continue;
+                if( assembly.FullName.StartsWith( "Boo.Lan" ) ) continue;
+                if( assembly.FullName.StartsWith( "System" ) ) continue;
+                if( assembly.FullName.StartsWith( "I18N" ) ) continue;
+                if( assembly.FullName.StartsWith( "UnityEngine" ) ) continue;
+                if( assembly.FullName.StartsWith( "UnityEditor" ) ) continue;
+                if( assembly.FullName.StartsWith( "mscorlib" ) ) continue;
+                // Debug.Log(assembly.GetName());
+                System.Type[] types = assembly.GetTypes();
+                
+                foreach( System.Type type in types )
+                {
+                    if( type.IsClass && !type.IsAbstract && type.IsSubclassOf( typeof(IState) )&&nameSpace.Equals(type.Namespace) )
+                    {
+                        var state = (IState)Activator.CreateInstance(type);
+                        var name = state.Name;
+                        Debug.Log(name);
+                        if (!_states.ContainsKey(name))
+                        {
+                            _states.Add(name,state);
+                        }
+                    }
+                }
+            }
+        }
+        
+        private Coroutine StartCoroutine(IEnumerator routine)
+        {
+            return owner.StartCoroutine(routine);
+        }
+        
+        public bool HasState(string name)
+        {
+            return _states.ContainsKey(name);
+        }
+
+        public IState GetState(string name)
+        {
+            if (HasState(name))
+            {
+                return _states[name];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
+        public void GoTo(string name,object arg=null)
+        {
+            var next = GetState(name);
+            if (CanGo(currentState,next))
+            {
+                Debug.Log("goto "+name);
+                requestState = next;
+                requestState.arg = arg;
+            }
+            else
+            {
+                Debug.LogError("can not goto "+name);
+            }
+            
+        }
+
+        public void Update()
+        {
+            while( requestState != null )
+            {
+                currentState.OnExit();
+                
+                pretState     = currentState;
+                currentState  = requestState;
+                requestState  = null;
+                StartCoroutine(currentState.OnEnter(this));
+            }
+
+            if (currentState!=null)
+            {
+                currentState.OnUpdate();
+            }
+                
+        }
+
+        private bool CanGo(IState cur, IState next)
+        {
+            return cur.CanGoto(next);
+        }
+    }
 }

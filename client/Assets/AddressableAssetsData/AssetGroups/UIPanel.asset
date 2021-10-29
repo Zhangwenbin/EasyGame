@@ -15,10 +15,10 @@ MonoBehaviour:
   m_GroupName: UIPanel
   m_Data:
     m_SerializedData: []
-  m_GUID: 0360940932ee201498c6e03714bcc0a6
+  m_GUID: 1ca00d30e173bf54c944c7f6a8cc07d1
   m_SerializeEntries:
-  - m_GUID: 78756fad68b25d44c8c795c1d6ca439c
-    m_Address: UIRoot.prefab
+  - m_GUID: 560a61c83f0891540aad15f26a432247
+    m_Address: onHit.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - .prefab
@@ -31,6 +31,30 @@ MonoBehaviour:
     - UIPanel
   - m_GUID: 29f8e492c36e14649ad6ecf6721ba912
     m_Address: UILoading.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - .prefab
+    - UIPanel
+  - m_GUID: 78756fad68b25d44c8c795c1d6ca439c
+    m_Address: UIRoot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - .prefab
+    - UIPanel
+  - m_GUID: f76a5c80b5baf3a4f83140d9585d2668
+    m_Address: UIStartMenu.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - .prefab
+    - UIPanel
+  - m_GUID: 42dd9e700103d254c82969fb798d3791
+    m_Address: UpdateUIRoot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - .prefab
+    - UIPanel
+  - m_GUID: 29fafaec86dc9994788fda389114ae72
+    m_Address: UITest.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - .prefab

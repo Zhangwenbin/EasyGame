@@ -49,6 +49,7 @@ namespace EG
         }
 
         public string key;
+        private bool startLoad;
         public bool isSprite;
         public bool useCache;
 
@@ -96,6 +97,8 @@ namespace EG
             {
                 handle = Addressables.LoadAssetAsync<Object>(key);
             }
+
+            startLoad = true;
         }
 
         /// <summary>
@@ -103,7 +106,7 @@ namespace EG
         /// </summary>
         public bool IsDone
         {
-            get { return useCache || handle.IsDone; }
+            get { return startLoad && (useCache || handle.IsDone); }
         }
 
 
@@ -113,7 +116,7 @@ namespace EG
         /// <returns>True if valid.</returns>
         public bool IsValid
         {
-            get { return useCache || handle.IsValid(); }
+            get { return startLoad? useCache || handle.IsValid():true; }
         }
 
 
@@ -127,7 +130,7 @@ namespace EG
         /// </summary>
         public float PercentComplete
         {
-            get { return useCache ? 1 : handle.PercentComplete; }
+            get { return startLoad? useCache ? 1 : handle.PercentComplete:0; }
         }
 
         private Object result;
@@ -217,13 +220,21 @@ namespace EG
         {
             if (callback != null)
             {
-                callback(key, Result);
+                //委托的执行顺序问题
+                var list = callback.GetInvocationList();
+                for (int i = 0; i < list.Length; i++)
+                {
+                    Debug.Log(list[i].Method.Name);
+                    list[i].DynamicInvoke(key, Result);
+                }
             }
+
         }
 
         public LoadRequest(string key)
         {
             this.key = key;
+            startLoad = false;
         }
 
         public void Release()
@@ -243,6 +254,13 @@ namespace EG
             StartCoroutine(InitializeAsync());
         }
 
+        public void PreloadToPool(string name)
+        {
+           GetAsset(name, (key, obj) =>
+           {
+               ReleaseAsset(key,obj,true);
+           });
+        }
 
         /// <summary>
         /// 从assetbundle中加载asset
@@ -262,11 +280,11 @@ namespace EG
 
             if (priority == LoadPriority.Default)
             {
-                LoadAssetAsyncQueue(name).callback = callback;
+                LoadAssetAsyncQueue(name).callback += callback;
             }
             else
             {
-                LoadAssetAsync(name).callback = callback;
+                LoadAssetAsync(name).callback += callback;
             }
         }
 
@@ -346,7 +364,7 @@ namespace EG
 
 
         //ɾ����Դ����
-        public virtual void ReleaseAsset(string name, UnityEngine.Object obj, bool recycle = true)
+        public virtual void ReleaseAsset(string name, UnityEngine.Object obj, bool recycle = false)
         {
             if (obj is GameObject)
             {
@@ -627,11 +645,16 @@ namespace EG
 
         private Dictionary<string, byte[]> luaBytes = new Dictionary<string, byte[]>();
 
-        public static readonly string RESOURCE_ASSETBUNDLE_PATH = "ResDLC";
+        public const string RESOURCE_ASSETBUNDLE_PATH = "ResDLC";
 
 
-        private LoadRequest LoadAssetAsyncQueue(string key, bool isSprite = false)
+        public LoadRequest LoadAssetAsyncQueue(string key, bool isSprite = false)
         {
+            var loadingInfo = IsLoading(key);
+            if (loadingInfo.Item1)
+            {
+                return loadingInfo.Item2;
+            }
             var req = new LoadRequest(key);
             req.isSprite = isSprite;
             comingRequests.Add(req);
@@ -701,6 +724,11 @@ namespace EG
 
         public LoadRequest LoadAssetAsync(string key, bool isSprite = false, LoadRequest req = null)
         {
+            var loadingInfo = IsLoading(key);
+            if (loadingInfo.Item1)
+            {
+                return loadingInfo.Item2;
+            }
             if (req == null)
             {
                 req = new LoadRequest(key);
@@ -714,6 +742,20 @@ namespace EG
 
             req.Load();
             return req;
+        }
+
+        private (bool, LoadRequest) IsLoading(string key)
+        {
+            //不行
+            // foreach (var loading in loadingRequests)
+            // {
+            //     if (!loading.IsDone&&loading.key==key)
+            //     {
+            //         return (true, loading);
+            //     }
+            // }
+
+            return (false, null);
         }
 
 

@@ -14,15 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DefaultGroup: db2e84e4e777cc84aae034466ddce600
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
-  m_DisableCatalogUpdateOnStart: 0
+  m_CatalogRequestsTimeout: 0
+  m_DisableCatalogUpdateOnStart: 1
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
+  m_NonRecursiveBuilding: 0
   m_maxConcurrentWebRequests: 500
   m_ContiguousBundles: 0
   m_ShaderBundleNaming: 0
   m_ShaderBundleCustomNaming: 
+  m_MonoScriptBundleNaming: 0
+  m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
     m_Id: 
   m_RemoteCatalogLoadPath:
@@ -32,12 +36,15 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: ecc1c8d3c7ece9a4b8ee7a636b1b072f, type: 2}
   - {fileID: 11400000, guid: 58016231a5c6d784fa72a38c0f4c71f8, type: 2}
-  - {fileID: 11400000, guid: 8e2bb969bee14d5418d8237032d11f9c, type: 2}
+  - {fileID: 11400000, guid: 21e2b5f0b5679534c822c423a9a16bff, type: 2}
   - {fileID: 11400000, guid: 4462db12b550d714c83f2e188f742c26, type: 2}
   - {fileID: 11400000, guid: d1fe441ab66bf1f4680e31b1a66184d8, type: 2}
-  - {fileID: 11400000, guid: 07855e611905de945817dcce5d83a3ff, type: 2}
+  - {fileID: 11400000, guid: 8e2bb969bee14d5418d8237032d11f9c, type: 2}
   - {fileID: 11400000, guid: dead6a54c7b603e44a8d409136c847ff, type: 2}
+  - {fileID: 11400000, guid: 07855e611905de945817dcce5d83a3ff, type: 2}
   - {fileID: 11400000, guid: f7ad054fce7fc1446a79073f04c03627, type: 2}
+  - {fileID: 11400000, guid: 016c2c1810de8094db86e687ddb069be, type: 2}
+  - {fileID: 11400000, guid: a4f3d413649007542a3886fe6e846938, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -91,6 +98,10 @@ MonoBehaviour:
     - Scenes
     - .png
     - UITexture
+    - character
+    - preload
+    - character_tex
+    - FMODBanks
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: e6e870283553834448a0f81db4aef027, type: 2}

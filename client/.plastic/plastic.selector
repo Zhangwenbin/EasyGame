@@ -1,0 +1,4 @@
+repository "client2@ssl://zhangwenbin-4078076@sh03-plasticscm.unity.cn:8787"
+  path "/"
+    smartbranch "/main/991355745" 
+     

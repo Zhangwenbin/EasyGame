@@ -206,6 +206,7 @@ namespace EG
             StringAndEnum       ,
             BitFlag             ,
             UIImageArray        ,
+            EventRef            ,
 
             //SG: added for Global (Global-only enums should start from here to prevent clashing with JP enums)
             Vector4 = 1000      ,
@@ -832,10 +833,9 @@ namespace EG
                         case Type.Curve:
                             prop.animationCurveValue = EditorHelp.CurveField( prop.serializedObject.targetObject, text, prop.animationCurveValue );
                             break;
-                        //todo UITweenController
-                        // case Type.UITweenController:
-                        //     prop.objectReferenceValue = EditorHelp.ObjectField( prop.serializedObject.targetObject, text, prop.objectReferenceValue, typeof( UITweenController ), true ) as UITweenController;
-                        //     break;
+                        case Type.UITweenController:
+                            prop.objectReferenceValue = EditorHelp.ObjectField( prop.serializedObject.targetObject, text, prop.objectReferenceValue, typeof( UITweenController ), true ) as UITweenController;
+                            break;
                         case Type.MonoBehaviour:
                             GUIField_ObjectField<UnityEngine.MonoBehaviour>( text, objType, prop );
                             break;
@@ -1038,6 +1038,9 @@ namespace EG
                         // case Type.UIImageArray:
                         //     GUIField_ObjectField<UIImageArray>(text, objType, prop);
                         //     break;
+                        case Type.EventRef:
+                            
+                            break;
                         }
                     }
                     UnityEditor.EditorGUILayout.EndHorizontal( );
@@ -1143,7 +1146,7 @@ namespace EG
                     {
                         UnityEditor.EditorGUILayout.BeginHorizontal( );
                         {
-                            UnityEditor.EditorGUILayout.LabelField( "サイズ:" + prop.arraySize );
+                            UnityEditor.EditorGUILayout.LabelField( "数量:" + prop.arraySize );
                             _edit_array_size = UnityEditor.EditorGUILayout.TextField( _edit_array_size, GUILayout.Width( 80f ) );
                             int size = Utility.ParseInt( _edit_array_size, -1 );
                             GUI.enabled = size != -1;

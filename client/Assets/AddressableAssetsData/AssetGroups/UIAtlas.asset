@@ -15,16 +15,22 @@ MonoBehaviour:
   m_GroupName: UIAtlas
   m_Data:
     m_SerializedData: []
-  m_GUID: 61c83c2aeeee2c04cac1ebdeb18c1704
+  m_GUID: 5c8796ef9241fcf4a8a85296953c95a0
   m_SerializeEntries:
+  - m_GUID: 46a21ef946fda1446ab084f90264da86
+    m_Address: Common.spriteatlas
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - .spriteatlas
+    - UIAtlas
   - m_GUID: 0768fd14b430b4c41a66ba0d0fe92040
     m_Address: UIGuide.spriteatlas
     m_ReadOnly: 0
     m_SerializedLabels:
     - .spriteatlas
     - UIAtlas
-  - m_GUID: 46a21ef946fda1446ab084f90264da86
-    m_Address: Common.spriteatlas
+  - m_GUID: 9fbb4d94e8ab4b0489aab7ae8c36a227
+    m_Address: UIStartMenu.spriteatlas
     m_ReadOnly: 0
     m_SerializedLabels:
     - .spriteatlas

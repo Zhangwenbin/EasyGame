@@ -66,13 +66,12 @@ public static class Events
     #region 常量与字段
 
     private static readonly Dictionary<EventsType, Delegate> eventTable = EventInternal.eventTable;
-    private static readonly Dictionary<EventsType, Dictionary<string, EventsType>> _listenerDic = new Dictionary<EventsType, Dictionary<string, EventsType>>();
 
     #endregion
 
     #region 方法
 
-    public static void AddListener(EventsType eventType, Action handler, Type type=null)
+    public static void AddListener(EventsType eventType, Action handler)
     {
         EventInternal.OnListenerAdding(eventType, handler);
         Delegate d = eventTable[eventType];
@@ -84,32 +83,10 @@ public static class Events
         {
            eventTable[eventType] = (Action)eventTable[eventType] + handler;
         }
-        if (type==null)
-        {
-            return;
-        }
-        Dictionary<string, EventsType> types;
-        if (!_listenerDic.ContainsKey(eventType))
-        {
-            types = new Dictionary<string, EventsType>();
-            types.Add(type.Name, eventType);
-            _listenerDic.Add(eventType, types);
-        }
-        else
-        {
-            _listenerDic.TryGetValue(eventType, out types);
-            if (types.ContainsKey(type.Name))
-            {
-                //addListener already!!!
-            }
-            else
-            {
-                types.Add(type.Name, eventType);
-            }
-        }
+       
     }
 
-    public static void RemoveListener(EventsType eventType, Action handler, Type type=null)
+    public static void RemoveListener(EventsType eventType, Action handler)
     {
         if (!EventInternal.HasListener(eventType)) return;
 
@@ -124,31 +101,6 @@ public static class Events
         else
         {
             Debug.LogError("消息的监听函数和要移除的函数不一致");   
-        }
-        if (type == null)
-        {
-            return;
-        }
-        Dictionary<string, EventsType> types;
-        if (!_listenerDic.ContainsKey(eventType))
-        {
-            //no listener!!!
-        }
-        else
-        {
-            _listenerDic.TryGetValue(eventType, out types);
-            if (types.ContainsKey(type.Name))
-            {
-                types.Remove(type.Name);
-                if (types.Count == 0)
-                {
-                    _listenerDic.Remove(eventType);
-                }
-            }
-            else
-            {
-                //no listener!!!
-            }
         }
     }
 
@@ -180,7 +132,6 @@ public static class Events
         }
 
         eventTable.Clear();
-        _listenerDic.Clear();
     }
     
 
@@ -214,66 +165,25 @@ public static class Events<T>
     #region 常量与字段
 
     private static readonly Dictionary<EventsType, Delegate> eventTable = EventInternal.eventTable;
-    private static readonly Dictionary<EventsType, Dictionary<string, EventsType>> _listenerDic = new Dictionary<EventsType, Dictionary<string, EventsType>>();
 
     #endregion
 
     #region 方法
 
-    public static void AddListener(EventsType eventType, Action<T> handler, Type type)
+    public static void AddListener(EventsType eventType, Action<T> handler)
     {
         EventInternal.OnListenerAdding(eventType, handler);
         eventTable[eventType] = (Action<T>)eventTable[eventType] + handler;
-
-        Dictionary<string, EventsType> types;
-        if (!_listenerDic.ContainsKey(eventType))
-        {
-            types = new Dictionary<string, EventsType>();
-            types.Add(type.Name, eventType);
-            _listenerDic.Add(eventType, types);
-        }
-        else
-        {
-            _listenerDic.TryGetValue(eventType, out types);
-            if (types.ContainsKey(type.Name))
-            {
-                //addListener already!!!
-            }
-            else
-            {
-                types.Add(type.Name, eventType);
-            }
-        }
+       
     }
 
-    public static void RemoveListener(EventsType eventType, Action<T> handler, Type type)
+    public static void RemoveListener(EventsType eventType, Action<T> handler)
     {
         if (!EventInternal.HasListener(eventType)) return;
         EventInternal.OnListenerRemoving(eventType, handler);
         eventTable[eventType] = (Action<T>)eventTable[eventType] - handler;
         EventInternal.OnListenerRemoved(eventType);
-
-        Dictionary<string, EventsType> types;
-        if (!_listenerDic.ContainsKey(eventType))
-        {
-            //no listener!!!
-        }
-        else
-        {
-            _listenerDic.TryGetValue(eventType, out types);
-            if (types.ContainsKey(type.Name))
-            {
-                types.Remove(type.Name);
-                if (types.Count == 0)
-                {
-                    _listenerDic.Remove(eventType);
-                }
-            }
-            else
-            {
-                //no listener!!!
-            }
-        }
+       
     }
 
     //dispatch
@@ -303,7 +213,8 @@ public static class Events<T>
 public enum EventsType
 {
     //场景相关
-    sceneLoadingPercent,
+    sceneLoadingPercent=0,
+    onSceneLoaded,
     
     //资源相关
     assetStatusChange=100,

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42188ad5254f62b42be0289de48062ea, type: 3}
+  m_Name: Particle System
+  m_EditorClassIdentifier: 
+  m_Prefab: {fileID: 6236018688718315549, guid: ed30f50b849f2754985d337044c400ca, type: 3}
+  m_Param:
+    PlayMode: 2
+    AliveTime: 6
+    GenOption:
+      m_Value: 0
+  m_EvParam: {fileID: 0}
+  m_AttachedUIPrefab: {fileID: 0}

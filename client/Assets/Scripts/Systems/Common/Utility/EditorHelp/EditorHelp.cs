@@ -1,8 +1,4 @@
-﻿/**************************************************************************/
-/*! @file   EditorHelp.cs
-    @brief  エディタヘルプ
-***************************************************************************/
-using UnityEngine;
+﻿using UnityEngine;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,37 +17,21 @@ using UnityEditor.SceneManagement;
 namespace EG
 {
     #if UNITY_EDITOR
-    //=========================================================================
-    //. EditorUtility
-    //=========================================================================
     public static partial class EditorHelp
     {
         public static void SetTitle( this EditorWindow window, string title )
         {
             window.titleContent.text = title;
         }
-        
-        //=========================================================================
-        //. アセット作成
-        //=========================================================================
-        #region アセット作成
-        
-        /// ***********************************************************************
-        /// <summary>
-        /// 新しいスクリプタルオブジェクトアセットを作成する
-        /// </summary>
-        /// ***********************************************************************
+  
         public static T CreateScriptableObject<T>( System.Action<ScriptableObject,string,string> callback ) where T : ScriptableObject
         {
             T asset = ScriptableObject.CreateInstance<T>( );
             
-            // インスタンスID
             int instanceID = asset.GetInstanceID( );
             
-            //マテリアルのアイコンを取得
             Texture2D icon = AssetPreview.GetMiniThumbnail( asset );
             
-            // 生成クラス
             if( callback != null )
             {
                 DoCreateScriptableObject endNameEditAction = ScriptableObject.CreateInstance<DoCreateScriptableObject>();
@@ -61,11 +41,6 @@ namespace EG
             return asset;
         }
         
-        /// ***********************************************************************
-        /// <summary>
-        /// 中身書き換え
-        /// </summary>
-        /// ***********************************************************************
         public class DoCreateScriptableObject : EndNameEditAction
         {
             public System.Action<ScriptableObject,string,string> Callback;
@@ -87,18 +62,7 @@ namespace EG
             }
         }
         
-        #endregion
-        
-        //=========================================================================
-        //. スクリプタルオブジェクト
-        //=========================================================================
-        #region スクリプタルオブジェクト
-        
-        /// ***********************************************************************
-        /// <summary>
-        /// スクリプタルオブジェクトの生成
-        /// </summary>
-        /// ***********************************************************************
+       
         public static T CreateAssetOfType<T>() where T : ScriptableObject
         {
             T asset = ScriptableObject.CreateInstance<T>( );
@@ -125,47 +89,26 @@ namespace EG
             return asset;
         }
         
-        #endregion
-        
-        //=========================================================================
-        //. IO
-        //=========================================================================
-        #region IO
-        
-        /// ***********************************************************************
-        /// <summary>
-        /// Editor用のTempPath取得
-        /// </summary>
-        /// ***********************************************************************
         public static string GetTempPath( bool temporary = false )
         {
             string path = "/TempEditor";
 
             if (temporary)
             {
-                // バンドルID単位で管理したい場合
                 path = Application.temporaryCachePath + path;
             }
             else
             {
-                // リポジトリ単位で管理したい場合
                 path = Application.dataPath + "/.." + path;
             }
 
             return path;
         }
-
-        /// ***********************************************************************
-        /// <summary>
-        /// 保存
-        /// </summary>
-        /// ***********************************************************************
+        
         public static void ConfigSave<T>( string file, T value, bool temporary = false )
         {
-            // 保存
             if( value != null )
             {
-                // 保存
                 string text = JsonUtility.ToJson( value, true );
                 string path = GetTempPath(temporary) + "/" + file + ".txt";
                 CreateDirectory( path );
@@ -173,11 +116,6 @@ namespace EG
             }
         }
         
-        /// ***********************************************************************
-        /// <summary>
-        /// 読み込み
-        /// </summary>
-        /// ***********************************************************************
         public static T ConfigLoad<T>( string file, T defaultValue, bool temporary = false )
         {
             T result = defaultValue;
@@ -193,11 +131,6 @@ namespace EG
             return result;
         }
         
-        /// ***********************************************************************
-        /// <summary>
-        /// フォルダ生成
-        /// </summary>
-        /// ***********************************************************************
         public static void CreateDirectory( string path )
         {
             FileUtility.CreateDirectory( path );
@@ -220,12 +153,6 @@ namespace EG
             return EditorUtility.OpenFilePanel( title, folder, extension );
         }
         
-        #endregion
-        
-        //=========================================================================
-        //. プログレスバー
-        //=========================================================================
-        #region プログレスバー
         
         public static class AsyncProgressBar
         {
@@ -269,28 +196,12 @@ namespace EG
             }
         }
          
-        #endregion
         
-        //=========================================================================
-        //. ヘルパー
-        //=========================================================================
-        #region ヘルパー
-        
-        /// ***********************************************************************
-        /// <summary>
-        /// SetDirty オーバーライド
-        /// </summary>
-        /// ***********************************************************************
         public static void SetDirty( UnityEngine.Object obj )
         {
             UnityEditor.EditorUtility.SetDirty( obj );
         }
         
-        /// ***********************************************************************
-        /// <summary>
-        /// シリアライズプロパティのコピー( self -> prop へコピー )
-        /// </summary>
-        /// ***********************************************************************
         public static void GenericCopyTo( this SerializedProperty self, SerializedProperty prop, System.Type propType )
         {
             List<SerializedProperty> propList = new List<SerializedProperty>( ); 
@@ -322,11 +233,6 @@ namespace EG
             }
         }
         
-        /// ***********************************************************************
-        /// <summary>
-        /// シリアライズプロパティのコピー( self -> prop へコピー )
-        /// </summary>
-        /// ***********************************************************************
         public static void CopyTo( this SerializedProperty self, SerializedProperty prop, System.Type propType )
         {
             switch( prop.propertyType )
@@ -359,7 +265,6 @@ namespace EG
                 prop.exposedReferenceValue = self.exposedReferenceValue;
                 break;
             case SerializedPropertyType.FixedBufferSize:
-                // 読み込み専用
                 break;
             case SerializedPropertyType.Float:
                 prop.floatValue = self.floatValue;
@@ -416,14 +321,7 @@ namespace EG
                 break;
             }
         }
-        
-        #endregion
-        
-        //=========================================================================
-        //. ビューポートに表示する警告
-        //=========================================================================
-        #region ビューポートに表示する警告
-         
+
         public class ViewportWarnings
         {
             static List<string> mLines = new List<string>();
@@ -450,8 +348,6 @@ namespace EG
             }
         }
         
-        #endregion
-
 
         public static List<string> GetHierarchyPath(Transform t, List<string> hierarchy = null)
         {
@@ -611,25 +507,21 @@ namespace EG
 
             if (stage != null)
             {
-                // prefabStage(prefabダブルクリックで開くやつ)上のインスタンス
                 path = stage.prefabAssetPath;
                 root = stage.prefabContentsRoot;
             }
             else if (PrefabUtility.IsPartOfPrefabAsset(go))
             {
-                // AssetDatabase.LoadAssetAtPath()等で取得されたprefabアセット
                 path = AssetDatabase.GetAssetPath(go.GetInstanceID());
                 root = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             }
             else if (PrefabUtility.IsPartOfPrefabInstance(go))
             {
-                // sceneに置かれたprefabのインスタンス
                 path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(go);
                 root = PrefabUtility.GetNearestPrefabInstanceRoot(go);
             }
             else if (EditorSceneManager.IsPreviewSceneObject(go.transform.root.gameObject))
             {
-                // PrefabUtility.LoadPrefabContents()で開いたインスタンス
                 path = go.scene.path;
                 root = go.transform.root.gameObject;
             }
@@ -653,10 +545,7 @@ namespace EG
                     }
                     return -1;
                 }
-
-                // TryGetGUIDAndLocalFileIdentifierは常にrootのLocalIDを返すので,
-                // 深いオブジェクトのLocalIDが欲しい時は自力でもぐってリフレクションで取得する
-                // Unsupported.GetLocalIdentifierInFile()はint32を返すので下位32bitしか取得できない.
+                
                 t = prefab.transform;
                 foreach (var h in hierarchy)
                 {
@@ -787,6 +676,12 @@ namespace EG
 
             return -1;
         }
+        
+        public static T Load<T>(string path) where T : UnityEngine.Object
+        {
+            var obj = UnityEditor.AssetDatabase.LoadAssetAtPath<T>("Assets/" + AssetManager.RESOURCE_ASSETBUNDLE_PATH + path);
+            return obj;
+        }
 
         /// 
         public static void ValidateNullableSerializeFields(MonoBehaviour behaviour)
@@ -807,7 +702,7 @@ namespace EG
                 {
                     var go = behaviour.gameObject;
                     var hierarchy = go ? AnimationUtility.CalculateTransformPath(go.transform, go.transform.root) : "";
-                    var msg = $"null非許容のフィールド[{field.Name}]の値がnullの状態です <{type.Name}> ({hierarchy})";
+                    var msg = $"空不允许字段[{field.Name}]的值为空。 <{type.Name}> ({hierarchy})";
                     Debug.LogError(msg, behaviour);
                     sb.Append(msg);
                     sb.Append('\n');
@@ -816,12 +711,11 @@ namespace EG
 
             if (sb.Length > 0)
             {
-                EditorUtility.DisplayDialog("null非許容", sb.ToString(), "Ok", "");
+                EditorUtility.DisplayDialog("null", sb.ToString(), "Ok", "");
             }
             FastStringBuilder.Free(sb);
         }
-
-        /// <summary>string一覧</summary>
+        
         public static string DrawPopupStringField(string label, string value, string[] options, bool keepValueOption = true)
         {
             var index = Array.IndexOf(options, value);

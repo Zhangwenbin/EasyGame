@@ -94,6 +94,7 @@ namespace EG
 			else
 				_prepareCallback = prepareCallback;
 		}
+
 		internal void InternalLoad(string location, System.Action<UIWindow> prepareCallback, System.Object userData)
 		{
 			if (_isLoadAsset)
@@ -136,6 +137,11 @@ namespace EG
 			
 		}
 
+		public void RecleToPool(string key,UnityEngine.Object obj)
+		{
+			AssetManager.Instance.ReleaseAsset(key,obj,true);
+		}
+
 		private void Handle_Completed(string key,UnityEngine.Object obj)
 		{
 			if (obj == null)
@@ -160,7 +166,7 @@ namespace EG
 			IsDone = true;
 		}
 		protected abstract void OnAssetLoad(GameObject go);
-
+		
 		#region 异步相关
 		bool IEnumerator.MoveNext()
 		{

@@ -18,9 +18,14 @@ PluginImporter:
       settings:
         ScriptingBackend: Il2Cpp
   - first:
-      Any: ''
+      Any: 
     second:
       enabled: 0
+      settings: {}
+  - first:
+      CloudRendering: CloudRendering
+    second:
+      enabled: 1
       settings: {}
   - first:
       Editor: Editor
@@ -28,6 +33,11 @@ PluginImporter:
       enabled: 1
       settings:
         DefaultValueInitialized: true
+  - first:
+      GameCoreXboxOne: GameCoreXboxOne
+    second:
+      enabled: 1
+      settings: {}
   - first:
       Lumin: Lumin
     second:
@@ -40,6 +50,16 @@ PluginImporter:
       settings: {}
   - first:
       PS4: PS4
+    second:
+      enabled: 1
+      settings: {}
+  - first:
+      PS5: PS5
+    second:
+      enabled: 1
+      settings: {}
+  - first:
+      Stadia: Stadia
     second:
       enabled: 1
       settings: {}
@@ -100,7 +120,6 @@ PluginImporter:
     second:
       enabled: 1
       settings: {}
-  userData: ''
-  assetBundleName: ''
-  assetBundleVariant: ''
-...
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

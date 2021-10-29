@@ -15,9 +15,7 @@ namespace EG
         
         public static readonly string       ISO_8601_FORMAT     = "yyyy-MM-ddTHH:mm:ss.fffZ";
         
-        // 
-        #region フィールド
-        
+
         [SerializeField]    private bool    m_Burdening         = false;
         [SerializeField]    private bool    m_FixFrameRate      = false;
                             private int     m_FrameRate         = FPS_NORMAL;
@@ -41,12 +39,8 @@ namespace EG
                             
                             private long    m_FrameCount        = 0;
                             private long    m_FrameStartCount   = 0;
-        #endregion
-        
-        // プロパティ
-        #region プロパティ
-        
-        // フレームカウントの取得
+
+
         public static long      FrameCount
         {
             get { return Instance.m_FrameCount; }
@@ -56,31 +50,27 @@ namespace EG
             get { return Instance.m_FrameCount - Instance.m_FrameStartCount; }
         }
         
-        // 処理落ちレートの取得
         public static float     DeltaFall
         {
             get { return Instance.m_DeltaTime * (float)Instance.m_FrameRate; }
         }
         
-        // フレームレートの取得
         public static int       FrameRate
         {
             get { return Instance.m_FrameRate == -1 ? 60: Instance.m_FrameRate; }
             set { Instance.m_FrameRate = value; }
         }
         
-        // FPSの取得
         public static float     Fps
         {
             get { return Instance.m_Fps;        }
         }
         
-        // 可変更新時間の取得(速度レートの影響を受けない)
         public static float     DeltaTimeSystem
         {
             get { return Instance.m_DeltaTimeSystem; }
         }
-        // 可変更新時間の取得(速度レートの影響を受ける)
+
         public static float     DeltaTime
         {
             get { return Instance.m_DeltaTime; }
@@ -90,27 +80,25 @@ namespace EG
             get { return Instance.m_UnscaledDeltaTime; }
         }
         
-        // ゲーム起動からの経過時間
         public static float     Time
         {
             get { return Instance.m_Time; }
         }
         
-        // 速度レート
         public static float     SpeedRate
         {
             set { Instance.m_SpeedRate = value;     }
             get { return Instance.m_SpeedRate;      }
         }
         
-        // ローカル速度レート
+
         public static float     LocalSpeedRate
         {
             set { Instance.m_LocalSpeedRate = value;     }
             get { return Instance.m_LocalSpeedRate;      }
         }
         
-        // レベルロードからの経過時間
+
         public static float     SinceTime
         {
             get { return Instance.m_SinceTime; }
@@ -121,21 +109,10 @@ namespace EG
             get { return Instance.m_SlowTime > 0; }
         }
         
-        #endregion
         
-        //=========================================================================
-        //. 初期化
-        //=========================================================================
-        #region 初期化
-        
-        /// ***********************************************************************
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        /// ***********************************************************************
         public override void Initialize()
         {
-            if( isInitialized )
+            if( IsInitialized() )
             {
                 return;
             }
@@ -144,26 +121,13 @@ namespace EG
             
         }
         
-        #endregion
         
-        //=========================================================================
-        //. 更新
-        //=========================================================================
-        #region 更新
-        
-        /// ***********************************************************************
-        /// <summary>
-        /// 更新
-        /// </summary>
-        /// ***********************************************************************
         private void Update()
         {
             float rate = 1.0f;
             
-            // フレームカウントの保存
             m_FrameCount = UnityEngine.Time.frameCount;
-            
-            // フレーム開始時間
+
             m_Time += m_DeltaTime; 
             
             if( m_SlowTime > 0 )
@@ -211,7 +175,6 @@ namespace EG
             
             if( m_FixFrameRate == false )
             {
-                // 可変時間
                 m_DeltaTimeSystem   = 
                 m_DeltaTime         = UnityEngine.Time.deltaTime;
                 m_UnscaledDeltaTime = UnityEngine.Time.timeScale == 0 ? UnityEngine.Time.fixedDeltaTime: UnityEngine.Time.deltaTime / UnityEngine.Time.timeScale;
@@ -219,43 +182,22 @@ namespace EG
             }
             else
             {
-                // 固定時間
                 m_DeltaTimeSystem   = 
                 m_DeltaTime         = m_Fps * m_SpeedRate * m_LocalSpeedRate * rate;
                 m_UnscaledDeltaTime = m_Fps;
             }
             
-            // 擬似処理負荷モード
             if( m_Burdening && m_FrameRate > 0 )
             {
                 Application.targetFrameRate = (int)( m_FrameRate + (float)m_FrameRate * Random.Range( -0.5f, 0.0f ) );
-                //Application.targetFrameRate = (int)( m_FrameRate + (float)m_FrameRate * Random.Range( -0.8f, 0.0f ) );
             }
             
-            // 速度レートを掛ける
             //m_DeltaTime *= m_SpeedRate;
             UnityEngine.Time.timeScale = m_SpeedRate * m_LocalSpeedRate * rate;
             
         }
         
-#endregion
         
-        //=========================================================================
-        //. スロー
-        //=========================================================================
-#region スロー
-        
-        /// ***********************************************************************
-        /// <summary>
-        /// スロー開始
-        /// </summary>
-        /// <param name="time">スロー最大時間</param>
-        /// <param name="time_s">スロー開始時間</param>
-        /// <param name="time_e">スロー戻り時間</param>
-        /// <param name="rate">スローレート</param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        /// ***********************************************************************
         public void SetSlow( float time, float time_s, float time_e, float rate )
         {
             m_SlowNowTime   = 0.0f;
@@ -275,28 +217,13 @@ namespace EG
             SetSlow( time, 0.0f, time_e, rate );
         }
         
-        /// ***********************************************************************
-        /// <summary>
-        /// スロー解除
-        /// </summary>
-        /// ***********************************************************************
+
         public void ResetSlow( )
         {
             m_SlowTime      = 0;
         }
         
-#endregion
         
-        //=========================================================================
-        //. 設定/取得
-        //=========================================================================
-#region 設定/取得
-        
-        /// ***********************************************************************
-        /// <summary>
-        /// フレームカウントの初期値を設定
-        /// </summary>
-        /// ***********************************************************************
         public static void SetFrameStartCount( )
         {
             TimerManager inst = TimerManager.Instance;
@@ -304,11 +231,7 @@ namespace EG
             inst.m_FrameStartCount = inst.m_FrameCount;
         }
         
-        /// ***********************************************************************
-        /// <summary>
-        /// 係数を速度倍率に合わせて補正
-        /// </summary>
-        /// ***********************************************************************
+
         public static float CalcValueSpeedRate( ref float value, float rate )
         {
             TimerManager inst = TimerManager.Instance;
@@ -328,6 +251,5 @@ namespace EG
             return result;
         }
         
-#endregion
     }
 }

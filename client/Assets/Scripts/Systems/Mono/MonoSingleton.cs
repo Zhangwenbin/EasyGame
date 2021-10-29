@@ -13,7 +13,7 @@ namespace EG
         
         protected bool                  m_Initialize            = false;
         
-        public bool isInitialized       { get { return m_Initialize;            } }
+        private bool isInitialized       { get { return m_Initialize;            } }
         
 
         public bool IsInitialized( )    { return m_Initialize;                  }
@@ -51,27 +51,6 @@ namespace EG
             return m_Instance != null;
         }
         
-        
-        public virtual void OnSceneLoaded( UnityEngine.SceneManagement.Scene sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode )
-        {
-        }
-        
-
-        protected virtual void OnCreate( )
-        {
-            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        
-        protected virtual void Awake()
-        {
-            OnCreate();
-        }
-        
-
-        protected virtual void Start()
-        {
-            // DontDestroyOnLoad( this );
-        }
         
         public virtual void Initialize()
         {
