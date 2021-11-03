@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="de649846-b568-4e41-919e-f5f8870466ee" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/CharacterViewer/PreviewUnit.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/CharacterViewer/PreviewUnit.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Scenes.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Scenes.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/Scenes_BundledAssetGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/Scenes_BundledAssetGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/Scenes_ContentUpdateGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/Scenes_ContentUpdateGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UIAtlas_BundledAssetGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UIAtlas_BundledAssetGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UIAtlas_ContentUpdateGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UIAtlas_ContentUpdateGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UIPanel_BundledAssetGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UIPanel_BundledAssetGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UIPanel_ContentUpdateGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UIPanel_ContentUpdateGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UITexture_BundledAssetGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UITexture_BundledAssetGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UITexture_ContentUpdateGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/UITexture_ContentUpdateGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/codedll_BundledAssetGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/codedll_BundledAssetGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/codedll_ContentUpdateGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/codedll_ContentUpdateGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/config_BundledAssetGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/config_BundledAssetGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/config_ContentUpdateGroupSchema.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Schemas/config_ContentUpdateGroupSchema.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/UIAtlas.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/UIAtlas.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/UIPanel.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/UIPanel.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/UITexture.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/UITexture.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/codedll.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/codedll.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/config.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/config.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ludiq/Bolt.Core/Generated/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ludiq/Bolt.Core/Generated/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ludiq/Bolt.Flow/Generated/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ludiq/Bolt.Flow/Generated/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ludiq/Bolt.Flow/Generated/UnitOptions.db" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ludiq/Bolt.Flow/Generated/UnitOptions.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ludiq/Bolt.State/Generated/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ludiq/Bolt.State/Generated/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ludiq/Ludiq.Core/Generated/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ludiq/Ludiq.Core/Generated/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ludiq/Ludiq.Graphs/Generated/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ludiq/Ludiq.Graphs/Generated/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MotionSetting/AssetImporterSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MotionSetting/AssetImporterSetting.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ResDLC/Charactor/Player/MB/Prefab/MB.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ResDLC/Charactor/Player/MB/Prefab/MB.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/Addressbles/Runtime/AssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/Addressbles/Runtime/AssetManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/Event2.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5CAC3F76-5EFB-4A71-98FB-BE8126E46E77/27/46f4570a/GUIUtility.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F427A2CD-9F1A-412A-B26B-288BDCA4D453/fa/fb8a4c36/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Track/Common/EventTrackAnimation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FB001E01-371B-4ADC-A200-13E0AC763896/f2/72974ce5/IntPtr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Systems/Animation/EditorAnimationPlayer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/973DE711-F457-4163-AA90-E6E76787EE38/5a/6a0c3acb/EditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <changedPaths>
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EditorInspector_EffectParam.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EditorWindow_Event.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventPlayerMachine.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorInspector_EventPlayerMachine.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_Event_OnPlaying.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_Event_Timeline.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_EventBugfix.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_FindEventPlayer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_PreviewController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_UnitMatcapSetting.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Animation/EditorAnimationPlayer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Addressbles/Runtime/AssetManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/CharacterViewer/EditorWindow_CharacterViewer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EditorInspector_EventParam.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/CharacterViewer/EditorWindow_CharacterViewer_Chara.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Track/Common/EventTrackAnimation.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_Event.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_Event_Utility.cs" />
+    </changedPaths>
+  </component>
+  <component name="ProjectId" id="1yLfpuMCX9fruYarGSxyp7TMzoA" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34994584" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
+    <property name="Discover.Launch.Via.Unity" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="1392">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" value="1392" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="de649846-b568-4e41-919e-f5f8870466ee" name="Default Changelist" comment="" />
+      <created>1632035975914</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1632035975914</updated>
+      <workItem from="1632036011459" duration="4098000" />
+      <workItem from="1632470235615" duration="12816000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Systems/Event2/EventPlayer.cs</url>
+          <line>131</line>
+          <properties documentPath="C:\zwb\study\EasyGame\client\Assets\Scripts\Systems\Event2\EventPlayer.cs" initialLine="131" containingFunctionPresentation="method 'UpdateEvent'">
+            <startOffsets>
+              <option value="3796" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3845" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Systems/Event2/EventPlayer.cs</url>
+          <line>124</line>
+          <properties documentPath="C:\zwb\study\EasyGame\client\Assets\Scripts\Systems\Event2\EventPlayer.cs" initialLine="124" containingFunctionPresentation="method 'Update'">
+            <startOffsets>
+              <option value="3536" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3628" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_Event_Timeline.cs</url>
+          <line>411</line>
+          <properties documentPath="C:\zwb\study\EasyGame\client\Assets\Scripts\Systems\Event2\Editor\EventEditor\EditorWindow_Event_Timeline.cs" initialLine="411" containingFunctionPresentation="method '_AddEventParamToPlayer'">
+            <startOffsets>
+              <option value="15650" />
+            </startOffsets>
+            <endOffsets>
+              <option value="15677" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_Event.cs</url>
+          <line>593</line>
+          <properties documentPath="C:\zwb\study\EasyGame\client\Assets\Scripts\Systems\Event2\Editor\EventEditor\EditorWindow_Event.cs" initialLine="593" containingFunctionPresentation="method '_SetEventParam'">
+            <startOffsets>
+              <option value="21448" />
+            </startOffsets>
+            <endOffsets>
+              <option value="21458" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_Event_Utility.cs</url>
+          <line>957</line>
+          <properties documentPath="C:\zwb\study\EasyGame\client\Assets\Scripts\Systems\Event2\Editor\EventEditor\EditorWindow_Event_Utility.cs" initialLine="957" containingFunctionPresentation="method 'CallbackCharaList'">
+            <startOffsets>
+              <option value="33026" />
+            </startOffsets>
+            <endOffsets>
+              <option value="33038" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_Event.cs</url>
+          <line>591</line>
+          <properties documentPath="C:\zwb\study\EasyGame\client\Assets\Scripts\Systems\Event2\Editor\EventEditor\EditorWindow_Event.cs" initialLine="591" containingFunctionPresentation="method '_SetEventParam'">
+            <startOffsets>
+              <option value="21374" />
+            </startOffsets>
+            <endOffsets>
+              <option value="21411" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Systems/Event2/Editor/EventEditor/EditorWindow_Event.cs</url>
+          <line>598</line>
+          <properties documentPath="C:\zwb\study\EasyGame\client\Assets\Scripts\Systems\Event2\Editor\EventEditor\EditorWindow_Event.cs" initialLine="598" containingFunctionPresentation="method '_SetEventParam'">
+            <startOffsets>
+              <option value="21613" />
+            </startOffsets>
+            <endOffsets>
+              <option value="21643" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
